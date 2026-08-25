@@ -30,6 +30,7 @@ npm run build      # 検証 + 型チェック + 本番ビルド
 | [docs/01_企画書.md](docs/01_企画書.md) | 背景・課題、コンセプト、想定ユーザー、フェーズ分割、技術方針、リスク |
 | [docs/02_要件定義書.md](docs/02_要件定義書.md) | 機能要件（FR-000〜FR-010）、非機能要件、画面一覧、スコープ外、未決事項 |
 | [docs/03_データモデル.md](docs/03_データモデル.md) | エンティティ設計、JSON構造、データ整備手順、品質ゲート |
+| [docs/04_アンチバイオグラム突合手順.md](docs/04_アンチバイオグラム突合手順.md) | 原データとの突合の3段階（自己整合チェック／機械突合／目視照合）と完了の記録方法 |
 
 ## 実装済みの機能
 
@@ -82,6 +83,18 @@ scripts/validate-data.mjs         データ品質ゲート
   ESBL産生率・MRSA/MRSE率を用いた算術整合チェック（例：S. aureus total の CEZ 67% = MSSA の CEZ 100% × (1 − MRSA率 0.33)）
   で主要行の列対応を検証しているが、**院内公開前に作成元 Excel との突合が必須**。
   アプリ内でもこの旨をバナー表示している（`antibiogram.json` の `meta.verified: false`）。
+  突合の手順とツールは [docs/04_アンチバイオグラム突合手順.md](docs/04_アンチバイオグラム突合手順.md) を参照。
+
+  ```bash
+  npm run antibiogram:check                                        # 自己整合チェック（原データ不要）
+  node scripts/diff-antibiogram.mjs 入院.csv --setting inpatient    # 原データCSVと機械突合
+  node scripts/diff-antibiogram.mjs --export --setting inpatient    # 目視照合用チェックシート出力
+  ```
+
+  現状の自己整合チェックは 12組・126セルすべてで加重平均が一致しており、大腸菌・肺炎桿菌・
+  K. oxytoca・P. mirabilis・S. aureus・S. epidermidis の列対応は信頼度が高い。
+  一方、total 行を持たない菌（緑膿菌、腸球菌、レンサ球菌ほか）はこの方法では検証できないため、
+  原データとの突合でしか確認できない。
 - イミペネム・シラスタチンは、標準投与量表（p.10、0.5g 6時間毎）と腎機能障害時の表（p.16、CCr>50 で 1g 6時間毎）の
   記載が異なる。原典どおり両方を保持し、薬剤詳細に注記している。
 - プログラム医療機器（SaMD）該当性の確認、原典PDF同梱の可否、菌の日本語名リストの監修は未決（docs/02 §5 参照）。

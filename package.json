@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "npm run validate && tsc -b && vite build",
     "preview": "vite preview",
-    "validate": "node scripts/validate-data.mjs",
+    "validate": "node scripts/validate-data.mjs && node scripts/check-antibiogram-consistency.mjs",
+    "antibiogram:check": "node scripts/check-antibiogram-consistency.mjs",
+    "antibiogram:diff": "node scripts/diff-antibiogram.mjs",
     "typecheck": "tsc -b --noEmit"
   },
   "dependencies": {
