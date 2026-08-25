@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.shot.mjs
+*.log
+.DS_Store
+tsconfig.tsbuildinfo

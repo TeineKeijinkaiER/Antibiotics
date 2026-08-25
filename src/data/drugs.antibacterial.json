@@ -1,0 +1,1103 @@
+[
+  {
+    "id": "vancomycin",
+    "genericName": { "en": "Vancomycin", "ja": "バンコマイシン" },
+    "brandNames": ["バンコマイシン塩酸塩点滴静注用0.5g", "バンコマイシン塩酸塩散0.5g"],
+    "abbr": "VCM",
+    "class": "グリコペプチド系",
+    "category": "antibacterial",
+    "requiresApplication": true,
+    "aware": "Watch",
+    "aliases": ["バンコマイシン", "塩酸バンコマイシン", "VCM", "抗MRSA薬"],
+    "adult": {
+      "iv": [
+        {
+          "indication": null,
+          "text": "実体重（Actual body weight）で15-20mg/kg 12時間毎で開始（必要時、初回Loading dose 25-30mg/kg）。5ドーズ目以降TDMで投与量調整",
+          "perKg": { "amount": [15, 20], "unit": "mg", "per": "perDose", "basis": "actual" }
+        }
+      ],
+      "po": [{ "indication": "Clostridioides difficile 感染症等", "text": "0.125g 1日4回" }]
+    },
+    "pediatric": {
+      "iv": [
+        { "indication": "小児・乳児", "text": "40mg/kg/day 分2-4", "perKg": { "amount": 40, "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "新生児", "text": "1回10-15mg/kg。生後1週までは12時間毎、生後1ヶ月までは8時間毎", "perKg": { "amount": [10, 15], "unit": "mg", "per": "perDose", "basis": "actual" } }
+      ]
+    },
+    "renal": {
+      "gt50": "別表の投与量設定方法（TDM）を参照のこと",
+      "ccr10_50": "別表の投与量設定方法（TDM）を参照のこと",
+      "lt10": "別表の投与量設定方法（TDM）を参照のこと",
+      "hd": "透析日のみ透析後に0.75-1g投与、TDM推奨",
+      "chdf": "0.75-1g 24時間毎、TDM推奨"
+    },
+    "renalNote": "経口バンコマイシン（散剤）は腎機能低下時も常用量投与が可能",
+    "tdm": {
+      "designer": "vancomycin",
+      "targets": [
+        { "type": "peak", "value": "目標値なし", "unit": "", "condition": null },
+        { "type": "trough", "value": "10-15", "unit": "µg/mL", "condition": null },
+        { "type": "trough", "value": "15-20", "unit": "µg/mL", "condition": "菌血症・心内膜炎・骨髄炎・髄膜炎・院内肺炎" },
+        { "type": "auc", "value": "400-600 (AUC/MIC)", "unit": "", "condition": "MRSA菌血症で感染症科・ASTによる推奨がある場合" }
+      ],
+      "sampling": { "trough": "バンコマイシン投与直前（透析患者の場合は透析前）", "peak": "AUCガイドTDM時のみ：投与終了後60分" },
+      "firstTdmDose": "5ドーズ目以降（重症例では2-4ドーズ目を考慮）",
+      "loadingDose": "25-30mg/kg（点滴時間は1g/hr以上かける）",
+      "cautions": [
+        "1日3gを超える投与は慎重に行い、1日4gを上限とする（4gを超える場合は他の抗MRSA薬への変更を考慮）",
+        "初回ローディングの母液は生食250mLで溶解し2時間で投与",
+        "AUCガイドTDMはMICが1の菌株に使用する。MICが2以上の場合は他の抗MRSA薬への変更を検討",
+        "AUCガイドTDMは透析患者には適用できない",
+        "AUCガイドTDMは採血タイミングが重要なため、実施する際は速やかに薬剤部（病棟薬剤師）へ連絡する"
+      ],
+      "source": { "edition": 9, "pages": [31, 32] }
+    },
+    "formulations": [
+      {
+        "brandName": "バンコマイシン塩酸塩点滴静注用0.5g",
+        "strength": "0.5g/1V",
+        "price": 980,
+        "ivPush": false,
+        "drip": "1時間",
+        "im": false,
+        "notes": ["投与時間1時間以上必要（Redman症候群）", "TDM推奨"],
+        "incompatibleWith": ["AZT", "SBT/CPZ", "CTM", "MCFG", "CAZ"],
+        "source": { "edition": 9, "pages": [65] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [10, 14, 16, 21, 22, 31, 32, 39, 65] }
+  },
+  {
+    "id": "teicoplanin",
+    "genericName": { "en": "Teicoplanin", "ja": "テイコプラニン" },
+    "brandNames": ["テイコプラニン点滴静注用200mg"],
+    "abbr": "TEIC",
+    "class": "グリコペプチド系",
+    "category": "antibacterial",
+    "requiresApplication": true,
+    "aliases": ["テイコプラニン", "タゴシッド", "TEIC", "抗MRSA薬"],
+    "adult": {
+      "iv": [
+        {
+          "indication": null,
+          "text": "6mg/kg 12時間毎 2日間、3日目以降は400mg 24時間毎。4日目にTDMで投与量調整",
+          "perKg": { "amount": 6, "unit": "mg", "per": "perDose", "basis": "actual" }
+        }
+      ]
+    },
+    "pediatric": {
+      "iv": [
+        { "indication": "乳児・幼児・小児", "text": "10mg/kgを12時間間隔で3回、以後6-10mg/kg（敗血症などの重症感染症では10mg/kg）を24時間毎、適宜増減", "perKg": { "amount": 10, "unit": "mg", "per": "perDose", "basis": "actual" } },
+        { "indication": "新生児（低出生体重児）", "text": "初回のみ16mg/kg、以後8mg/kgを24時間毎、適宜増減", "perKg": { "amount": 8, "unit": "mg", "per": "perDose", "basis": "actual" } }
+      ]
+    },
+    "renal": {
+      "gt50": "別表の投与量設定方法（TDM）を参照のこと",
+      "ccr10_50": "別表の投与量設定方法（TDM）を参照のこと",
+      "lt10": "別表の投与量設定方法（TDM）を参照のこと",
+      "hd": "6mg/kg 72時間毎、透析日は透析後に投与、TDM推奨",
+      "chdf": "1日目：800mg/day、2・3日目：400mg/day、4日目以降：400mg 48-72時間毎、TDM推奨"
+    },
+    "renalNote": "腎機能低下患者においても初日よりLoading doseを含め3日間は腎機能正常患者と同じ投与を行う。その後はTDMを実施し投与間隔の延長又は1回投与量の減量を行う",
+    "tdm": {
+      "designer": "teicoplanin",
+      "targets": [
+        { "type": "peak", "value": "目標値なし", "unit": "", "condition": null },
+        { "type": "trough", "value": "10-30", "unit": "µg/mL", "condition": null },
+        { "type": "trough", "value": "20-30 以上を考慮", "unit": "µg/mL", "condition": "重症例（感染性心内膜炎、骨関節感染症等）" }
+      ],
+      "sampling": { "trough": "テイコプラニン投与直前（透析患者の場合は透析前）", "peak": "必要なし" },
+      "firstTdmDose": "5ドーズ目以降（重症例では2-4ドーズ目を考慮）",
+      "loadingDose": "12mg/kg（早期に有効血中濃度を維持したい場合）",
+      "cautions": ["テイコプラニンは半減期が長く、定常状態への到達が遅れることを考慮する"],
+      "source": { "edition": 9, "pages": [33] }
+    },
+    "formulations": [
+      {
+        "brandName": "テイコプラニン点滴静注用200mg",
+        "strength": "200mg/1V",
+        "price": 1351,
+        "ivPush": false,
+        "drip": "30分以上",
+        "im": false,
+        "notes": ["TDM推奨"],
+        "incompatibleWith": ["L-AMB", "MINO", "CTM"],
+        "source": { "edition": 9, "pages": [65] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [10, 16, 21, 22, 33, 39, 65] }
+  },
+  {
+    "id": "daptomycin",
+    "genericName": { "en": "Daptomycin", "ja": "ダプトマイシン" },
+    "brandNames": ["ダプトマイシン静注用350mg"],
+    "abbr": "DAP",
+    "class": "環状リポペプチド系",
+    "category": "antibacterial",
+    "requiresApplication": true,
+    "consultSpecialist": true,
+    "aliases": ["ダプトマイシン", "キュビシン", "DAP", "抗MRSA薬"],
+    "adult": {
+      "iv": [
+        { "indication": null, "text": "6mg/kg 24時間毎", "perKg": { "amount": 6, "unit": "mg", "per": "perDose", "basis": "actual" } },
+        { "indication": "皮膚・軟部組織感染症", "text": "4mg/kg 24時間毎", "perKg": { "amount": 4, "unit": "mg", "per": "perDose", "basis": "actual" } },
+        { "indication": "左心系感染性心内膜炎など重症菌血症", "text": "8-12mg/kg 24時間毎（ただし日本の保険適用量では6mg/kg/dayが最大使用量）", "offLabel": true }
+      ]
+    },
+    "pediatric": {
+      "iv": [
+        { "indication": "1歳以上2歳未満", "text": "10mg/kg/day 分1", "perKg": { "amount": 10, "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "2歳以上7歳未満", "text": "9mg/kg/day 分1", "perKg": { "amount": 9, "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "7歳以上12歳未満", "text": "7mg/kg/day 分1", "perKg": { "amount": 7, "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "12歳以上18歳未満", "text": "5mg/kg/day 分1", "perKg": { "amount": 5, "unit": "mg", "per": "perDay", "basis": "actual" } }
+      ]
+    },
+    "renal": {
+      "gt50": "6mg/kg 24時間毎",
+      "ccr10_50": "6mg/kg 48時間毎（CCr <30mL/min）",
+      "lt10": "6mg/kg 48時間毎",
+      "hd": "6mg/kg 48時間毎、透析日は透析後に投与",
+      "chdf": "4-6mg/kg 48時間毎"
+    },
+    "renalNote": "血中濃度を測定する必要がなく、腎機能障害の患者にも減量して使用できる。腎機能低下患者では通常投与間隔を延長する",
+    "formulations": [
+      {
+        "brandName": "ダプトマイシン静注用350mg",
+        "strength": "350mg/1V",
+        "price": 4543,
+        "ivPush": false,
+        "drip": "30分以上",
+        "im": false,
+        "notes": [
+          "1V当たり7mLの生食で溶解し50mg/mLとし、必要量を抜き取る（泡立ちやすいので注意）",
+          "主な副作用：横紋筋融解症、肝機能障害、好酸球性肺炎、神経障害",
+          "投与前にCPKの測定を行い定期的にモニタリングすることを推奨",
+          "肺サーファクタントで不活化されるため肺炎には用いない",
+          "使用に関しては具体的な使用理由を記載すること"
+        ],
+        "source": { "edition": 9, "pages": [65] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [10, 16, 21, 22, 23, 24, 39, 65] }
+  },
+  {
+    "id": "linezolid",
+    "genericName": { "en": "Linezolid", "ja": "リネゾリド" },
+    "brandNames": ["ザイボックス注射液600mg", "ザイボックス錠600mg"],
+    "abbr": "LZD",
+    "class": "オキサゾリジノン系",
+    "category": "antibacterial",
+    "requiresApplication": true,
+    "renalAdjustmentNotRequired": true,
+    "aware": "Reserve",
+    "aliases": ["ザイボックス", "リネゾリド", "LZD", "抗MRSA薬"],
+    "adult": {
+      "iv": [{ "indication": null, "text": "600mg 12時間毎" }],
+      "po": [{ "indication": null, "text": "1回600mg 1日2回" }]
+    },
+    "pediatric": {
+      "iv": [
+        { "indication": "12歳未満", "text": "30mg/kg/day 分3（1回600mgまで）", "perKg": { "amount": 30, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDose": 600 } },
+        { "indication": "12歳以上", "text": "1200mg/day 分2" }
+      ],
+      "po": [
+        { "indication": "12歳未満", "text": "1日30mg/kg 分3（1回600mgまで）", "perKg": { "amount": 30, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDose": 600 } },
+        { "indication": "12歳以上", "text": "1日1200mg 分2" }
+      ]
+    },
+    "renal": {
+      "gt50": "600mg 12時間毎",
+      "ccr10_50": "投与量・間隔の調整不要",
+      "lt10": "投与量・間隔の調整不要",
+      "hd": "600mg 12時間毎",
+      "chdf": "600mg 12時間毎"
+    },
+    "formulations": [
+      {
+        "brandName": "ザイボックス注射液600mg",
+        "strength": "600mg 300mL/1袋",
+        "price": 8596,
+        "ivPush": false,
+        "drip": "0.5-2時間",
+        "im": false,
+        "notes": [
+          "エンピリックセラピーとしてのMRSAの第一選択には推奨されない",
+          "セロトニン作動薬と併用時セロトニン症候群（錯乱、振戦、高熱）",
+          "使用に関しては具体的な使用理由を記載すること",
+          "経口薬は粉砕可（強い苦味あり）"
+        ],
+        "incompatibleWith": ["L-AMB", "CTRX", "ST", "EM"],
+        "source": { "edition": 9, "pages": [65] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [10, 13, 16, 21, 22, 39, 41, 65] }
+  },
+  {
+    "id": "gentamicin",
+    "genericName": { "en": "Gentamicin", "ja": "ゲンタマイシン" },
+    "brandNames": ["ゲンタマイシン硫酸塩注射液60mg"],
+    "abbr": "GM",
+    "class": "アミノグリコシド系",
+    "category": "antibacterial",
+    "aliases": ["ゲンタマイシン", "ゲンタシン", "GM", "アミノグリコシド"],
+    "adult": {
+      "iv": [
+        {
+          "indication": "1日1回法（ODD）",
+          "text": "理想体重（Ideal body weight）で5mg/kg 24時間毎で開始、2ドーズ目以降TDMで投与量調整",
+          "offLabel": true,
+          "perKg": { "amount": 5, "unit": "mg", "per": "perDose", "basis": "ideal" }
+        },
+        {
+          "indication": "分割法（MDD）",
+          "text": "理想体重で1回1.7mg/kg 8時間毎",
+          "perKg": { "amount": 1.7, "unit": "mg", "per": "perDose", "basis": "ideal" }
+        },
+        {
+          "indication": "腸球菌・連鎖球菌群による感染性心内膜炎への併用療法",
+          "text": "理想体重で1回1mg/kg 8時間毎、又は1回3mg/kg 24時間毎",
+          "perKg": { "amount": 1, "unit": "mg", "per": "perDose", "basis": "ideal" }
+        }
+      ]
+    },
+    "pediatric": {
+      "iv": [
+        { "indication": null, "text": "4-7.5mg/kg/day 分2-3、適宜増減", "perKg": { "amount": [4, 7.5], "unit": "mg", "per": "perDay", "basis": "actual" } }
+      ]
+    },
+    "renal": {
+      "gt50": "ODD: IBWで5mg/kg 24時間毎／MDD: IBWで1.7mg/kg 8時間毎",
+      "ccr10_50": "MDD: IBWで1.2-1.5mg/kg 12時間毎（ODDはMDDを用いるか専門家へコンサルテーション）",
+      "lt10": "専門家へコンサルテーション",
+      "hd": "TDM推奨",
+      "chdf": "2mg/kg 24時間毎、TDM推奨"
+    },
+    "tdm": {
+      "designer": "aminoglycoside",
+      "targets": [
+        { "type": "peak", "value": "5-10", "unit": "µg/mL", "condition": "MDD（分割法）" },
+        { "type": "trough", "value": "1-2", "unit": "µg/mL", "condition": "MDD（分割法）" },
+        { "type": "peak", "value": "15-20", "unit": "µg/mL", "condition": "ODD・MIC 2µg/mL または重症" },
+        { "type": "peak", "value": "8-10", "unit": "µg/mL", "condition": "ODD・MIC 1µg/mL以下 または軽症" },
+        { "type": "trough", "value": "<1", "unit": "µg/mL", "condition": "ODD" },
+        { "type": "peak", "value": "3", "unit": "µg/mL", "condition": "感染性心内膜炎への併用療法" },
+        { "type": "trough", "value": "<1", "unit": "µg/mL", "condition": "感染性心内膜炎への併用療法" }
+      ],
+      "sampling": { "trough": "抗菌薬投与直前（透析患者の場合は透析前）", "peak": "抗菌薬投与終了後30分" },
+      "firstTdmDose": "2ドーズ目以降（5日以上投与の可能性、腎機能低下例、VCM・AMPH-B・シクロスポリン・造影剤等を併用時に推奨）",
+      "cautions": [
+        "体重は実体重で算出する。ただし実体重が理想体重から20%以上の患者では補正体重を用いる",
+        "ゲンタマイシンは院内測定"
+      ],
+      "source": { "edition": 9, "pages": [34, 35] }
+    },
+    "formulations": [
+      {
+        "brandName": "ゲンタマイシン硫酸塩注射液60mg",
+        "strength": "60mg 1.5mL/1A",
+        "price": 307,
+        "ivPush": false,
+        "drip": "0.5-2時間",
+        "im": true,
+        "notes": [
+          "TDM推奨",
+          "ヘパリンNaと混合すると力価低下",
+          "高用量を使用した場合、麻酔薬・筋弛緩薬との併用で呼吸抑制の可能性あり"
+        ],
+        "source": { "edition": 9, "pages": [65] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [11, 16, 21, 22, 34, 35, 39, 65] }
+  },
+  {
+    "id": "amikacin",
+    "genericName": { "en": "Amikacin", "ja": "アミカシン" },
+    "brandNames": ["アミカシン硫酸塩注射液200mg"],
+    "abbr": "AMK",
+    "class": "アミノグリコシド系",
+    "category": "antibacterial",
+    "aliases": ["アミカシン", "AMK", "アミノグリコシド"],
+    "adult": {
+      "iv": [
+        {
+          "indication": "1日1回法（ODD）",
+          "text": "理想体重（Ideal body weight）で15mg/kg 24時間毎で開始、2ドーズ目以降TDMで投与量調整",
+          "offLabel": true,
+          "perKg": { "amount": 15, "unit": "mg", "per": "perDose", "basis": "ideal" }
+        },
+        {
+          "indication": "分割法（MDD）",
+          "text": "理想体重で1回7.5mg/kg 12時間毎",
+          "perKg": { "amount": 7.5, "unit": "mg", "per": "perDose", "basis": "ideal" }
+        }
+      ]
+    },
+    "pediatric": {
+      "iv": [
+        { "indication": null, "text": "4-8mg/kg/day 分2、適宜増減", "perKg": { "amount": [4, 8], "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "新生児（未熟児含む）", "text": "12mg/kg/day 分2、適宜増減", "perKg": { "amount": 12, "unit": "mg", "per": "perDay", "basis": "actual" } }
+      ]
+    },
+    "renal": {
+      "gt50": "ODD: IBWで15mg/kg 24時間毎／MDD: IBWで7.5mg/kg 12時間毎",
+      "ccr10_50": "MDD: IBWで1回2-5mg/kg 12-18時間毎（ODDはMDDを用いるか専門家へコンサルテーション）",
+      "lt10": "専門家へコンサルテーション",
+      "hd": "TDM推奨",
+      "chdf": "7.5mg/kg 24-48時間毎、TDM推奨"
+    },
+    "tdm": {
+      "designer": "aminoglycoside",
+      "targets": [
+        { "type": "peak", "value": "15-30", "unit": "µg/mL", "condition": "MDD（分割法）" },
+        { "type": "trough", "value": "5-10", "unit": "µg/mL", "condition": "MDD（分割法）" },
+        { "type": "peak", "value": "50-60", "unit": "µg/mL", "condition": "ODD・MIC 8µg/mL または重症" },
+        { "type": "peak", "value": "40-50", "unit": "µg/mL", "condition": "ODD・MIC 4µg/mL以下 または軽症" },
+        { "type": "trough", "value": "<4", "unit": "µg/mL", "condition": "ODD" }
+      ],
+      "sampling": { "trough": "抗菌薬投与直前（透析患者の場合は透析前）", "peak": "抗菌薬投与終了後30分" },
+      "firstTdmDose": "2ドーズ目以降",
+      "cautions": [
+        "体重は実体重で算出する。ただし実体重が理想体重から20%以上の患者では補正体重を用いる",
+        "アミカシンの血中濃度測定は院外測定（外注）",
+        "p.11 の1日1回法の目標値は Peak 55-65µg/mL、Trough <1µg/mL と記載されている"
+      ],
+      "source": { "edition": 9, "pages": [34, 35] }
+    },
+    "formulations": [
+      {
+        "brandName": "アミカシン硫酸塩注射液200mg",
+        "strength": "200mg/1A",
+        "price": 357,
+        "ivPush": false,
+        "drip": "0.5-1時間",
+        "im": true,
+        "notes": [
+          "TDM推奨",
+          "血中濃度の測定は外注",
+          "高用量を使用した場合、麻酔薬・筋弛緩薬との併用で呼吸抑制の可能性あり"
+        ],
+        "incompatibleWith": ["SBT/CPZ"],
+        "source": { "edition": 9, "pages": [65] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [11, 16, 21, 22, 34, 35, 39, 65] }
+  },
+  {
+    "id": "minocycline",
+    "genericName": { "en": "Minocycline", "ja": "ミノサイクリン" },
+    "brandNames": ["ミノサイクリン塩酸塩点滴静注用100mg", "ミノサイクリン塩酸塩錠50mg/100mg"],
+    "abbr": "MINO",
+    "class": "テトラサイクリン系",
+    "category": "antibacterial",
+    "renalAdjustmentNotRequired": true,
+    "aware": "Access",
+    "aliases": ["ミノサイクリン", "ミノマイシン", "MINO"],
+    "adult": {
+      "iv": [{ "indication": null, "text": "100mg 12時間毎" }],
+      "po": [{ "indication": null, "text": "1回100mg 1日2回（最大400mg/day）" }]
+    },
+    "pediatric": {
+      "iv": [{ "indication": null, "text": "小児に対する投与量の設定なし（8歳未満原則禁忌）" }],
+      "po": [{ "indication": null, "text": "小児に対する投与量の設定なし（8歳未満禁忌）" }]
+    },
+    "renal": {
+      "gt50": "100mg 12時間毎",
+      "ccr10_50": "投与量・間隔の調整不要",
+      "lt10": "投与量・間隔の調整不要",
+      "hd": "100mg 12時間毎",
+      "chdf": "100mg 12時間毎"
+    },
+    "formulations": [
+      {
+        "brandName": "ミノサイクリン塩酸塩点滴静注用100mg",
+        "strength": "100mg/1V",
+        "price": 350,
+        "ivPush": false,
+        "drip": "0.5-2時間",
+        "im": false,
+        "notes": ["血管痛の可能性あり、1時間以上推奨", "主に肝・胆汁排泄", "経口薬は粉砕可（防湿・遮光保存）"],
+        "incompatibleWith": ["CEZ", "SBT/CPZ", "CMZ", "PIPC", "FOM"],
+        "source": { "edition": 9, "pages": [66] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [11, 13, 16, 21, 22, 39, 42, 66] }
+  },
+  {
+    "id": "doxycycline",
+    "genericName": { "en": "Doxycycline", "ja": "ドキシサイクリン" },
+    "brandNames": ["ビブラマイシン錠100mg"],
+    "abbr": "DOXY",
+    "class": "テトラサイクリン系",
+    "category": "antibacterial",
+    "renalAdjustmentNotRequired": true,
+    "aware": "Access",
+    "aliases": ["ビブラマイシン", "ドキシサイクリン", "DOXY"],
+    "adult": { "po": [{ "indication": null, "text": "1回100mg 1日1回（最大200mg/day）" }] },
+    "pediatric": { "po": [{ "indication": null, "text": "小児に対する投与量の設定なし（8歳未満禁忌）" }] },
+    "source": { "edition": 9, "pages": [13, 42] }
+  },
+  {
+    "id": "azithromycin",
+    "genericName": { "en": "Azithromycin", "ja": "アジスロマイシン" },
+    "brandNames": ["ジスロマック点滴静注用500mg", "ジスロマック錠250mg", "ジスロマック細粒小児用10%", "ジスロマックカプセル小児用100mg"],
+    "abbr": "AZM",
+    "class": "マクロライド系",
+    "category": "antibacterial",
+    "renalAdjustmentNotRequired": true,
+    "aware": "Watch",
+    "aliases": ["ジスロマック", "アジスロマイシン", "AZM"],
+    "adult": {
+      "iv": [{ "indication": null, "text": "500mg 24時間毎" }],
+      "po": [{ "indication": null, "text": "1回500mg 1日1回 3日間" }]
+    },
+    "pediatric": {
+      "iv": [{ "indication": null, "text": "小児に対する投与量の設定なし（10mg/kg/day 分1 は適応外）", "offLabel": true, "perKg": { "amount": 10, "unit": "mg", "per": "perDay", "basis": "actual" } }],
+      "po": [{ "indication": null, "text": "1日10mg/kg 分1、3日間（500mg/dayまで）", "perKg": { "amount": 10, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDay": 500 } }]
+    },
+    "renal": {
+      "gt50": "500mg 24時間毎",
+      "ccr10_50": "投与量・間隔の調整不要",
+      "lt10": "投与量・間隔の調整不要",
+      "hd": "500mg 24時間毎、透析日は透析後に投与",
+      "chdf": "500mg 12時間毎"
+    },
+    "formulations": [
+      {
+        "brandName": "ジスロマック点滴静注用500mg",
+        "strength": "500mg/1V",
+        "price": 1796,
+        "ivPush": false,
+        "drip": "2時間",
+        "im": false,
+        "notes": [
+          "2時間以上かけて点滴",
+          "注水4.8mLに溶解し100mg/mLとした後、母液が1mg/mLになるように溶解し投与（500mg投与の場合は500mLの母液）",
+          "1V中Na 4.96mEq含有"
+        ],
+        "source": { "edition": 9, "pages": [66] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [11, 13, 17, 21, 22, 39, 41, 66] }
+  },
+  {
+    "id": "clarithromycin",
+    "genericName": { "en": "Clarithromycin", "ja": "クラリスロマイシン" },
+    "brandNames": ["クラリス錠200", "クラリスドライシロップ10%小児用"],
+    "abbr": "CAM",
+    "class": "マクロライド系",
+    "category": "antibacterial",
+    "aware": "Watch",
+    "aliases": ["クラリス", "クラリシッド", "クラリスロマイシン", "CAM"],
+    "adult": {
+      "po": [
+        { "indication": "一般感染症", "text": "1回200mg 1日2回（最大800mg/day）" },
+        { "indication": "非結核性抗酸菌症", "text": "1回400mg 1日2回（最大1600mg/day）" }
+      ]
+    },
+    "pediatric": {
+      "po": [{ "indication": null, "text": "1日10-15mg/kg 分2-3、適宜増減", "perKg": { "amount": [10, 15], "unit": "mg", "per": "perDay", "basis": "actual" }, "note": "粉砕可（苦味あり）" }]
+    },
+    "source": { "edition": 9, "pages": [13, 41] }
+  },
+  {
+    "id": "erythromycin",
+    "genericName": { "en": "Erythromycin", "ja": "エリスロマイシン" },
+    "brandNames": ["エリスロシン錠200mg", "エリスロシンドライシロップW20%"],
+    "abbr": "EM",
+    "class": "マクロライド系",
+    "category": "antibacterial",
+    "renalAdjustmentNotRequired": true,
+    "aware": "Watch",
+    "aliases": ["エリスロシン", "エリスロマイシン", "EM"],
+    "adult": { "po": [{ "indication": null, "text": "1回400mg 1日3回（最大2400mg/day）" }] },
+    "pediatric": {
+      "po": [{ "indication": null, "text": "1日25-50mg/kg 分4-6、適宜増減（1200mg/dayまで）", "perKg": { "amount": [25, 50], "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDay": 1200 }, "note": "粉砕不可（胃酸で失活）" }]
+    },
+    "source": { "edition": 9, "pages": [13, 41] }
+  },
+  {
+    "id": "spiramycin",
+    "genericName": { "en": "Spiramycin", "ja": "スピラマイシン" },
+    "brandNames": ["スピラマイシン錠150万単位"],
+    "abbr": null,
+    "class": "マクロライド系",
+    "category": "antibacterial",
+    "aware": "Watch",
+    "aliases": ["スピラマイシン", "トキソプラズマ"],
+    "adult": { "po": [{ "indication": null, "text": "1回300万単位 1日3回" }] },
+    "pediatric": { "po": [{ "indication": null, "text": "小児に対する投与量の設定なし", "note": "粉砕可（苦味あり。通常の保存状態で30日間安定）" }] },
+    "source": { "edition": 9, "pages": [13, 41] }
+  },
+  {
+    "id": "clindamycin",
+    "genericName": { "en": "Clindamycin", "ja": "クリンダマイシン" },
+    "brandNames": ["クリンダマイシンリン酸エステル注射液600mg", "ダラシンカプセル150mg"],
+    "abbr": "CLDM",
+    "class": "リンコマイシン系",
+    "category": "antibacterial",
+    "renalAdjustmentNotRequired": true,
+    "aware": "Access",
+    "aliases": ["ダラシン", "クリンダマイシン", "CLDM"],
+    "adult": {
+      "iv": [{ "indication": null, "text": "600mg 8時間毎" }],
+      "po": [{ "indication": null, "text": "1回300mg 1日3回" }]
+    },
+    "pediatric": {
+      "iv": [
+        { "indication": null, "text": "15-25mg/kg/day 分3-4", "perKg": { "amount": [15, 25], "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "難治性又は重症感染症", "text": "40mg/kg/day 分3-4", "perKg": { "amount": 40, "unit": "mg", "per": "perDay", "basis": "actual" } }
+      ],
+      "po": [
+        { "indication": null, "text": "1日15mg/kg 分3-4、適宜増減", "perKg": { "amount": 15, "unit": "mg", "per": "perDay", "basis": "actual" }, "note": "粉砕可（強い苦味あり）" },
+        { "indication": "重症感染症", "text": "1日20mg/kg 分3-4", "perKg": { "amount": 20, "unit": "mg", "per": "perDay", "basis": "actual" } }
+      ]
+    },
+    "renal": {
+      "gt50": "600mg 8時間毎",
+      "ccr10_50": "投与量・間隔の調整不要",
+      "lt10": "投与量・間隔の調整不要",
+      "hd": "600mg 8時間毎",
+      "chdf": "600-900mg 8時間毎"
+    },
+    "formulations": [
+      {
+        "brandName": "クリンダマイシンリン酸エステル注射液600mg",
+        "strength": "600mg 4mL/1A",
+        "price": 387,
+        "ivPush": false,
+        "drip": "0.5-1時間",
+        "im": true,
+        "notes": ["ワンショット禁（心停止の恐れあり）", "マクロライドとの併用で効果が減弱するため併用禁"],
+        "incompatibleWith": ["MINO"],
+        "source": { "edition": 9, "pages": [67] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [11, 13, 17, 21, 22, 39, 41, 67] }
+  },
+  {
+    "id": "ciprofloxacin",
+    "genericName": { "en": "Ciprofloxacin", "ja": "シプロフロキサシン" },
+    "brandNames": ["シプロフロキサシン点滴静注液400mg", "シプロキサン錠200mg"],
+    "abbr": "CPFX",
+    "class": "ニューキノロン系",
+    "category": "antibacterial",
+    "aware": "Watch",
+    "aliases": ["シプロキサン", "シプロフロキサシン", "CPFX"],
+    "adult": {
+      "iv": [{ "indication": null, "text": "400mg 12時間毎（最大1200mg/day）" }],
+      "po": [{ "indication": null, "text": "1回200-400mg 1日2回" }]
+    },
+    "pediatric": {
+      "iv": [
+        { "indication": null, "text": "18-30mg/kg/day 分3（1回400mgまで）", "perKg": { "amount": [18, 30], "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDose": 400 } },
+        { "indication": "炭疽", "text": "20mg/kg/day 分2（1回400mgまで）", "perKg": { "amount": 20, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDose": 400 } },
+        { "indication": "嚢胞性肺線維症における緑膿菌による呼吸器感染症", "text": "30mg/kg/day 分3（1回400mgまで）", "perKg": { "amount": 30, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDose": 400 } }
+      ],
+      "po": [{ "indication": null, "text": "禁忌", "note": "粉砕可（遮光保存必要）" }]
+    },
+    "renal": {
+      "gt50": "400mg 12時間毎",
+      "ccr10_50": "200mg 12時間毎",
+      "lt10": "100-200mg 12時間毎",
+      "hd": "200mg 12時間毎 又は 400mg 24時間毎",
+      "chdf": "300mg 12時間毎"
+    },
+    "renalPo": {
+      "ccr10_50": "200mg 12時間毎",
+      "lt10": "200mg 24時間毎",
+      "hd": "200mg 24時間毎"
+    },
+    "formulations": [
+      {
+        "brandName": "シプロフロキサシン点滴静注液400mg",
+        "strength": "400mg 200mL/1袋",
+        "price": 1199,
+        "ivPush": false,
+        "drip": "1時間",
+        "im": false,
+        "notes": ["ケトプロフェン、チザニジン併用禁忌", "1袋中Na 30.8mEq含有", "アルカリ性溶液と配合しない"],
+        "incompatibleWith": ["L-AMB", "CEZ", "SBT/CPZ", "TAZ/PIPC", "TEIC", "CLDM", "CTM", "MCFG", "FOM", "MEPM", "SBT/ABPC", "CTRX"],
+        "source": { "edition": 9, "pages": [66] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [11, 13, 17, 19, 21, 22, 39, 41, 66] }
+  },
+  {
+    "id": "levofloxacin",
+    "genericName": { "en": "Levofloxacin", "ja": "レボフロキサシン" },
+    "brandNames": ["クラビット点滴静注500mg/20mL", "レボフロキサシン錠500mg"],
+    "abbr": "LVFX",
+    "class": "ニューキノロン系",
+    "category": "antibacterial",
+    "requiresApplication": true,
+    "aware": "Watch",
+    "aliases": ["クラビット", "レボフロキサシン", "LVFX"],
+    "adult": {
+      "iv": [{ "indication": null, "text": "500mg 24時間毎" }],
+      "po": [{ "indication": null, "text": "1回500mg 1日1回" }]
+    },
+    "pediatric": {
+      "iv": [{ "indication": null, "text": "禁忌。専門家へコンサルテーション" }],
+      "po": [{ "indication": null, "text": "禁忌", "note": "粉砕可" }]
+    },
+    "renal": {
+      "gt50": "500mg 24時間毎",
+      "ccr10_50": "500mg 48時間毎",
+      "lt10": "初回500mg、3日目以降250mg 48時間毎",
+      "hd": "500mg 48時間毎",
+      "chdf": "250-500mg 24時間毎"
+    },
+    "renalPo": {
+      "ccr10_50": "CCr 20-50: 初日500mg、2日目以降250mg 24時間毎／CCr <20: 初日500mg、3日目以降250mg 48時間毎",
+      "lt10": "初日500mg、3日目以降250mg 48時間毎",
+      "hd": "初日500mg、3日目以降250mg 48時間毎"
+    },
+    "formulations": [
+      {
+        "brandName": "クラビット点滴静注500mg/20mL",
+        "strength": "500mg 20mL/1V",
+        "price": 2825,
+        "ivPush": false,
+        "drip": "1時間",
+        "im": false,
+        "notes": ["ワンショット禁（60分以上かけて点滴静注）", "注射薬は使用申請書が必要"],
+        "incompatibleWith": ["SBT/CPZ", "TEIC", "MCFG"],
+        "source": { "edition": 9, "pages": [66] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [11, 13, 17, 19, 21, 22, 39, 41, 66] }
+  },
+  {
+    "id": "moxifloxacin",
+    "genericName": { "en": "Moxifloxacin", "ja": "モキシフロキサシン" },
+    "brandNames": ["アベロックス錠400mg"],
+    "abbr": "MFLX",
+    "class": "ニューキノロン系",
+    "category": "antibacterial",
+    "aware": "Watch",
+    "aliases": ["アベロックス", "モキシフロキサシン", "MFLX"],
+    "adult": { "po": [{ "indication": null, "text": "1回400mg 1日1回" }] },
+    "pediatric": { "po": [{ "indication": null, "text": "小児に対する投与量の設定なし", "note": "粉砕可" }] },
+    "source": { "edition": 9, "pages": [13, 41] }
+  },
+  {
+    "id": "tosufloxacin",
+    "genericName": { "en": "Tosufloxacin", "ja": "トスフロキサシン" },
+    "brandNames": ["オゼックス細粒小児用15%"],
+    "abbr": "TFLX",
+    "class": "ニューキノロン系",
+    "category": "antibacterial",
+    "aware": "Watch",
+    "aliases": ["オゼックス", "トスフロキサシン", "TFLX"],
+    "pediatric": {
+      "po": [{ "indication": null, "text": "1日12mg/kg 分2（1回180mg、360mg/dayまで）", "perKg": { "amount": 12, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDose": 180, "maxPerDay": 360 } }]
+    },
+    "source": { "edition": 9, "pages": [41] }
+  },
+  {
+    "id": "fosfomycin",
+    "genericName": { "en": "Fosfomycin", "ja": "ホスホマイシン" },
+    "brandNames": ["ホスミシンＳ静注用1g"],
+    "abbr": "FOM",
+    "class": "ホスホマイシン系",
+    "category": "antibacterial",
+    "aliases": ["ホスミシン", "ホスホマイシン", "FOM"],
+    "adult": { "iv": [{ "indication": null, "text": "2g 12時間毎（最大8g/day）" }] },
+    "pediatric": {
+      "iv": [{ "indication": null, "text": "100-200mg/kg/day 分2-4、適宜増減", "perKg": { "amount": [100, 200], "unit": "mg", "per": "perDay", "basis": "actual" } }]
+    },
+    "renal": {
+      "gt50": "2g 12時間毎",
+      "ccr10_50": "1g 24時間毎",
+      "lt10": "1g 24時間毎",
+      "hd": "1g 24時間毎、透析日は透析後に投与",
+      "chdf": "2g 12時間毎"
+    },
+    "formulations": [
+      {
+        "brandName": "ホスミシンＳ静注用1g",
+        "strength": "1g/1V",
+        "price": 732,
+        "ivPush": true,
+        "drip": "1-2時間",
+        "im": false,
+        "notes": ["1V中Na 14.5mEq含有"],
+        "incompatibleWith": ["EM", "MINO", "CPFX"],
+        "source": { "edition": 9, "pages": [66] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [11, 17, 21, 22, 39, 66] }
+  },
+  {
+    "id": "sulfamethoxazole-trimethoprim",
+    "genericName": { "en": "Sulfamethoxazole/Trimethoprim", "ja": "スルファメトキサゾール・トリメトプリム" },
+    "brandNames": ["バクトラミン注", "ダイフェン配合錠", "ダイフェン配合顆粒"],
+    "abbr": "ST",
+    "class": "ST合剤",
+    "category": "antibacterial",
+    "aware": "Access",
+    "aliases": ["バクトラミン", "ダイフェン", "バクタ", "ST合剤", "スルファメトキサゾール", "トリメトプリム", "TMP/SMX"],
+    "adult": {
+      "iv": [
+        { "indication": "Pneumocystis jiroveci pneumonia（PCP）", "text": "Trimethoprimとして5mg/kg 6-8時間毎", "perKg": { "amount": 5, "unit": "mg", "per": "perDose", "basis": "actual" }, "note": "1A中80mgのTrimethoprim含有" },
+        { "indication": "GNRなどによる全身性感染症", "text": "Trimethoprimとして5mg/kg 12時間毎", "perKg": { "amount": 5, "unit": "mg", "per": "perDose", "basis": "actual" } }
+      ],
+      "po": [
+        { "indication": "Pneumocystis jiroveci pneumonia（PCP）", "text": "1回3-4T（3-4g） 1日3-4回" },
+        { "indication": "上記以外", "text": "1回2T（2g） 1日2回" }
+      ]
+    },
+    "pediatric": {
+      "iv": [{ "indication": null, "text": "小児に対する投与量の設定なし。低出生体重児、新生児には禁忌" }],
+      "po": [
+        { "indication": "PCP（治療）", "text": "Trimethoprimとして1日15-20mg/kg 分3-4、適宜増減", "perKg": { "amount": [15, 20], "unit": "mg", "per": "perDay", "basis": "actual" }, "note": "粉砕可（遮光保存）" },
+        { "indication": "PCP（発症抑制）", "text": "Trimethoprimとして1日4-8mg/kg 分2、連日又は週3日", "perKg": { "amount": [4, 8], "unit": "mg", "per": "perDay", "basis": "actual" } }
+      ]
+    },
+    "renal": {
+      "gt50": "PCP: TMPとして5mg/kg 6-8時間毎／GNR全身性感染症: TMPとして5mg/kg 12時間毎",
+      "ccr10_50": "PCP: TMPとして5mg/kg 12時間毎／GNR全身性感染症: TMPとして2.5mg/kg 12時間毎",
+      "lt10": "要注意 ⇒ 専門家へコンサルテーション",
+      "hd": "5-10mg/kg 24時間毎",
+      "chdf": "2.5mg/kg 8時間毎"
+    },
+    "renalPo": {
+      "gt50": "CCr >90: 常用量／CCr 50-90: TMPとして5-20mg/kg/day 6-12時間分割",
+      "ccr10_50": "CCr 30-50: TMPとして5-7.5mg/kg/day 8時間分割／CCr 10-30: TMPとして5-10mg/kg/day 12時間分割",
+      "lt10": "TMPとして5-20mg/kg/day 24時間分割",
+      "hd": "TMPとして5-10mg/kg 24時間毎。PCP予防は1T（1g） 24時間毎（HD後）"
+    },
+    "formulations": [
+      {
+        "brandName": "バクトラミン注",
+        "strength": "5mL/1A",
+        "price": 665,
+        "ivPush": false,
+        "drip": "1-2時間",
+        "im": false,
+        "notes": [
+          "1A当たり5%ブドウ糖又は生食125mLに溶解（6時間以内に使用）",
+          "75mLで溶解した場合は2時間以内に使用",
+          "高用量使用で高K、低Na血症"
+        ],
+        "source": { "edition": 9, "pages": [65] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [11, 13, 17, 19, 21, 22, 39, 42, 65] }
+  },
+  {
+    "id": "metronidazole",
+    "genericName": { "en": "Metronidazole", "ja": "メトロニダゾール" },
+    "brandNames": ["アネメトロ点滴静注液500mg", "フラジール内服錠250mg"],
+    "abbr": "MNZ",
+    "class": "ニトロイミダゾール系",
+    "category": "antibacterial",
+    "renalAdjustmentNotRequired": true,
+    "aware": "Access",
+    "aliases": ["アネメトロ", "フラジール", "メトロニダゾール", "MNZ"],
+    "adult": {
+      "iv": [{ "indication": null, "text": "500mg 8時間毎" }],
+      "po": [{ "indication": null, "text": "1回500mg 1日3回" }]
+    },
+    "pediatric": {
+      "iv": [{ "indication": null, "text": "小児に対する投与量の設定なし" }],
+      "po": [{ "indication": null, "text": "小児に対する投与量の設定なし", "note": "粉砕可（強い苦味あり、遮光保存）" }]
+    },
+    "renal": {
+      "gt50": "500mg 8時間毎",
+      "ccr10_50": "250mg 8時間毎",
+      "lt10": "250mg 8時間毎",
+      "hd": "250-500mg 8時間毎",
+      "chdf": "500mg 8時間毎"
+    },
+    "formulations": [
+      {
+        "brandName": "アネメトロ点滴静注液500mg",
+        "strength": "500mg 100mL/1V",
+        "price": 1091,
+        "ivPush": false,
+        "drip": "20分",
+        "im": false,
+        "notes": ["20分以上かけて点滴静注"],
+        "source": { "edition": 9, "pages": [67] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [11, 13, 17, 21, 22, 39, 42, 67] }
+  },
+  {
+    "id": "pentamidine",
+    "genericName": { "en": "Pentamidine", "ja": "ペンタミジン" },
+    "brandNames": ["ベナンバックス注用300mg"],
+    "abbr": null,
+    "class": "その他",
+    "category": "antibacterial",
+    "aliases": ["ベナンバックス", "ペンタミジン", "PCP"],
+    "adult": {
+      "iv": [{ "indication": null, "text": "4mg/kg 24時間毎に静注又は筋注", "perKg": { "amount": 4, "unit": "mg", "per": "perDose", "basis": "actual" } }],
+      "inhalation": [
+        { "indication": null, "text": "300-600mgを1日1回吸入" },
+        { "indication": "PCP予防", "text": "300mg吸入（月1回）", "offLabel": true }
+      ]
+    },
+    "pediatric": { "iv": [{ "indication": null, "text": "小児に対する投与量の設定なし" }] },
+    "renal": {
+      "gt50": "4mg/kg 24時間毎",
+      "ccr10_50": "4mg/kg 36時間毎",
+      "lt10": "4mg/kg 48時間毎",
+      "hd": "4mg/kg 48時間毎",
+      "chdf": "4mg/kg 24時間毎"
+    },
+    "formulations": [
+      {
+        "brandName": "ベナンバックス注用300mg",
+        "strength": "300mg/1V",
+        "price": 5788,
+        "ivPush": false,
+        "drip": "1-2時間",
+        "im": true,
+        "notes": [
+          "静脈内投与：注水3-5mLに溶解し5%ブドウ糖50-250mLに希釈し1-2時間かけて投与",
+          "筋肉内投与：注水3mLに溶解した後、2カ所以上の部位に分けて投与",
+          "吸入投与：300-600mgと注水3-5mLに溶解し、吸入装置を用いて30分かけて投与",
+          "ホスカルネット併用禁忌"
+        ],
+        "source": { "edition": 9, "pages": [68] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [11, 17, 21, 22, 39, 68] }
+  },
+  {
+    "id": "amoxicillin",
+    "genericName": { "en": "Amoxicillin", "ja": "アモキシシリン" },
+    "brandNames": ["アモキシシリンカプセル250mg", "ワイドシリン細粒20%"],
+    "abbr": "AMPC",
+    "class": "ペニシリン系（経口）",
+    "category": "antibacterial",
+    "aware": "Access",
+    "aliases": ["サワシリン", "パセトシン", "ワイドシリン", "アモキシシリン", "AMPC"],
+    "adult": {
+      "po": [
+        { "indication": "肺炎", "text": "1回500mg 1日4回" },
+        { "indication": "中耳炎", "text": "1回500mg 1日3回" },
+        { "indication": "尿路感染", "text": "1回500mg 1日3-4回" },
+        { "indication": "その他", "text": "1回500mg 1日3-4回（最大2000mg/day）" }
+      ]
+    },
+    "pediatric": {
+      "po": [{ "indication": null, "text": "1日20-40mg/kg 分3-4、適宜増減（90mg/kg/dayまで）", "perKg": { "amount": [20, 40], "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDay": 90 }, "note": "粉砕可" }]
+    },
+    "renalPo": {
+      "gt50": "常用量",
+      "ccr10_50": "500mg 12時間毎",
+      "lt10": "500mg 24時間毎",
+      "hd": "500mg 24時間毎（HD後）"
+    },
+    "source": { "edition": 9, "pages": [13, 19, 42] }
+  },
+  {
+    "id": "amoxicillin-clavulanate",
+    "genericName": { "en": "Amoxicillin/Clavulanate", "ja": "アモキシシリン・クラブラン酸" },
+    "brandNames": ["オーグメンチン配合錠250RS", "クラバモックス小児用配合ドライシロップ"],
+    "abbr": "AMPC/CVA",
+    "class": "ペニシリン系（経口・β-ラクタマーゼ阻害薬配合）",
+    "category": "antibacterial",
+    "aware": "Access",
+    "aliases": ["オーグメンチン", "クラバモックス", "オグサワ", "AMPC/CVA", "CVA/AMPC"],
+    "adult": {
+      "po": [
+        { "indication": null, "text": "1回1錠 1日3-4回、又は1回1錠 1日3回＋Amoxicillin 1回250mg 1日3回の併用（最大8錠/day）", "note": "Amoxicillin 250mg/Clavulanate 125mg" }
+      ]
+    },
+    "pediatric": {
+      "po": [
+        { "indication": "オーグメンチン配合錠250RS", "text": "小児に対する投与量の設定なし", "note": "粉砕不可（強い吸湿性あり）" },
+        { "indication": "クラバモックス小児用配合ドライシロップ", "text": "1日96.4mg/kg 分2", "perKg": { "amount": 96.4, "unit": "mg", "per": "perDay", "basis": "actual" } }
+      ]
+    },
+    "renalPo": {
+      "gt50": "常用量",
+      "ccr10_50": "2錠 12時間毎",
+      "lt10": "2錠 24時間毎",
+      "hd": "2錠 24時間毎（HD後）"
+    },
+    "source": { "edition": 9, "pages": [13, 19, 41] }
+  },
+  {
+    "id": "cephalexin",
+    "genericName": { "en": "Cefalexin", "ja": "セファレキシン" },
+    "brandNames": ["セファレキシン錠250mg", "ラリキシンドライシロップ小児用20%"],
+    "abbr": "CEX",
+    "class": "第1世代セフェム系（経口）",
+    "category": "antibacterial",
+    "aware": "Access",
+    "aliases": ["ケフレックス", "ラリキシン", "セファレキシン", "CEX"],
+    "adult": { "po": [{ "indication": null, "text": "1回500mg 1日4回（最大2000mg/day）" }] },
+    "pediatric": {
+      "po": [
+        { "indication": "20kg未満", "text": "1日25-100mg/kg 分4、適宜増減", "perKg": { "amount": [25, 100], "unit": "mg", "per": "perDay", "basis": "actual" }, "note": "粉砕可（苦味あり）" },
+        { "indication": "20kg以上", "text": "1日1000mg 分4、適宜増減" }
+      ]
+    },
+    "renalPo": {
+      "gt50": "常用量",
+      "ccr10_50": "250mg 8時間毎",
+      "lt10": "250mg 24時間毎",
+      "hd": "250mg 12時間毎"
+    },
+    "source": { "edition": 9, "pages": [13, 19, 41] }
+  },
+  {
+    "id": "cefuroxime-axetil",
+    "genericName": { "en": "Cefuroxime Axetil", "ja": "セフロキシム アキセチル" },
+    "brandNames": ["オラセフ錠250mg"],
+    "abbr": "CXM-AX",
+    "class": "第2世代セフェム系（経口）",
+    "category": "antibacterial",
+    "aware": "Watch",
+    "aliases": ["オラセフ", "セフロキシム", "CXM"],
+    "adult": { "po": [{ "indication": null, "text": "1回500mg 1日3回" }] },
+    "pediatric": { "po": [{ "indication": null, "text": "小児に対する投与量の設定なし", "note": "粉砕可（苦味あり、防湿・遮光保存）" }] },
+    "renalPo": {
+      "gt50": "常用量",
+      "ccr10_50": "CCr 30-50: 500mg 12時間毎／CCr 10-30: 500mg 24時間毎",
+      "lt10": "500mg 48時間毎",
+      "hd": "500mg 24時間毎（HD後）"
+    },
+    "source": { "edition": 9, "pages": [13, 19, 42] }
+  },
+  {
+    "id": "rifampicin",
+    "genericName": { "en": "Rifampicin", "ja": "リファンピシン" },
+    "brandNames": ["リファジンカプセル150mg"],
+    "abbr": "RFP",
+    "class": "リファマイシン系",
+    "category": "antituberculous",
+    "renalAdjustmentNotRequired": true,
+    "aware": "Watch",
+    "aliases": ["リファジン", "リファンピシン", "RFP", "抗結核薬"],
+    "adult": {
+      "po": [
+        { "indication": null, "text": "1回450mg 1日1回（最大600mg/day）" },
+        { "indication": "感染性心内膜炎", "text": "1回300mg 1日2回", "offLabel": true }
+      ]
+    },
+    "pediatric": { "po": [{ "indication": null, "text": "小児に対する投与量の設定なし", "note": "粉砕可" }] },
+    "renalPo": { "gt50": "600mg/day（正常時と同じ）", "ccr10_50": "正常時と同じ", "lt10": "正常時と同じ", "hd": "正常時と同じ" },
+    "source": { "edition": 9, "pages": [13, 20, 42] }
+  },
+  {
+    "id": "isoniazid",
+    "genericName": { "en": "Isoniazid", "ja": "イソニアジド" },
+    "brandNames": ["イスコチン錠100mg"],
+    "abbr": "INH",
+    "class": "抗結核薬",
+    "category": "antituberculous",
+    "renalAdjustmentNotRequired": true,
+    "aliases": ["イスコチン", "イソニアジド", "INH", "抗結核薬"],
+    "adult": { "po": [{ "indication": null, "text": "1回300mg 1日1回" }] },
+    "pediatric": {
+      "po": [{ "indication": null, "text": "1日4-10mg/kg 分1-3、適宜増減（13歳未満は20mg/kgまで増量可）", "perKg": { "amount": [4, 10], "unit": "mg", "per": "perDay", "basis": "actual" }, "note": "粉砕可" }]
+    },
+    "renalPo": { "gt50": "300mg/day（正常時と同じ）", "ccr10_50": "正常時と同じ", "lt10": "正常時と同じ", "hd": "正常時と同じ" },
+    "source": { "edition": 9, "pages": [13, 20, 41] }
+  },
+  {
+    "id": "ethambutol",
+    "genericName": { "en": "Ethambutol", "ja": "エタンブトール" },
+    "brandNames": ["エサンブトール錠125mg"],
+    "abbr": "EB",
+    "class": "抗結核薬",
+    "category": "antituberculous",
+    "aliases": ["エサンブトール", "エタンブトール", "EB", "抗結核薬"],
+    "adult": { "po": [{ "indication": null, "text": "1回750mg 1日1回" }] },
+    "pediatric": { "po": [{ "indication": null, "text": "小児に対する投与量の設定なし", "note": "粉砕可（苦味あり。吸湿性あり）" }] },
+    "renalPo": {
+      "gt50": "750mg/day",
+      "ccr10_50": "CCr <30: 隔日又は週3回750mg",
+      "lt10": "隔日又は週3回750mg",
+      "hd": "透析後750mg"
+    },
+    "source": { "edition": 9, "pages": [13, 20, 41] }
+  },
+  {
+    "id": "pyrazinamide",
+    "genericName": { "en": "Pyrazinamide", "ja": "ピラジナミド" },
+    "brandNames": ["ピラマイド原末"],
+    "abbr": "PZA",
+    "class": "抗結核薬",
+    "category": "antituberculous",
+    "aliases": ["ピラマイド", "ピラジナミド", "PZA", "抗結核薬"],
+    "adult": { "po": [{ "indication": null, "text": "1回1500mg 1日1回" }] },
+    "pediatric": { "po": [{ "indication": null, "text": "小児に対する投与量の設定なし" }] },
+    "renalPo": {
+      "gt50": "1500mg/day",
+      "ccr10_50": "CCr <30: 隔日又は週3回1500mg",
+      "lt10": "隔日又は週3回1500mg",
+      "hd": "透析後1500mg"
+    },
+    "source": { "edition": 9, "pages": [13, 20, 42] }
+  },
+  {
+    "id": "fidaxomicin",
+    "genericName": { "en": "Fidaxomicin", "ja": "フィダキソマイシン" },
+    "brandNames": ["ダフクリア錠200mg"],
+    "abbr": null,
+    "class": "マクロライド系（経口・難吸収性）",
+    "category": "antibacterial",
+    "renalAdjustmentNotRequired": true,
+    "aware": "Access",
+    "aliases": ["ダフクリア", "フィダキソマイシン", "CDI", "クロストリジオイデス"],
+    "adult": { "po": [{ "indication": "Clostridioides difficile 感染症", "text": "1回200mg 1日2回、10日間" }] },
+    "pediatric": { "po": [{ "indication": null, "text": "小児に対する投与量の設定なし", "note": "粉砕可" }] },
+    "source": { "edition": 9, "pages": [14, 42] }
+  },
+  {
+    "id": "kanamycin",
+    "genericName": { "en": "Kanamycin", "ja": "カナマイシン" },
+    "brandNames": ["カナマイシンカプセル250mg"],
+    "abbr": "KM",
+    "class": "アミノグリコシド系（経口）",
+    "category": "antibacterial",
+    "renalAdjustmentNotRequired": true,
+    "aware": "Access",
+    "aliases": ["カナマイシン", "KM"],
+    "adult": { "po": [{ "indication": null, "text": "1回500-1000mg 1日4回" }] },
+    "pediatric": {
+      "po": [{ "indication": null, "text": "1日50-100mg/kg 分4、適宜増減", "perKg": { "amount": [50, 100], "unit": "mg", "per": "perDay", "basis": "actual" }, "note": "粉砕可（吸湿性あり）" }]
+    },
+    "source": { "edition": 9, "pages": [14, 41] }
+  },
+  {
+    "id": "rifaximin",
+    "genericName": { "en": "Rifaximin", "ja": "リファキシミン" },
+    "brandNames": ["リフキシマ錠200mg"],
+    "abbr": null,
+    "class": "リファマイシン系（経口・難吸収性）",
+    "category": "antibacterial",
+    "renalAdjustmentNotRequired": true,
+    "aware": "Access",
+    "aliases": ["リフキシマ", "リファキシミン", "肝性脳症"],
+    "adult": { "po": [{ "indication": null, "text": "1回400mg 1日3回" }] },
+    "pediatric": { "po": [{ "indication": null, "text": "小児に対する投与量の設定なし", "note": "粉砕可（苦味、舌への着色、吸湿性あり）" }] },
+    "source": { "edition": 9, "pages": [14, 42] }
+  },
+  {
+    "id": "atovaquone",
+    "genericName": { "en": "Atovaquone", "ja": "アトバコン" },
+    "brandNames": ["サムチレール内用懸濁液15%"],
+    "abbr": null,
+    "class": "その他（経口）",
+    "category": "antibacterial",
+    "aware": "NotRecommended",
+    "aliases": ["サムチレール", "アトバコン", "PCP"],
+    "adult": {
+      "po": [
+        { "indication": "Pneumocystis jiroveci pneumonia（PCP）", "text": "1回750mg 1日2回" },
+        { "indication": "予防", "text": "1回1500mg 1日1回" }
+      ]
+    },
+    "pediatric": { "po": [{ "indication": null, "text": "小児に対する投与量の設定なし" }] },
+    "source": { "edition": 9, "pages": [14, 42] }
+  }
+]

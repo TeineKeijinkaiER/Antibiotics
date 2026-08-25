@@ -1,0 +1,363 @@
+[
+  {
+    "id": "e_coli",
+    "scientificName": "Escherichia coli",
+    "shortName": "E. coli",
+    "japaneseName": "大腸菌",
+    "aliases": ["E.coli", "Ecoli", "coli", "エシェリキア", "エシェリヒア", "エシェリキア・コリ", "だいちょうきん", "大腸菌"],
+    "gramStain": "gram_negative_rod",
+    "group": "腸内細菌目細菌"
+  },
+  {
+    "id": "e_coli_esbl",
+    "scientificName": "Escherichia coli (ESBL)",
+    "shortName": "E. coli (ESBL)",
+    "japaneseName": "大腸菌（ESBL産生株）",
+    "aliases": ["ESBL大腸菌", "ESBL", "基質特異性拡張型βラクタマーゼ", "エスビーエル"],
+    "gramStain": "gram_negative_rod",
+    "group": "腸内細菌目細菌"
+  },
+  {
+    "id": "e_coli_total",
+    "scientificName": "Escherichia coli (total)",
+    "shortName": "E. coli (total)",
+    "japaneseName": "大腸菌（全体）",
+    "aliases": ["大腸菌 全体", "E.coli total"],
+    "gramStain": "gram_negative_rod",
+    "group": "腸内細菌目細菌"
+  },
+  {
+    "id": "k_pneumoniae",
+    "scientificName": "Klebsiella pneumoniae",
+    "shortName": "K. pneumoniae",
+    "japaneseName": "肺炎桿菌",
+    "aliases": ["K.pneumoniae", "クレブシエラ", "クレブシエラ・ニューモニエ", "肺炎桿菌", "はいえんかんきん", "Klebsiella"],
+    "gramStain": "gram_negative_rod",
+    "group": "腸内細菌目細菌"
+  },
+  {
+    "id": "k_pneumoniae_esbl",
+    "scientificName": "Klebsiella pneumoniae (ESBL)",
+    "shortName": "K. pneumoniae (ESBL)",
+    "japaneseName": "肺炎桿菌（ESBL産生株）",
+    "aliases": ["ESBLクレブシエラ", "ESBL肺炎桿菌"],
+    "gramStain": "gram_negative_rod",
+    "group": "腸内細菌目細菌"
+  },
+  {
+    "id": "k_pneumoniae_total",
+    "scientificName": "Klebsiella pneumoniae (total)",
+    "shortName": "K. pneumoniae (total)",
+    "japaneseName": "肺炎桿菌（全体）",
+    "aliases": ["クレブシエラ 全体"],
+    "gramStain": "gram_negative_rod",
+    "group": "腸内細菌目細菌"
+  },
+  {
+    "id": "k_oxytoca",
+    "scientificName": "Klebsiella oxytoca",
+    "shortName": "K. oxytoca",
+    "japaneseName": "クレブシエラ・オキシトカ",
+    "aliases": ["K.oxytoca", "オキシトカ", "クレブシエラ"],
+    "gramStain": "gram_negative_rod",
+    "group": "腸内細菌目細菌"
+  },
+  {
+    "id": "k_oxytoca_esbl",
+    "scientificName": "Klebsiella oxytoca (ESBL or K1型BL)",
+    "shortName": "K. oxytoca (ESBL/K1)",
+    "japaneseName": "クレブシエラ・オキシトカ（ESBL又はK1型βラクタマーゼ産生株）",
+    "aliases": ["K1型", "K1型BL", "ESBLオキシトカ"],
+    "gramStain": "gram_negative_rod",
+    "group": "腸内細菌目細菌"
+  },
+  {
+    "id": "k_oxytoca_total",
+    "scientificName": "Klebsiella oxytoca (total)",
+    "shortName": "K. oxytoca (total)",
+    "japaneseName": "クレブシエラ・オキシトカ（全体）",
+    "aliases": ["オキシトカ 全体"],
+    "gramStain": "gram_negative_rod",
+    "group": "腸内細菌目細菌"
+  },
+  {
+    "id": "p_mirabilis",
+    "scientificName": "Proteus mirabilis",
+    "shortName": "P. mirabilis",
+    "japaneseName": "プロテウス・ミラビリス",
+    "aliases": ["P.mirabilis", "プロテウス", "ミラビリス", "Proteus"],
+    "gramStain": "gram_negative_rod",
+    "group": "腸内細菌目細菌"
+  },
+  {
+    "id": "p_mirabilis_esbl",
+    "scientificName": "Proteus mirabilis (ESBL)",
+    "shortName": "P. mirabilis (ESBL)",
+    "japaneseName": "プロテウス・ミラビリス（ESBL産生株）",
+    "aliases": ["ESBLプロテウス"],
+    "gramStain": "gram_negative_rod",
+    "group": "腸内細菌目細菌"
+  },
+  {
+    "id": "p_mirabilis_total",
+    "scientificName": "Proteus mirabilis (total)",
+    "shortName": "P. mirabilis (total)",
+    "japaneseName": "プロテウス・ミラビリス（全体）",
+    "aliases": ["プロテウス 全体"],
+    "gramStain": "gram_negative_rod",
+    "group": "腸内細菌目細菌"
+  },
+  {
+    "id": "p_vulgaris",
+    "scientificName": "Proteus vulgaris",
+    "shortName": "P. vulgaris",
+    "japaneseName": "プロテウス・ブルガリス",
+    "aliases": ["P.vulgaris", "ブルガリス", "プロテウス"],
+    "gramStain": "gram_negative_rod",
+    "group": "腸内細菌目細菌"
+  },
+  {
+    "id": "e_cloacae",
+    "scientificName": "Enterobacter cloacae",
+    "shortName": "E. cloacae",
+    "japaneseName": "エンテロバクター・クロアカ",
+    "aliases": ["E.cloacae", "エンテロバクター", "クロアカ", "Enterobacter", "AmpC"],
+    "gramStain": "gram_negative_rod",
+    "group": "腸内細菌目細菌"
+  },
+  {
+    "id": "k_aerogenes",
+    "scientificName": "Klebsiella aerogenes",
+    "shortName": "K. aerogenes",
+    "japaneseName": "クレブシエラ・アエロゲネス",
+    "aliases": ["K.aerogenes", "Enterobacter aerogenes", "アエロゲネス", "エロゲネス"],
+    "gramStain": "gram_negative_rod",
+    "group": "腸内細菌目細菌"
+  },
+  {
+    "id": "c_freundii",
+    "scientificName": "Citrobacter freundii",
+    "shortName": "C. freundii",
+    "japaneseName": "シトロバクター・フロインディ",
+    "aliases": ["C.freundii", "シトロバクター", "Citrobacter", "フロインディ"],
+    "gramStain": "gram_negative_rod",
+    "group": "腸内細菌目細菌"
+  },
+  {
+    "id": "s_marcescens",
+    "scientificName": "Serratia marcescens",
+    "shortName": "S. marcescens",
+    "japaneseName": "セラチア（霊菌）",
+    "aliases": ["S.marcescens", "セラチア", "Serratia", "霊菌", "マルセッセンス"],
+    "gramStain": "gram_negative_rod",
+    "group": "腸内細菌目細菌"
+  },
+  {
+    "id": "m_morganii",
+    "scientificName": "Morganella morganii",
+    "shortName": "M. morganii",
+    "japaneseName": "モルガネラ・モルガニー",
+    "aliases": ["M.morganii", "モルガネラ", "Morganella", "モルガニー"],
+    "gramStain": "gram_negative_rod",
+    "group": "腸内細菌目細菌"
+  },
+  {
+    "id": "p_aeruginosa",
+    "scientificName": "Pseudomonas aeruginosa",
+    "shortName": "P. aeruginosa",
+    "japaneseName": "緑膿菌",
+    "aliases": ["P.aeruginosa", "緑膿菌", "りょくのうきん", "シュードモナス", "プソイドモナス", "Pseudomonas", "アエルギノーサ"],
+    "gramStain": "gram_negative_rod",
+    "group": "ブドウ糖非発酵菌"
+  },
+  {
+    "id": "acinetobacter",
+    "scientificName": "Acinetobacter sp.",
+    "shortName": "Acinetobacter",
+    "japaneseName": "アシネトバクター属",
+    "aliases": ["アシネトバクター", "Acinetobacter", "アシネト", "baumannii"],
+    "gramStain": "gram_negative_rod",
+    "group": "ブドウ糖非発酵菌"
+  },
+  {
+    "id": "b_fragilis",
+    "scientificName": "Bacteroides fragilis",
+    "shortName": "B. fragilis",
+    "japaneseName": "バクテロイデス・フラジリス",
+    "aliases": ["B.fragilis", "バクテロイデス", "Bacteroides", "フラジリス", "嫌気性菌"],
+    "gramStain": "anaerobe",
+    "group": "嫌気性グラム陰性桿菌"
+  },
+  {
+    "id": "anaerobic_gnr_other",
+    "scientificName": "Anaerobic GNR (other than B. fragilis)",
+    "shortName": "嫌気性GNR",
+    "japaneseName": "嫌気性グラム陰性桿菌（B. fragilis以外）",
+    "aliases": ["嫌気性菌", "嫌気性GNR", "anaerobe"],
+    "gramStain": "anaerobe",
+    "group": "嫌気性グラム陰性桿菌"
+  },
+  {
+    "id": "h_influenzae",
+    "scientificName": "Haemophilus influenzae",
+    "shortName": "H. influenzae",
+    "japaneseName": "インフルエンザ菌",
+    "aliases": ["H.influenzae", "インフルエンザ菌", "ヘモフィルス", "Haemophilus", "Hib", "BLNAR"],
+    "gramStain": "gram_negative_rod",
+    "group": "その他グラム陰性桿菌"
+  },
+
+  {
+    "id": "mssa",
+    "scientificName": "Staphylococcus aureus (methicillin-susceptible)",
+    "shortName": "MSSA",
+    "japaneseName": "メチシリン感性黄色ブドウ球菌",
+    "aliases": ["MSSA", "エムエスエスエー", "黄色ブドウ球菌", "ブドウ球菌", "Staphylococcus aureus", "S.aureus", "アウレウス"],
+    "gramStain": "gram_positive_coccus",
+    "group": "ブドウ球菌"
+  },
+  {
+    "id": "mrsa",
+    "scientificName": "Staphylococcus aureus (methicillin-resistant)",
+    "shortName": "MRSA",
+    "japaneseName": "メチシリン耐性黄色ブドウ球菌",
+    "aliases": ["MRSA", "エムアールエスエー", "耐性ブドウ球菌", "黄色ブドウ球菌", "Staphylococcus aureus", "S.aureus"],
+    "gramStain": "gram_positive_coccus",
+    "group": "ブドウ球菌"
+  },
+  {
+    "id": "s_aureus_total",
+    "scientificName": "Staphylococcus aureus (total)",
+    "shortName": "S. aureus (total)",
+    "japaneseName": "黄色ブドウ球菌（全体）",
+    "aliases": ["黄色ブドウ球菌", "S.aureus", "ブドウ球菌", "Staphylococcus aureus"],
+    "gramStain": "gram_positive_coccus",
+    "group": "ブドウ球菌"
+  },
+  {
+    "id": "msse",
+    "scientificName": "Staphylococcus epidermidis (methicillin-susceptible)",
+    "shortName": "MSSE",
+    "japaneseName": "メチシリン感性表皮ブドウ球菌",
+    "aliases": ["MSSE", "表皮ブドウ球菌", "エピデルミディス", "S.epidermidis", "CNS", "コアグラーゼ陰性ブドウ球菌"],
+    "gramStain": "gram_positive_coccus",
+    "group": "ブドウ球菌"
+  },
+  {
+    "id": "mrse",
+    "scientificName": "Staphylococcus epidermidis (methicillin-resistant)",
+    "shortName": "MRSE",
+    "japaneseName": "メチシリン耐性表皮ブドウ球菌",
+    "aliases": ["MRSE", "表皮ブドウ球菌", "S.epidermidis", "CNS"],
+    "gramStain": "gram_positive_coccus",
+    "group": "ブドウ球菌"
+  },
+  {
+    "id": "s_epidermidis_total",
+    "scientificName": "Staphylococcus epidermidis (total)",
+    "shortName": "S. epidermidis (total)",
+    "japaneseName": "表皮ブドウ球菌（全体）",
+    "aliases": ["表皮ブドウ球菌", "S.epidermidis", "CNS"],
+    "gramStain": "gram_positive_coccus",
+    "group": "ブドウ球菌"
+  },
+  {
+    "id": "s_lugdunensis",
+    "scientificName": "Staphylococcus lugdunensis",
+    "shortName": "S. lugdunensis",
+    "japaneseName": "スタフィロコッカス・ルグドゥネンシス",
+    "aliases": ["S.lugdunensis", "ルグドネンシス", "ルグドゥネンシス", "CNS"],
+    "gramStain": "gram_positive_coccus",
+    "group": "ブドウ球菌"
+  },
+  {
+    "id": "cns_other",
+    "scientificName": "Coagulase-negative staphylococci (other)",
+    "shortName": "その他CNS",
+    "japaneseName": "その他のコアグラーゼ陰性ブドウ球菌",
+    "aliases": ["CNS", "コアグラーゼ陰性ブドウ球菌", "表皮ブドウ球菌以外"],
+    "gramStain": "gram_positive_coccus",
+    "group": "ブドウ球菌"
+  },
+  {
+    "id": "e_faecalis",
+    "scientificName": "Enterococcus faecalis",
+    "shortName": "E. faecalis",
+    "japaneseName": "腸球菌（フェカリス）",
+    "aliases": ["E.faecalis", "腸球菌", "ちょうきゅうきん", "エンテロコッカス", "Enterococcus", "フェカリス"],
+    "gramStain": "gram_positive_coccus",
+    "group": "腸球菌"
+  },
+  {
+    "id": "e_faecium",
+    "scientificName": "Enterococcus faecium",
+    "shortName": "E. faecium",
+    "japaneseName": "腸球菌（フェシウム）",
+    "aliases": ["E.faecium", "腸球菌", "エンテロコッカス", "Enterococcus", "フェシウム", "VRE"],
+    "gramStain": "gram_positive_coccus",
+    "group": "腸球菌"
+  },
+  {
+    "id": "vgs",
+    "scientificName": "α-Streptococcus (Viridans group streptococci)",
+    "shortName": "VGS",
+    "japaneseName": "緑色レンサ球菌（α溶血性レンサ球菌）",
+    "aliases": ["VGS", "α-Streptococcus", "αストレプトコッカス", "緑色連鎖球菌", "ビリダンス", "viridans", "レンサ球菌"],
+    "gramStain": "gram_positive_coccus",
+    "group": "レンサ球菌"
+  },
+  {
+    "id": "sag",
+    "scientificName": "Streptococcus anginosus group",
+    "shortName": "SAG",
+    "japaneseName": "ストレプトコッカス・アンギノサスグループ",
+    "aliases": ["SAG", "アンギノサス", "anginosus", "ミレリ", "milleri", "レンサ球菌"],
+    "gramStain": "gram_positive_coccus",
+    "group": "レンサ球菌"
+  },
+  {
+    "id": "gas",
+    "scientificName": "Streptococcus pyogenes",
+    "shortName": "GAS",
+    "japaneseName": "A群溶血性レンサ球菌（化膿レンサ球菌）",
+    "aliases": ["GAS", "A群", "A群溶連菌", "溶連菌", "pyogenes", "ピオゲネス", "化膿レンサ球菌", "レンサ球菌"],
+    "gramStain": "gram_positive_coccus",
+    "group": "レンサ球菌"
+  },
+  {
+    "id": "gbs",
+    "scientificName": "Streptococcus agalactiae",
+    "shortName": "GBS",
+    "japaneseName": "B群溶血性レンサ球菌",
+    "aliases": ["GBS", "B群", "B群溶連菌", "agalactiae", "アガラクチア", "レンサ球菌"],
+    "gramStain": "gram_positive_coccus",
+    "group": "レンサ球菌"
+  },
+  {
+    "id": "ggs",
+    "scientificName": "Streptococcus dysgalactiae",
+    "shortName": "GGS",
+    "japaneseName": "G群溶血性レンサ球菌",
+    "aliases": ["GGS", "G群", "dysgalactiae", "ディスガラクチエ", "レンサ球菌"],
+    "gramStain": "gram_positive_coccus",
+    "group": "レンサ球菌"
+  },
+  {
+    "id": "s_pneumoniae_meningitis",
+    "scientificName": "Streptococcus pneumoniae (meningitis breakpoint)",
+    "shortName": "S. pneumoniae（髄膜炎）",
+    "japaneseName": "肺炎球菌（髄膜炎ブレイクポイント）",
+    "aliases": ["肺炎球菌", "はいえんきゅうきん", "pneumoniae", "ニューモコッカス", "髄膜炎", "PRSP"],
+    "gramStain": "gram_positive_coccus",
+    "group": "レンサ球菌"
+  },
+  {
+    "id": "s_pneumoniae_nonmeningitis",
+    "scientificName": "Streptococcus pneumoniae (non-meningitis breakpoint)",
+    "shortName": "S. pneumoniae（非髄膜炎）",
+    "japaneseName": "肺炎球菌（非髄膜炎ブレイクポイント）",
+    "aliases": ["肺炎球菌", "はいえんきゅうきん", "pneumoniae", "ニューモコッカス", "非髄膜炎", "PRSP"],
+    "gramStain": "gram_positive_coccus",
+    "group": "レンサ球菌"
+  }
+]

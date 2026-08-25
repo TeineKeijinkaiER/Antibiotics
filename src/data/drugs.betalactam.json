@@ -1,0 +1,766 @@
+[
+  {
+    "id": "benzylpenicillin",
+    "genericName": { "en": "Benzylpenicillin", "ja": "ベンジルペニシリン" },
+    "brandNames": ["注射用ペニシリンGカリウム100万単位"],
+    "abbr": "PCG",
+    "class": "ペニシリン系",
+    "category": "antibacterial",
+    "aliases": ["ペニシリンG", "ペニシリンGカリウム", "PCG", "penicillin G"],
+    "adult": {
+      "iv": [
+        { "indication": "髄膜炎", "text": "400万単位 4時間毎" },
+        { "indication": "心内膜炎", "text": "300-400万単位 4時間毎" },
+        { "indication": "肺炎球菌肺炎", "text": "200万単位 4時間毎" }
+      ]
+    },
+    "pediatric": { "iv": [{ "indication": null, "text": "小児に対する投与量の設定なし" }] },
+    "renal": {
+      "gt50": "200-400万単位 4時間毎",
+      "ccr10_50": "200万単位 4時間毎",
+      "lt10": "100万単位 4時間毎",
+      "hd": "100-200万単位 4時間毎",
+      "chdf": "100万単位 4時間毎"
+    },
+    "renalNote": "高カリウム血症や腎不全患者での投与には注意すること（1V中K 1.68mEq含有）",
+    "formulations": [
+      {
+        "brandName": "注射用ペニシリンＧカリウム100万単位",
+        "strength": "100万単位/1V",
+        "price": 485,
+        "ivPush": false,
+        "drip": "1時間",
+        "im": true,
+        "notes": ["1V当たり50mL以上の母液が必要", "1V中K 1.68mEq含有"],
+        "source": { "edition": 9, "pages": [66] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [10, 16, 21, 22, 38, 66] }
+  },
+  {
+    "id": "benzathine-benzylpenicillin",
+    "genericName": { "en": "Benzathine benzylpenicillin", "ja": "ベンジルペニシリンベンザチン" },
+    "brandNames": ["ステルイズ水性懸濁筋注240万単位シリンジ"],
+    "abbr": "DBECPCG",
+    "class": "ペニシリン系",
+    "category": "antibacterial",
+    "aliases": ["ステルイズ", "梅毒", "持続性ペニシリン"],
+    "adult": {
+      "im": [
+        { "indication": "早期梅毒", "text": "240万単位、単回筋注", "note": "神経梅毒を除く" },
+        { "indication": "後期梅毒", "text": "240万単位、週1回計3回筋注", "note": "神経梅毒を除く" }
+      ]
+    },
+    "pediatric": {
+      "im": [
+        { "indication": "2歳以上・早期梅毒", "text": "240万単位、単回筋注" },
+        { "indication": "2歳以上・後期梅毒", "text": "240万単位、週1回計3回筋注" },
+        { "indication": "2歳未満・早期先天梅毒／早期梅毒", "text": "5万単位/kg、単回筋注", "perKg": { "amount": 50000, "unit": "µg", "per": "perDose", "basis": "actual" } }
+      ]
+    },
+    "formulations": [
+      {
+        "brandName": "ステルイズ水性懸濁筋注240万単位シリンジ",
+        "strength": "240万単位/1筒",
+        "price": 10025,
+        "ivPush": false,
+        "drip": false,
+        "im": true,
+        "notes": ["筋肉内注射投与", "静注により心肺停止及び死亡の報告あり"],
+        "source": { "edition": 9, "pages": [66] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [10, 38, 66] }
+  },
+  {
+    "id": "ampicillin",
+    "genericName": { "en": "Ampicillin", "ja": "アンピシリン" },
+    "brandNames": ["ビクシリン注射用0.5g", "ビクシリン注射用2g"],
+    "abbr": "ABPC",
+    "class": "ペニシリン系",
+    "category": "antibacterial",
+    "aliases": ["ビクシリン", "ABPC", "アンピシリン"],
+    "adult": {
+      "iv": [
+        { "indication": null, "text": "2g 6時間毎" },
+        {
+          "indication": "重症腸球菌感染（心内膜炎等）／S. pneumoniae・Streptococcus・Listeria等による中枢神経感染",
+          "text": "2g 4時間毎"
+        }
+      ]
+    },
+    "pediatric": {
+      "iv": [
+        { "indication": null, "text": "100-200mg/kg/day 分3-4（400mg/kg/dayまで）", "perKg": { "amount": [100, 200], "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDay": 400 } },
+        { "indication": "新生児", "text": "50-200mg/kg/day 分2", "perKg": { "amount": [50, 200], "unit": "mg", "per": "perDay", "basis": "actual" } }
+      ]
+    },
+    "renal": {
+      "gt50": "2g 6時間毎",
+      "ccr10_50": "2g 8時間毎",
+      "lt10": "2g 12時間毎",
+      "hd": "2g 24時間毎、透析日は透析後に投与",
+      "chdf": "2g 8時間毎"
+    },
+    "formulations": [
+      {
+        "brandName": "ビクシリン注射用0.5g",
+        "strength": "0.5g/1V",
+        "price": 335,
+        "ivPush": true,
+        "drip": "1-2時間",
+        "im": true,
+        "notes": ["溶解後24時間の残存率 — 生食：95%、5%ブドウ糖：75%"],
+        "source": { "edition": 9, "pages": [66] }
+      },
+      {
+        "brandName": "ビクシリン注射用2g",
+        "strength": "2g/1V",
+        "price": 818,
+        "ivPush": true,
+        "drip": "1-2時間",
+        "im": true,
+        "source": { "edition": 9, "pages": [66] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [10, 16, 21, 22, 38, 66] }
+  },
+  {
+    "id": "ampicillin-sulbactam",
+    "genericName": { "en": "Ampicillin/Sulbactam", "ja": "アンピシリン・スルバクタム" },
+    "brandNames": ["ピシリバクタ静注用3g"],
+    "abbr": "SBT/ABPC",
+    "class": "合成ペニシリン系（β-ラクタマーゼ阻害薬配合）",
+    "category": "antibacterial",
+    "aliases": ["ピシリバクタ", "スルバシリン", "ユナシン", "SBT/ABPC", "ABPC/SBT"],
+    "adult": { "iv": [{ "indication": null, "text": "3g 6時間毎" }] },
+    "pediatric": {
+      "iv": [
+        { "indication": null, "text": "100-300mg/kg/day 分3-4", "offLabel": true, "perKg": { "amount": [100, 300], "unit": "mg", "per": "perDay", "basis": "actual" } }
+      ]
+    },
+    "renal": {
+      "gt50": "3g 6時間毎",
+      "ccr10_50": "3g 12時間毎",
+      "lt10": "3g 24時間毎",
+      "hd": "1.5-3g 24時間毎、透析日は透析後に投与",
+      "chdf": "3g 8時間毎"
+    },
+    "formulations": [
+      {
+        "brandName": "ピシリバクタ静注用3g",
+        "strength": "3g/1V",
+        "price": 778,
+        "ivPush": true,
+        "drip": "0.5-2時間",
+        "im": false,
+        "notes": ["1V中Na 5.02mEq含有", "アミノグリコシドと併用する場合は別ルート"],
+        "source": { "edition": 9, "pages": [66] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [10, 16, 21, 22, 38, 66] }
+  },
+  {
+    "id": "piperacillin",
+    "genericName": { "en": "Piperacillin", "ja": "ピペラシリン" },
+    "brandNames": ["ピペラシリンナトリウム注射用2g"],
+    "abbr": "PIPC",
+    "class": "広域ペニシリン系",
+    "category": "antibacterial",
+    "aliases": ["ピペラシリン", "ペントシリン", "PIPC"],
+    "adult": {
+      "iv": [
+        { "indication": null, "text": "2g 6時間毎" },
+        { "indication": "重症感染症", "text": "4g 6時間毎" }
+      ]
+    },
+    "pediatric": {
+      "iv": [
+        { "indication": null, "text": "50-125mg/kg/day 分2-4", "perKg": { "amount": [50, 125], "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "難治性又は重症感染症", "text": "300mg/kg/day 分3（1回4gまで）", "perKg": { "amount": 300, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDose": 4000 } }
+      ]
+    },
+    "renal": {
+      "gt50": "2g 6時間毎",
+      "ccr10_50": "2g 6-8時間毎",
+      "lt10": "2g 8時間毎",
+      "hd": "2g 8時間毎、透析後に1g追加投与",
+      "chdf": "2g 6-8時間毎"
+    },
+    "formulations": [
+      {
+        "brandName": "ピペラシリンナトリウム注射用2g",
+        "strength": "2g/1V",
+        "price": 579,
+        "ivPush": true,
+        "drip": "1-2時間",
+        "im": true,
+        "notes": ["アミノグリコシドと併用する場合は別ルート"],
+        "source": { "edition": 9, "pages": [65] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [10, 16, 21, 22, 38, 65] }
+  },
+  {
+    "id": "piperacillin-tazobactam",
+    "genericName": { "en": "Piperacillin/Tazobactam", "ja": "ピペラシリン・タゾバクタム" },
+    "brandNames": ["タゾピペ配合静注用2.25", "タゾピペ配合静注用4.5"],
+    "abbr": "TAZ/PIPC",
+    "class": "合成ペニシリン系（β-ラクタマーゼ阻害薬配合）",
+    "category": "antibacterial",
+    "requiresApplication": true,
+    "aliases": ["タゾピペ", "ゾシン", "TAZ/PIPC", "PIPC/TAZ"],
+    "adult": {
+      "iv": [
+        { "indication": "緑膿菌", "text": "4.5g 6時間毎" },
+        { "indication": "緑膿菌以外", "text": "3.375g 6時間毎" }
+      ]
+    },
+    "pediatric": {
+      "iv": [
+        { "indication": null, "text": "337.5mg/kg/day 分3、適宜減量（1回4.5gまで）", "perKg": { "amount": 337.5, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDose": 4500 } },
+        { "indication": "腎盂腎炎及び複雑性尿路感染症", "text": "225mg/kg/day 分2、適宜減量（1回4.5gまで）", "perKg": { "amount": 225, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDose": 4500 } }
+      ]
+    },
+    "renal": {
+      "gt50": "4.5g 6時間毎",
+      "ccr10_50": "2.25g 6時間毎（CCr <20mL/min では8時間毎）",
+      "lt10": "2.25g 8時間毎",
+      "hd": "2.25g 8時間毎、透析後に0.75g追加投与",
+      "chdf": "2.25-3.375g 6時間毎"
+    },
+    "formulations": [
+      {
+        "brandName": "タゾピペ配合静注用2.25",
+        "strength": "2.25g/1V",
+        "price": 858,
+        "ivPush": true,
+        "drip": "1時間",
+        "im": false,
+        "notes": [
+          "点滴静注は3時間までデータあり",
+          "点滴静注の際は注水を用いないこと（溶液が等張にならない）",
+          "アミノグリコシドと併用する場合は別ルート",
+          "4.5g 1V中Na 9.39mEq含有",
+          "3.375gの調製の場合、生食20mLで溶解し17.5mLを母液に混注"
+        ],
+        "source": { "edition": 9, "pages": [66] }
+      },
+      {
+        "brandName": "タゾピペ配合静注用4.5",
+        "strength": "4.5g/1V",
+        "price": 1160,
+        "ivPush": true,
+        "drip": "1時間",
+        "im": false,
+        "source": { "edition": 9, "pages": [66] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [10, 16, 21, 22, 38, 66] }
+  },
+  {
+    "id": "cefazolin",
+    "genericName": { "en": "Cefazolin", "ja": "セファゾリン" },
+    "brandNames": ["セファゾリンナトリウム注射用1g"],
+    "abbr": "CEZ",
+    "class": "第1世代セフェム系",
+    "category": "antibacterial",
+    "aliases": ["セファゾリン", "セファメジン", "CEZ"],
+    "adult": {
+      "iv": [
+        { "indication": null, "text": "1g 6-8時間毎" },
+        { "indication": "MSSAによる感染性心内膜炎・重症菌血症", "text": "2g 8時間毎", "offLabel": true, "note": "治療を考慮" }
+      ]
+    },
+    "pediatric": {
+      "iv": [
+        { "indication": null, "text": "50-150mg/kg/day 分3", "offLabel": true, "perKg": { "amount": [50, 150], "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "生後8日未満", "text": "50mg/kg/day 分2", "offLabel": true, "perKg": { "amount": 50, "unit": "mg", "per": "perDay", "basis": "actual" } }
+      ]
+    },
+    "renal": {
+      "gt50": "1g 6-8時間毎",
+      "ccr10_50": "1g 12時間毎",
+      "lt10": "1g 24時間毎",
+      "hd": "1-2g 24時間毎、透析後に0.5-1g追加投与",
+      "chdf": "2g 12時間毎"
+    },
+    "formulations": [
+      {
+        "brandName": "セファゾリンナトリウム注射用1g",
+        "strength": "1g/1V",
+        "price": 346,
+        "ivPush": true,
+        "drip": "0.5-1時間",
+        "im": true,
+        "notes": ["GMと配合変化"],
+        "incompatibleWith": ["GM"],
+        "source": { "edition": 9, "pages": [67] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [10, 16, 21, 22, 38, 67] }
+  },
+  {
+    "id": "cefmetazole",
+    "genericName": { "en": "Cefmetazole", "ja": "セフメタゾール" },
+    "brandNames": ["セフメタゾールNa静注用1g"],
+    "abbr": "CMZ",
+    "class": "第2世代セフェム系（セファマイシン系）",
+    "category": "antibacterial",
+    "aliases": ["セフメタゾール", "セフメタゾン", "CMZ"],
+    "adult": { "iv": [{ "indication": null, "text": "1g 6-8時間毎" }] },
+    "pediatric": {
+      "iv": [
+        { "indication": null, "text": "25-100mg/kg/day 分2-4", "perKg": { "amount": [25, 100], "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "難治性又は重症感染症", "text": "150mg/kg/day 分2-4", "perKg": { "amount": 150, "unit": "mg", "per": "perDay", "basis": "actual" } }
+      ]
+    },
+    "renal": {
+      "gt50": "1g 6-8時間毎",
+      "ccr10_50": "1g 12時間毎",
+      "lt10": "1g 24時間毎",
+      "hd": "0.5-1g 24時間毎、透析日は透析後に投与",
+      "chdf": "2g 12時間毎"
+    },
+    "formulations": [
+      {
+        "brandName": "セフメタゾールＮａ静注用1g",
+        "strength": "1g/1V",
+        "price": 525,
+        "ivPush": true,
+        "drip": "1時間",
+        "im": false,
+        "notes": ["点滴静注の際は注水を用いないこと（溶液が等張にならない）"],
+        "source": { "edition": 9, "pages": [67] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [10, 16, 21, 22, 38, 67] }
+  },
+  {
+    "id": "ceftriaxone",
+    "genericName": { "en": "Ceftriaxone", "ja": "セフトリアキソン" },
+    "brandNames": ["セフトリアキソン静注用1g"],
+    "abbr": "CTRX",
+    "class": "第3世代セフェム系",
+    "category": "antibacterial",
+    "renalAdjustmentNotRequired": true,
+    "aliases": ["セフトリアキソン", "ロセフィン", "CTRX"],
+    "adult": {
+      "iv": [
+        { "indication": null, "text": "2g 24時間毎" },
+        { "indication": "髄膜炎", "text": "2g 12時間毎" }
+      ]
+    },
+    "pediatric": {
+      "iv": [
+        { "indication": null, "text": "20-60mg/kg/day 分1-2", "perKg": { "amount": [20, 60], "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "難治性又は重症感染症", "text": "120mg/kg 分2", "perKg": { "amount": 120, "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "未熟児・新生児（生後0-3日齢）", "text": "20mg/kg/day 分1", "perKg": { "amount": 20, "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "新生児（生後4日齢以降）", "text": "40mg/kg/day 分2。難治性又は重症感染症には症状に応じ80mg/kg/day 分2まで増量可（但し、生後2週間以内の未熟児・新生児には50mg/kg/dayまで）", "perKg": { "amount": 40, "unit": "mg", "per": "perDay", "basis": "actual" } }
+      ]
+    },
+    "renal": {
+      "gt50": "1g 12-24時間毎（髄膜炎では2g 12時間毎）",
+      "ccr10_50": "投与量・間隔の調整不要",
+      "lt10": "投与量・間隔の調整不要",
+      "hd": "1g 24時間毎、透析日は透析後に投与",
+      "chdf": "2g 12-24時間毎"
+    },
+    "renalNote": "高ビリルビン血症の未熟児・新生児には禁忌。新生児への投与を検討する場合は小児科へコンサルト",
+    "formulations": [
+      {
+        "brandName": "セフトリアキソン静注用1g",
+        "strength": "1g/1V",
+        "price": 422,
+        "ivPush": true,
+        "drip": "30分以上",
+        "im": false,
+        "notes": [
+          "主に肝・胆汁排泄",
+          "半減期が長い",
+          "点滴静注の際は注水を用いないこと（溶液が等張にならない）",
+          "高ビリルビン血症の未熟児、新生児には投与しない",
+          "1V中Na 3.61mEq含有"
+        ],
+        "incompatibleWith": ["GM", "MINO"],
+        "source": { "edition": 9, "pages": [67] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [10, 16, 21, 22, 38, 67] }
+  },
+  {
+    "id": "ceftazidime",
+    "genericName": { "en": "Ceftazidime", "ja": "セフタジジム" },
+    "brandNames": ["セフタジジム静注用1g"],
+    "abbr": "CAZ",
+    "class": "第3世代セフェム系",
+    "category": "antibacterial",
+    "aliases": ["セフタジジム", "モダシン", "CAZ"],
+    "adult": {
+      "iv": [
+        { "indication": null, "text": "1g 6-8時間毎" },
+        { "indication": "発熱性好中球減少症", "text": "2g 8時間毎", "offLabel": true }
+      ]
+    },
+    "pediatric": {
+      "iv": [
+        { "indication": null, "text": "40-100mg/kg/day 分2-4", "perKg": { "amount": [40, 100], "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "難治性又は重症感染症", "text": "150mg/kg/day 分2-4", "perKg": { "amount": 150, "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "未熟児・新生児（生後0-3日齢）", "text": "40-60mg/kg/day 分2-3", "perKg": { "amount": [40, 60], "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "新生児（生後4日齢以降）", "text": "60-80mg/kg/day 分3-4", "perKg": { "amount": [60, 80], "unit": "mg", "per": "perDay", "basis": "actual" } }
+      ]
+    },
+    "renal": {
+      "gt50": "1g 6-8時間毎",
+      "ccr10_50": "1g 12時間毎",
+      "lt10": "1g 24時間毎",
+      "hd": "2g 24-48時間毎、透析後に1g追加投与",
+      "chdf": "2g 12時間毎"
+    },
+    "formulations": [
+      {
+        "brandName": "セフタジジム静注用1g",
+        "strength": "1g/1V",
+        "price": 686,
+        "ivPush": true,
+        "drip": "0.5-2時間",
+        "im": false,
+        "notes": ["VCMと配合変化"],
+        "incompatibleWith": ["VCM"],
+        "source": { "edition": 9, "pages": [67] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [10, 16, 21, 22, 38, 67] }
+  },
+  {
+    "id": "cefotaxime",
+    "genericName": { "en": "Cefotaxime", "ja": "セフォタキシム" },
+    "brandNames": ["セフォタックス注射用0.5g", "セフォタックス注射用1g"],
+    "abbr": "CTX",
+    "class": "第3世代セフェム系",
+    "category": "antibacterial",
+    "aliases": ["セフォタックス", "セフォタキシム", "CTX"],
+    "adult": {
+      "iv": [
+        { "indication": null, "text": "1g 6時間毎" },
+        { "indication": "髄膜炎", "text": "2g 4-6時間毎", "offLabel": true }
+      ]
+    },
+    "pediatric": {
+      "iv": [
+        { "indication": null, "text": "50-100mg/kg/day 分3-4", "perKg": { "amount": [50, 100], "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "難治性又は重症感染症", "text": "150mg/kg/day 分3-4", "perKg": { "amount": 150, "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "化膿性髄膜炎", "text": "300mg/kg/day 分3-4", "perKg": { "amount": 300, "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "生後8日未満", "text": "100mg/kg/day 分2", "offLabel": true, "perKg": { "amount": 100, "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "生後8-28日", "text": "150-200mg/kg/day 分3-4", "offLabel": true, "perKg": { "amount": [150, 200], "unit": "mg", "per": "perDay", "basis": "actual" } }
+      ]
+    },
+    "renal": {
+      "gt50": "1g 6時間毎",
+      "ccr10_50": "1g 12時間毎",
+      "lt10": "1g 24時間毎",
+      "hd": "2g 24時間毎、透析後に1g追加投与",
+      "chdf": "2g 12時間毎"
+    },
+    "formulations": [
+      {
+        "brandName": "セフォタックス注射用0.5g",
+        "strength": "0.5g/1V",
+        "price": 560,
+        "ivPush": true,
+        "drip": "1時間",
+        "im": true,
+        "source": { "edition": 9, "pages": [67] }
+      },
+      {
+        "brandName": "セフォタックス注射用1g",
+        "strength": "1g/1V",
+        "price": 799,
+        "ivPush": true,
+        "drip": "1時間",
+        "im": true,
+        "source": { "edition": 9, "pages": [67] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [10, 16, 21, 22, 38, 67] }
+  },
+  {
+    "id": "cefepime",
+    "genericName": { "en": "Cefepime", "ja": "セフェピム" },
+    "brandNames": ["セフェピム塩酸塩静注用1g"],
+    "abbr": "CFPM",
+    "class": "第4世代セフェム系",
+    "category": "antibacterial",
+    "aliases": ["セフェピム", "マキシピーム", "CFPM"],
+    "adult": {
+      "iv": [
+        { "indication": null, "text": "1g 8時間毎" },
+        { "indication": "発熱性好中球減少症・緑膿菌感染", "text": "2g 12時間毎" }
+      ]
+    },
+    "pediatric": {
+      "iv": [
+        { "indication": null, "text": "小児に対する投与量の設定なし" },
+        { "indication": "肺炎", "text": "100-150mg/kg/day 分2-3", "offLabel": true, "perKg": { "amount": [100, 150], "unit": "mg", "per": "perDay", "basis": "actual" } }
+      ]
+    },
+    "renal": {
+      "gt50": "1g 8時間毎（発熱性好中球減少症及び緑膿菌感染では2g 12時間毎）",
+      "ccr10_50": "1g 12時間毎",
+      "lt10": "1g 24時間毎",
+      "hd": "1g 24時間毎、透析後に1g追加投与",
+      "chdf": "2g 12時間毎"
+    },
+    "formulations": [
+      {
+        "brandName": "セフェピム塩酸塩静注用1g",
+        "strength": "1g/1V",
+        "price": 522,
+        "ivPush": true,
+        "drip": "0.5-1時間",
+        "im": false,
+        "notes": ["MINOと配合変化"],
+        "incompatibleWith": ["MINO"],
+        "source": { "edition": 9, "pages": [67] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [10, 16, 21, 22, 38, 67] }
+  },
+  {
+    "id": "aztreonam",
+    "genericName": { "en": "Aztreonam", "ja": "アズトレオナム" },
+    "brandNames": ["アザクタム注射用1g"],
+    "abbr": "AZT",
+    "class": "モノバクタム系",
+    "category": "antibacterial",
+    "aliases": ["アザクタム", "アズトレオナム", "AZT"],
+    "adult": { "iv": [{ "indication": null, "text": "1g 6-8時間毎" }] },
+    "pediatric": {
+      "iv": [
+        { "indication": null, "text": "40-80mg/kg/day 分2-4、適宜増減", "perKg": { "amount": [40, 80], "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "難治性又は重症感染症", "text": "150mg/kg/day 分3-4", "perKg": { "amount": 150, "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "生後3日までの未熟児・新生児", "text": "40mg/kg/day 分2", "perKg": { "amount": 40, "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "生後4日以降の未熟児・新生児", "text": "40-60mg/kg/day 分2-3", "perKg": { "amount": [40, 60], "unit": "mg", "per": "perDay", "basis": "actual" } }
+      ]
+    },
+    "renal": {
+      "gt50": "1g 6-8時間毎",
+      "ccr10_50": "1g 12時間毎",
+      "lt10": "1g 24時間毎",
+      "hd": "0.5g 8時間毎、透析後に0.5g追加投与",
+      "chdf": "1g 8時間毎"
+    },
+    "formulations": [
+      {
+        "brandName": "アザクタム注射用1g",
+        "strength": "1g/1V",
+        "price": 981,
+        "ivPush": true,
+        "drip": "1時間",
+        "im": true,
+        "notes": ["βラクタム系抗菌薬と交差アレルギーが少ない", "アミノ酸製剤と配合変化"],
+        "source": { "edition": 9, "pages": [66] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [10, 16, 21, 22, 39, 66] }
+  },
+  {
+    "id": "meropenem",
+    "genericName": { "en": "Meropenem", "ja": "メロペネム" },
+    "brandNames": ["メロペネム点滴静注用1g"],
+    "abbr": "MEPM",
+    "class": "カルバペネム系",
+    "category": "antibacterial",
+    "requiresApplication": true,
+    "aliases": ["メロペネム", "メロペン", "MEPM"],
+    "adult": {
+      "iv": [
+        { "indication": null, "text": "1g 8時間毎" },
+        { "indication": "髄膜炎", "text": "2g 8時間毎" }
+      ]
+    },
+    "pediatric": {
+      "iv": [
+        { "indication": null, "text": "30-60mg/kg/day 分3、適宜増減", "perKg": { "amount": [30, 60], "unit": "mg", "per": "perDay", "basis": "actual" } },
+        { "indication": "難治性又は重症感染症", "text": "120mg/kg/day（3g/dayまで）", "perKg": { "amount": 120, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDay": 3000 } },
+        { "indication": "化膿性髄膜炎", "text": "120mg/kg/day 分3、適宜増減（6g/dayまで）", "perKg": { "amount": 120, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDay": 6000 } },
+        { "indication": "発熱性好中球減少症", "text": "120mg/kg/day 分3（3g/dayまで）", "perKg": { "amount": 120, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDay": 3000 } }
+      ]
+    },
+    "renal": {
+      "gt50": "1g 8時間毎",
+      "ccr10_50": "1g 12時間毎",
+      "lt10": "500mg 24時間毎",
+      "hd": "0.5g 24時間毎、透析日は透析後に投与",
+      "chdf": "1g 12時間毎"
+    },
+    "formulations": [
+      {
+        "brandName": "メロペネム点滴静注用1g",
+        "strength": "1g/1V",
+        "price": 1210,
+        "ivPush": false,
+        "drip": "30分以上",
+        "im": false,
+        "notes": [
+          "バルプロ酸Na併用禁忌",
+          "5%ブドウ糖で溶解すると力価が低下するため1時間以内に投与",
+          "アミノ酸製剤と併用で力価低下"
+        ],
+        "source": { "edition": 9, "pages": [65] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [10, 16, 21, 22, 39, 65] }
+  },
+  {
+    "id": "imipenem-cilastatin",
+    "genericName": { "en": "Imipenem/Cilastatin", "ja": "イミペネム・シラスタチン" },
+    "brandNames": ["チエナム点滴静注用0.5g"],
+    "abbr": "IPM/CS",
+    "class": "カルバペネム系",
+    "category": "antibacterial",
+    "requiresApplication": true,
+    "aliases": ["チエナム", "イミペネム", "IPM/CS", "IPM"],
+    "adult": { "iv": [{ "indication": null, "text": "0.5g 6時間毎" }] },
+    "pediatric": {
+      "iv": [
+        { "indication": null, "text": "30-60mg/kg/day 分3-4（100mg/kg/dayまで）", "perKg": { "amount": [30, 60], "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDay": 100 } }
+      ]
+    },
+    "renal": {
+      "gt50": "1g 6時間毎",
+      "ccr10_50": "0.25g 6時間毎",
+      "lt10": "0.125g 12時間毎",
+      "hd": "0.25g 12時間毎",
+      "chdf": "0.5g 12時間毎"
+    },
+    "renalNote": "腎機能障害時の表（p.16）はCCr>50で1g 6時間毎と記載されており、標準投与量表（p.10）の0.5g 6時間毎と異なる。使用時は原典を確認すること",
+    "formulations": [
+      {
+        "brandName": "チエナム点滴静注用0.5g",
+        "strength": "0.5g/1V",
+        "price": 901,
+        "ivPush": false,
+        "drip": "30分以上",
+        "im": false,
+        "notes": ["バルプロ酸Na併用禁忌", "乳酸塩溶液に溶解しないこと", "使用に関しては具体的な使用理由を記載すること"],
+        "source": { "edition": 9, "pages": [65] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [10, 16, 21, 22, 39, 65] }
+  },
+  {
+    "id": "cefiderocol",
+    "genericName": { "en": "Cefiderocol", "ja": "セフィデロコル" },
+    "brandNames": ["フェトロージャ点滴静注用1g"],
+    "abbr": "CFDC",
+    "class": "シデロフォアセファロスポリン",
+    "category": "antibacterial",
+    "requiresApplication": true,
+    "consultSpecialist": true,
+    "aliases": ["フェトロージャ", "セフィデロコル", "CFDC"],
+    "adult": {
+      "iv": [
+        { "indication": null, "text": "2g 8時間毎（3時間かけて）" },
+        { "indication": "腎クリアランス亢進（CCr ≧ 120mL/min）", "text": "2g 6時間毎" }
+      ]
+    },
+    "pediatric": { "iv": [{ "indication": null, "text": "小児に対する投与量の設定なし" }] },
+    "renal": {
+      "gt50": "2g 8時間毎（CCr 30-59: 1.5g 8時間毎）",
+      "ccr10_50": "CCr 30-59: 1.5g 8時間毎／CCr 15-29: 1g 8時間毎",
+      "lt10": "0.75g 12時間毎",
+      "hd": "0.75g 12時間毎"
+    },
+    "renalNote": "適応症例はカルバペネム系抗菌薬に耐性を示す菌株に限る。グラム陽性菌・嫌気性菌に抗菌活性がないため、これらとの複合感染が明らかな場合は抗菌薬の併用が必要",
+    "formulations": [
+      {
+        "brandName": "フェトロージャ点滴静注用1g",
+        "strength": "1g/1V",
+        "price": 20203,
+        "ivPush": false,
+        "drip": "3時間",
+        "im": false,
+        "notes": ["3時間投与", "感染症科指示のもと使用可能", "主な副作用：下痢、悪心・嘔吐"],
+        "source": { "edition": 9, "pages": [68] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [11, 17, 21, 27, 40, 68] }
+  },
+  {
+    "id": "relebactam-imipenem-cilastatin",
+    "genericName": { "en": "Relebactam/Imipenem/Cilastatin", "ja": "レレバクタム・イミペネム・シラスタチン" },
+    "brandNames": ["レカルブリオ配合点滴静注用"],
+    "abbr": "REL/IPM/CS",
+    "class": "カルバペネム系（β-ラクタマーゼ阻害薬配合）",
+    "category": "antibacterial",
+    "requiresApplication": true,
+    "consultSpecialist": true,
+    "aliases": ["レカルブリオ", "レレバクタム", "REL/IPM/CS"],
+    "adult": { "iv": [{ "indication": null, "text": "1.25g 6時間毎（30分かけて点滴静注）" }] },
+    "pediatric": { "iv": [{ "indication": null, "text": "小児に対する投与量の設定なし" }] },
+    "renal": {
+      "gt50": "CCr ≧90: 1.25g 6時間毎／CCr 60-89: 1g 6時間毎",
+      "ccr10_50": "CCr 30-59: 0.75g 6時間毎／CCr 15-29: 0.5g 6時間毎",
+      "lt10": "0.5g 6時間毎",
+      "hd": "0.5g 6時間毎"
+    },
+    "renalNote": "適応はカルバペネム耐性かつ本剤感性の大腸菌・シトロバクター属・クレブシエラ属・エンテロバクター属・セラチア属・緑膿菌・アシネトバクター属。AmblerクラスA（KPC）又はクラスC（AmpC）のβ-ラクタマーゼが考えられる場合に投与（NDMやIMPは無効）。バルプロ酸ナトリウム投与中は併用禁忌",
+    "formulations": [
+      {
+        "brandName": "レカルブリオ配合点滴静注用",
+        "strength": "1.25g/1V",
+        "price": 22447,
+        "ivPush": false,
+        "drip": "30分以上",
+        "im": false,
+        "notes": [
+          "バルプロ酸Na併用禁忌",
+          "乳酸塩を含んだ溶液に溶解しないこと",
+          "感染症科指示のもと使用可能",
+          "主な副作用：腎障害、中枢神経障害"
+        ],
+        "source": { "edition": 9, "pages": [68] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [11, 17, 21, 25, 40, 68] }
+  },
+  {
+    "id": "ceftolozane-tazobactam",
+    "genericName": { "en": "Ceftolozane/Tazobactam", "ja": "セフトロザン・タゾバクタム" },
+    "brandNames": ["ザバクサ配合点滴静注用"],
+    "abbr": "CTLZ/TAZ",
+    "class": "セフェム系（β-ラクタマーゼ阻害薬配合）",
+    "category": "antibacterial",
+    "requiresApplication": true,
+    "consultSpecialist": true,
+    "aliases": ["ザバクサ", "セフトロザン", "CTLZ/TAZ", "TAZ/CTLZ"],
+    "adult": {
+      "iv": [
+        { "indication": "膀胱炎・腎盂腎炎・腹膜炎・腹腔内膿瘍・胆嚢炎・肝膿瘍", "text": "1.5g 8時間毎", "note": "腹膜炎・腹腔内膿瘍・胆嚢炎・肝膿瘍にはMNZ併用" },
+        { "indication": "敗血症・肺炎", "text": "3g 8時間毎" }
+      ]
+    },
+    "pediatric": { "iv": [{ "indication": null, "text": "小児に対する投与量の設定なし" }] },
+    "renal": {
+      "gt50": "膀胱炎等: 1.5g 8時間毎／敗血症・肺炎: 3g 8時間毎",
+      "ccr10_50": "膀胱炎等 — CCr 30-50: 750mg 8時間毎／CCr 15-29: 375mg 8時間毎。敗血症・肺炎 — CCr 30-50: 1.5g 8時間毎／CCr 15-29: 750mg 8時間毎",
+      "hd": "膀胱炎等: 初回750mg、以降150mg 8時間毎／敗血症・肺炎: 初回2.25g、以降450mg 8時間毎",
+      "chdf": "1.5g 8時間毎"
+    },
+    "renalNote": "β-ラクタマーゼの関与が考えられ、本剤に感性の原因菌による感染症である場合にのみ投与すること",
+    "formulations": [
+      {
+        "brandName": "ザバクサ配合点滴静注用",
+        "strength": "1.5g/1V",
+        "price": 5967,
+        "ivPush": false,
+        "drip": "1時間",
+        "im": false,
+        "notes": ["1Vに生食又は注水10mLで溶解", "感染症科指示のもと使用可能", "主な副作用：腎障害"],
+        "source": { "edition": 9, "pages": [68] }
+      }
+    ],
+    "source": { "edition": 9, "pages": [11, 17, 21, 22, 26, 40, 68] }
+  }
+]
