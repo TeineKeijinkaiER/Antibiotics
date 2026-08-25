@@ -218,6 +218,112 @@ export type ProphylaxisEntry = {
   source: Source;
 };
 
+export type WoundClass = {
+  id: string;
+  label: string;
+  indication: string;
+  criteria: string;
+  source: Source;
+};
+
+export type BetaLactamAllergyRow = {
+  id: string;
+  woundClass: string;
+  gramPositive: string[];
+  gramNegative: string[];
+  anaerobe: string[];
+  source: Source;
+};
+
+export type ProphylaxisDose = {
+  drug: string;
+  drugId: string;
+  bands: {
+    weightMin: number | null;
+    weightMax: number | null;
+    text: string;
+    perKg?: PerKgDose;
+  }[];
+  source: Source;
+};
+
+export type ProphylaxisData = {
+  meta: { purpose: string[]; selectionPrinciples: string[]; source: Source };
+  woundClasses: WoundClass[];
+  entries: ProphylaxisEntry[];
+  targetGroupLabels: Record<string, string>;
+  betaLactamAllergy: BetaLactamAllergyRow[];
+  timing: string[];
+  duration: string[];
+  doses: ProphylaxisDose[];
+};
+
+/** 参考情報（アナフィラキシー・曝露後予防・小児体重・PCG持続静注・適正使用指針・AWaRe） */
+export type ReferenceData = {
+  anaphylaxis: {
+    title: string;
+    intro: string;
+    basicPrecautions: string[];
+    allergyHistory: string[];
+    observation: string[];
+    severity: { level: string; definition: string }[];
+    drugs: { name: string; role: string }[];
+    steps: { phase: string; items: string[] }[];
+    source: Source;
+  };
+  postExposureProphylaxis: {
+    title: string;
+    intro: string;
+    entries: {
+      id: string;
+      disease: string;
+      regimens: { condition: string; detail: string }[];
+    }[];
+    notes: string[];
+    source: Source;
+  };
+  pediatricWeight: {
+    title: string;
+    table: { age: string; weight: number }[];
+    tableSource: string;
+    formulas: { name: string; expression: string }[];
+    vonHarnack: { age: string; ratio: string }[];
+    caution: string;
+    source: Source;
+  };
+  pcgContinuousInfusion: {
+    title: string;
+    rationale: string;
+    cautions: string[];
+    loading: string;
+    regimens: {
+      dailyUnits: number;
+      dailyLabel: string;
+      routes: {
+        route: string;
+        detail: string;
+        waterPerDay?: string;
+        concentration?: string;
+        potassium?: string;
+      }[];
+    }[];
+    source: Source;
+  };
+  stewardship: {
+    title: string;
+    objectives: string[];
+    sections: { heading: string; items: string[] }[];
+    applicationRule: { heading: string; drugs: string[]; items: string[] };
+    source: Source;
+  };
+  aware: {
+    title: string;
+    intro: string;
+    groups: { category: string; drugs: { generic: string; brand: string }[] }[];
+    source: Source;
+  };
+};
+
 export type PatientMode = "adult" | "pediatric";
 
 export type Sex = "male" | "female";

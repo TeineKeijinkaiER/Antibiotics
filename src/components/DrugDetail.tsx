@@ -13,11 +13,21 @@ const ROUTE_LABEL: Record<Route, string> = {
 
 const BAND_ORDER: RenalBand[] = ["gt50", "ccr10_50", "lt10", "hd", "chdf"];
 
+/** 薬剤詳細から参照させたい専用ページ */
+const RELATED_PAGES: Record<string, { key: string; label: string; sub: string }> = {
+  benzylpenicillin: {
+    key: "pcg",
+    label: "ペニシリンG持続静注の投与方法 →",
+    sub: "1日総量と投与経路から調製手順・K濃度を確認できます（原典 p.28-29）",
+  },
+};
+
 type Props = {
   drug: Drug;
   mode: PatientMode;
   patient: PatientState;
   onOpenDesigner: (key: string) => void;
+  onOpenPage: (key: string) => void;
   onSwitchMode: () => void;
 };
 
@@ -57,7 +67,15 @@ function DoseRow({
   );
 }
 
-export function DrugDetail({ drug, mode, patient, onOpenDesigner, onSwitchMode }: Props) {
+export function DrugDetail({
+  drug,
+  mode,
+  patient,
+  onOpenDesigner,
+  onOpenPage,
+  onSwitchMode,
+}: Props) {
+  const relatedPage = RELATED_PAGES[drug.id];
   const dosing = mode === "adult" ? drug.adult : drug.pediatric;
   const otherModeLabel = mode === "adult" ? "小児" : "成人";
   const hasOtherMode = !!(mode === "adult" ? drug.pediatric : drug.adult);
@@ -120,6 +138,12 @@ export function DrugDetail({ drug, mode, patient, onOpenDesigner, onSwitchMode }
         {hasOtherMode && (
           <button className="link-btn" onClick={onSwitchMode}>
             {otherModeLabel}用量を見る →（モードが切り替わります）
+          </button>
+        )}
+        {relatedPage && (
+          <button className="tile" style={{ marginTop: 12 }} onClick={() => onOpenPage(relatedPage.key)}>
+            <b>{relatedPage.label}</b>
+            <span>{relatedPage.sub}</span>
           </button>
         )}
       </section>

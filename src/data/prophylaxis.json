@@ -1,0 +1,161 @@
+{
+  "meta": {
+    "purpose": [
+      "一般的に予防抗菌薬の目的は手術部位感染（SSI）の予防とされており、遠隔部位感染は対象とされていない。",
+      "予防抗菌薬は組織の無菌化を目標とするのではなく、術中汚染による細菌量を宿主防御機構でコントロールできるレベルまでに下げるために補助的に使用する。"
+    ],
+    "selectionPrinciples": [
+      "原則として手術部位の常在菌に抗菌活性を有する薬剤選択を行い、術後の原因菌をターゲットにしない。",
+      "手術操作が及ぶ部位から常在菌以外の細菌が検出される症例では、その細菌に活性を有する抗菌薬を選択する。",
+      "術前1ヶ月以内に抗菌薬使用歴のある症例では耐性菌の関与も考慮する。"
+    ],
+    "source": { "edition": 9, "pages": [47, 48] }
+  },
+
+  "woundClasses": [
+    {
+      "id": "class1",
+      "label": "Class Ⅰ 清潔創",
+      "indication": "一部で抗菌薬の使用は不要である",
+      "criteria": "①炎症のない非汚染手術創 ②呼吸器、消化器、生殖器、尿路系に対する手術は含まれない ③1期的縫合創 ④閉鎖式ドレーン挿入例 ⑤非穿通性の鈍的外傷",
+      "source": { "edition": 9, "pages": [47] }
+    },
+    {
+      "id": "class2",
+      "label": "Class Ⅱ 準清潔創",
+      "indication": "予防抗菌薬の適応とする",
+      "criteria": "①呼吸器、消化器、生殖器、尿路系に対する手術 ②著しい術中汚染を認めない場合が該当 ③感染がなく、清潔操作がほぼ守られている胆道系、虫垂、膣、口腔、咽頭手術 ④閉鎖式ドレーン挿入例 ⑤虫垂炎、胆嚢炎、絞扼性イレウス（小範囲）で、周囲組織・臓器を汚染することなく病巣を完全に摘出・切除した症例",
+      "source": { "edition": 9, "pages": [47] }
+    },
+    {
+      "id": "class3",
+      "label": "Class Ⅲ 汚染創",
+      "indication": "SSIリスク因子の存在を参考に予防抗菌薬又は治療抗菌薬の選択を検討する",
+      "criteria": "①早期の穿通性外傷（事故等による新鮮な開放創）②早期の開放骨折 ③清潔操作が著しく守られていない場合（開胸心臓マッサージ等）④術中に消化器系から大量の内容物の漏れが生じた場合 ⑤胃十二指腸穿孔後24時間以内 ⑥適切に機械的腸管処置が行われた大腸内視鏡検査での穿孔（12時間以内）⑦急性非化膿性炎症を伴う創",
+      "source": { "edition": 9, "pages": [47] }
+    },
+    {
+      "id": "class4",
+      "label": "Class Ⅳ 不潔・感染創",
+      "indication": "予防ではなく、治療的に抗菌薬を使用する",
+      "criteria": "①壊死組織の存在する外傷 ②陳旧性外傷 ③臨床的に感染を疑う創 ④消化管穿孔例（ClassⅢ の⑤・⑥以外）",
+      "source": { "edition": 9, "pages": [48] }
+    }
+  ],
+
+  "entries": [
+    { "id": "cardiovascular", "targetGroup": 1, "field": "心臓・血管外科", "organs": ["心臓", "血管"], "recommended": ["CEZ", "SBT/ABPC など"], "source": { "edition": 9, "pages": [48] } },
+    { "id": "general_surgery", "targetGroup": 1, "field": "一般外科", "organs": ["乳腺", "ヘルニア（鼠径など）", "脾"], "recommended": ["CEZ", "SBT/ABPC など"], "source": { "edition": 9, "pages": [48] } },
+    { "id": "orthopedics", "targetGroup": 1, "field": "整形外科", "organs": ["骨", "関節", "筋"], "recommended": ["CEZ", "SBT/ABPC など"], "source": { "edition": 9, "pages": [48] } },
+    { "id": "neurosurgery", "targetGroup": 1, "field": "脳神経外科", "organs": ["脳", "神経"], "recommended": ["CEZ", "SBT/ABPC など"], "source": { "edition": 9, "pages": [48] } },
+    { "id": "ophthalmology", "targetGroup": 1, "field": "眼科", "organs": ["眼", "眼付属臓器（涙道を除く）"], "recommended": ["CEZ", "SBT/ABPC など"], "source": { "edition": 9, "pages": [48] } },
+
+    { "id": "upper_gi", "targetGroup": 2, "field": "消化器外科（消化管）、泌尿器科（消化管利用）", "organs": ["上部消化管（食道、胃、空腸）"], "recommended": ["CEZ など"], "source": { "edition": 9, "pages": [48] } },
+    { "id": "lower_gi", "targetGroup": 2, "field": "消化器外科（消化管）、泌尿器科（消化管利用）", "organs": ["下部消化管（回腸、結腸、直腸、肛門）"], "recommended": ["CMZ", "CEZ＋MNZ など"], "source": { "edition": 9, "pages": [48] } },
+    { "id": "ent_oral_open", "targetGroup": 2, "field": "耳鼻科（口腔を開放）、口腔外科", "organs": ["口腔", "咽頭", "喉頭"], "recommended": ["SBT/ABPC", "CMZ など"], "source": { "edition": 9, "pages": [48] } },
+    { "id": "ent_oral_closed", "targetGroup": 2, "field": "耳鼻科（口腔を開放しない）", "organs": ["耳", "鼻"], "recommended": ["CEZ など"], "source": { "edition": 9, "pages": [48] } },
+    { "id": "obgyn", "targetGroup": 2, "field": "産婦人科", "organs": ["膣", "子宮"], "recommended": ["CMZ", "CEZ＋MNZ など"], "source": { "edition": 9, "pages": [48] } },
+    { "id": "cesarean", "targetGroup": 2, "field": "産婦人科", "organs": ["帝王切開"], "recommended": ["CEZ など"], "source": { "edition": 9, "pages": [48] } },
+    { "id": "lacrimal", "targetGroup": 2, "field": "眼科", "organs": ["涙道"], "recommended": ["CEZ など"], "source": { "edition": 9, "pages": [48] } },
+
+    { "id": "urology", "targetGroup": 3, "field": "泌尿器科", "organs": ["尿道", "膀胱", "尿管", "腎", "前立腺"], "recommended": ["CEZ", "SBT/ABPC など"], "source": { "edition": 9, "pages": [49] } },
+    { "id": "hbp", "targetGroup": 3, "field": "消化器外科（肝胆膵）", "organs": ["肝", "胆嚢", "胆管", "膵"], "recommended": ["CEZ など"], "source": { "edition": 9, "pages": [49] } },
+    { "id": "thoracic", "targetGroup": 3, "field": "胸部外科（気道が胸腔内で開放されている場合）", "organs": ["肺", "気管"], "recommended": ["SBT/ABPC など"], "source": { "edition": 9, "pages": [49] } }
+  ],
+
+  "targetGroupLabels": {
+    "1": "皮膚常在菌のみを予防抗菌薬のターゲットとする手術",
+    "2": "皮膚常在菌に加え、臓器特有の常在菌を予防抗菌薬のターゲットとする手術",
+    "3": "臓器には常在菌は存在しないが、隣接する消化管（口腔・咽頭、十二指腸、小腸、大腸）の常在菌をターゲットとする手術"
+  },
+
+  "betaLactamAllergy": [
+    {
+      "id": "clean",
+      "woundClass": "清潔創",
+      "gramPositive": ["CLDM", "VCM"],
+      "gramNegative": [],
+      "anaerobe": [],
+      "source": { "edition": 9, "pages": [49] }
+    },
+    {
+      "id": "clean_contaminated",
+      "woundClass": "準清潔創",
+      "gramPositive": ["アミノグリコシド系", "ニューキノロン系", "AZT＋CLDM/VCM"],
+      "gramNegative": ["アミノグリコシド系", "ニューキノロン系", "AZT＋CLDM/VCM"],
+      "anaerobe": [],
+      "source": { "edition": 9, "pages": [49] }
+    },
+    {
+      "id": "clean_contaminated_gi",
+      "woundClass": "準清潔創（下部消化管、婦人科、口腔、咽頭手術）",
+      "gramPositive": ["アミノグリコシド系", "ニューキノロン系"],
+      "gramNegative": ["アミノグリコシド系", "ニューキノロン系"],
+      "anaerobe": ["MNZ（下部消化管、婦人科）", "CLDM（口腔、咽頭）"],
+      "source": { "edition": 9, "pages": [49] }
+    }
+  ],
+
+  "timing": [
+    "手術が始まる時点で十分な殺菌作用を示す血中濃度・組織濃度が必要であり、切開の1時間以内に投与を開始する（切開時には投与を終了していること）。但し、眼科手術では組織移行性を考慮し2時間前に投与。",
+    "VCMとニューキノロン系薬は2時間以内に投与を行う（VCMはRedman症候群を起こすので1時間以上かけて点滴静注する）。",
+    "長時間手術（3時間を超える）の場合には術中の追加投与が必要である。一般的に半減期の2倍の時間が追加投与を行う目安となる。",
+    "腎機能低下症例では、腎機能に応じて再投与の間隔を延長する。",
+    "短時間に1500mL以上の大量出血が認められた場合、決められた再投与間隔を待たずに追加投与を考慮する。",
+    "術後も抗菌薬投与を継続する場合の投与間隔は、CTRXを除くセファロスポリン系薬では8時間を基本とする。",
+    "予防抗菌薬であっても治療量を用いる。"
+  ],
+
+  "duration": [
+    "単回投与と複数回投与を比較した臨床試験でSSIに有意差を認めていないことから、欧米では24時間投与が推奨されている。",
+    "予防抗菌薬の延長でより高いSSI予防効果が得られるわけではなく、2日以内と比較し3日以上の予防抗菌薬投与は耐性菌発生リスクにさえなる。例外的に心臓手術では48-72時間投与が推奨される。"
+  ],
+
+  "doses": [
+    {
+      "drug": "CEZ",
+      "drugId": "cefazolin",
+      "bands": [
+        { "weightMin": null, "weightMax": 80, "text": "1g" },
+        { "weightMin": 80, "weightMax": 120, "text": "2g" },
+        { "weightMin": 120, "weightMax": null, "text": "3g" }
+      ],
+      "source": { "edition": 9, "pages": [50] }
+    },
+    {
+      "drug": "CMZ",
+      "drugId": "cefmetazole",
+      "bands": [
+        { "weightMin": null, "weightMax": 80, "text": "1g" },
+        { "weightMin": 80, "weightMax": null, "text": "2g" }
+      ],
+      "source": { "edition": 9, "pages": [50] }
+    },
+    {
+      "drug": "SBT/ABPC",
+      "drugId": "ampicillin-sulbactam",
+      "bands": [
+        { "weightMin": null, "weightMax": 80, "text": "1.5-3g" },
+        { "weightMin": 80, "weightMax": null, "text": "3g" }
+      ],
+      "source": { "edition": 9, "pages": [50] }
+    },
+    {
+      "drug": "MNZ",
+      "drugId": "metronidazole",
+      "bands": [
+        { "weightMin": null, "weightMax": 80, "text": "500mg" },
+        { "weightMin": 80, "weightMax": null, "text": "1000mg" }
+      ],
+      "source": { "edition": 9, "pages": [50] }
+    },
+    {
+      "drug": "VCM",
+      "drugId": "vancomycin",
+      "bands": [
+        { "weightMin": null, "weightMax": null, "text": "15mg/kg（実測体重、最大2gまで）", "perKg": { "amount": 15, "unit": "mg", "per": "perDose", "basis": "actual", "maxPerDose": 2000 } }
+      ],
+      "source": { "edition": 9, "pages": [50] }
+    }
+  ]
+}

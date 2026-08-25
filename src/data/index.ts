@@ -4,6 +4,8 @@ import type {
   Disease,
   OffLabelUse,
   AntibiogramRow,
+  ProphylaxisData,
+  ReferenceData,
 } from "../types";
 
 import betalactam from "./drugs.betalactam.json";
@@ -13,6 +15,8 @@ import organismsJson from "./organisms.json";
 import diseasesJson from "./diseases.json";
 import offlabelJson from "./offlabel.json";
 import antibiogramJson from "./antibiogram.json";
+import prophylaxisJson from "./prophylaxis.json";
+import referenceJson from "./reference.json";
 
 export const DRUGS: Drug[] = [
   ...(betalactam as Drug[]),
@@ -38,6 +42,9 @@ export const ANTIBIOGRAM = antibiogramJson as unknown as {
   };
   rows: AntibiogramRow[];
 };
+
+export const PROPHYLAXIS = prophylaxisJson as unknown as ProphylaxisData;
+export const REFERENCE = referenceJson as unknown as ReferenceData;
 
 export const DRUG_BY_ID = new Map(DRUGS.map((d) => [d.id, d]));
 export const ORGANISM_BY_ID = new Map(ORGANISMS.map((o) => [o.id, o]));

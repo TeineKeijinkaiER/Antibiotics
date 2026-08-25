@@ -25,6 +25,8 @@ const organisms = load("organisms.json");
 const diseases = load("diseases.json");
 const offlabel = load("offlabel.json");
 const antibiogram = load("antibiogram.json");
+const prophylaxis = load("prophylaxis.json");
+const reference = load("reference.json");
 
 const errors = [];
 const warnings = [];
@@ -204,6 +206,91 @@ for (const row of antibiogram.rows ?? []) {
   }
 }
 
+/* ---------- 周術期予防抗菌薬 ---------- */
+
+checkSource(prophylaxis.meta?.source, "Prophylaxis.meta");
+for (const w of prophylaxis.woundClasses ?? []) {
+  checkSource(w.source, `WoundClass(${w.id})`);
+  if (!w.label || !w.indication || !w.criteria) fail(`WoundClass(${w.id}): 項目が不足しています`);
+}
+checkUniqueIds(prophylaxis.entries ?? [], "ProphylaxisEntry");
+for (const e of prophylaxis.entries ?? []) {
+  const where = `ProphylaxisEntry(${e.id})`;
+  checkSource(e.source, where);
+  if (![1, 2, 3].includes(e.targetGroup)) fail(`${where}: targetGroup が不正です — ${e.targetGroup}`);
+  if (!prophylaxis.targetGroupLabels?.[String(e.targetGroup)]) {
+    fail(`${where}: targetGroupLabels に ${e.targetGroup} の説明がありません`);
+  }
+  if (!e.field || !Array.isArray(e.organs) || e.organs.length === 0) fail(`${where}: field/organs が不足しています`);
+  if (!Array.isArray(e.recommended) || e.recommended.length === 0) fail(`${where}: recommended が空です`);
+}
+for (const r of prophylaxis.betaLactamAllergy ?? []) {
+  checkSource(r.source, `BetaLactamAllergy(${r.id})`);
+}
+for (const d of prophylaxis.doses ?? []) {
+  const where = `ProphylaxisDose(${d.drug})`;
+  checkSource(d.source, where);
+  if (!drugIds.has(d.drugId)) fail(`${where}: drugId の参照切れ — ${d.drugId}`);
+  if (!Array.isArray(d.bands) || d.bands.length === 0) fail(`${where}: bands が空です`);
+  for (const [i, b] of (d.bands ?? []).entries()) {
+    if (!b.text) fail(`${where}.bands[${i}]: text がありません`);
+    if (b.weightMin != null && b.weightMax != null && b.weightMin >= b.weightMax) {
+      fail(`${where}.bands[${i}]: 体重帯が不正です（min >= max）`);
+    }
+    if (b.perKg && !VALID_BASIS.has(b.perKg.basis)) {
+      fail(`${where}.bands[${i}]: perKg.basis が不正です`);
+    }
+  }
+  // 体重帯に隙間・重なりがないこと
+  const sorted = [...d.bands].filter((b) => b.weightMin != null || b.weightMax != null)
+    .sort((a, b) => (a.weightMin ?? -Infinity) - (b.weightMin ?? -Infinity));
+  for (let i = 1; i < sorted.length; i++) {
+    if (sorted[i - 1].weightMax !== sorted[i].weightMin) {
+      fail(`${where}: 体重帯が連続していません（${sorted[i - 1].weightMax} → ${sorted[i].weightMin}）`);
+    }
+  }
+}
+for (const key of ["timing", "duration"]) {
+  if (!Array.isArray(prophylaxis[key]) || prophylaxis[key].length === 0) {
+    fail(`Prophylaxis.${key}: 空です`);
+  }
+}
+
+/* ---------- 参考情報 ---------- */
+
+for (const key of [
+  "anaphylaxis", "postExposureProphylaxis", "pediatricWeight",
+  "pcgContinuousInfusion", "stewardship", "aware",
+]) {
+  const section = reference[key];
+  if (!section) {
+    fail(`Reference.${key}: セクションがありません`);
+    continue;
+  }
+  checkSource(section.source, `Reference.${key}`);
+  if (!section.title) fail(`Reference.${key}: title がありません`);
+}
+
+for (const e of reference.postExposureProphylaxis?.entries ?? []) {
+  if (!e.disease) fail(`PostExposure(${e.id}): disease がありません`);
+  if (!Array.isArray(e.regimens) || e.regimens.length === 0) {
+    fail(`PostExposure(${e.id}): regimens が空です`);
+  }
+}
+for (const r of reference.pcgContinuousInfusion?.regimens ?? []) {
+  if (!Number.isInteger(r.dailyUnits) || r.dailyUnits <= 0) {
+    fail(`PCG(${r.dailyLabel}): dailyUnits が不正です`);
+  }
+  if (!Array.isArray(r.routes) || r.routes.length === 0) {
+    fail(`PCG(${r.dailyLabel}): routes が空です`);
+  }
+}
+for (const row of reference.pediatricWeight?.table ?? []) {
+  if (typeof row.weight !== "number" || row.weight <= 0 || row.weight > 100) {
+    fail(`PediatricWeight(${row.age}): weight が不正です — ${row.weight}`);
+  }
+}
+
 /* ---------- 出力 ---------- */
 
 const counts = {
@@ -212,6 +299,8 @@ const counts = {
   疾患: diseases.length,
   適応外使用: offlabel.length,
   アンチバイオグラム行: (antibiogram.rows ?? []).length,
+  周術期エントリ: (prophylaxis.entries ?? []).length,
+  曝露後予防: (reference.postExposureProphylaxis?.entries ?? []).length,
 };
 
 console.log("データ件数:", JSON.stringify(counts, null, 0));

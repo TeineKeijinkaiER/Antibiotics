@@ -8,13 +8,42 @@ import { DrugDetail } from "./components/DrugDetail";
 import { OrganismDetail } from "./components/OrganismDetail";
 import { OffLabelSearch } from "./components/OffLabelSearch";
 import { Designer, DESIGNERS } from "./components/Designer";
+import { SurgicalProphylaxis } from "./components/SurgicalProphylaxis";
+import { Formulary } from "./components/Formulary";
+import {
+  Anaphylaxis,
+  PostExposureProphylaxis,
+  PediatricWeight,
+  PcgContinuousInfusion,
+  Stewardship,
+} from "./components/Reference";
 
 type View =
   | { type: "home" }
   | { type: "drug"; id: string }
   | { type: "organism"; id: string }
   | { type: "offlabel" }
-  | { type: "designer"; key: string };
+  | { type: "designer"; key: string }
+  | { type: "page"; key: PageKey };
+
+type PageKey =
+  | "prophylaxis"
+  | "formulary"
+  | "anaphylaxis"
+  | "postexposure"
+  | "pediatric-weight"
+  | "pcg"
+  | "stewardship";
+
+const PAGES: { key: PageKey; title: string; sub: string }[] = [
+  { key: "prophylaxis", title: "周術期予防抗菌薬", sub: "領域から推奨薬・1回量・投与期間" },
+  { key: "pcg", title: "ペニシリンG持続静注", sub: "1日総量と経路から調製手順" },
+  { key: "anaphylaxis", title: "アナフィラキシー対応", sub: "重症度別の救急処置" },
+  { key: "postexposure", title: "曝露後予防投与", sub: "HBV・HIV・水痘・インフルエンザほか" },
+  { key: "formulary", title: "当院採用注射抗菌薬一覧", sub: "規格・薬価・投与時間・配合変化" },
+  { key: "pediatric-weight", title: "小児の体重・薬用量", sub: "年齢別体重、Augsberger式ほか" },
+  { key: "stewardship", title: "適正使用指針・AWaRe", sub: "申請ルールとAWaRe分類" },
+];
 
 type SearchTarget = "drug" | "organism";
 
@@ -266,6 +295,12 @@ export default function App() {
                     <span>患者条件から初期投与量を算出</span>
                   </button>
                 ))}
+                {PAGES.map((p) => (
+                  <button key={p.key} className="tile" onClick={() => go({ type: "page", key: p.key })}>
+                    <b>{p.title}</b>
+                    <span>{p.sub}</span>
+                  </button>
+                ))}
               </div>
             </section>
           </>
@@ -281,6 +316,7 @@ export default function App() {
                 mode={mode}
                 patient={patient}
                 onOpenDesigner={(key) => go({ type: "designer", key })}
+                onOpenPage={(key) => go({ type: "page", key: key as PageKey })}
                 onSwitchMode={switchMode}
               />
             );
@@ -298,6 +334,18 @@ export default function App() {
         )}
 
         {view.type === "designer" && <Designer designerKey={view.key} patient={patient} />}
+
+        {view.type === "page" && view.key === "prophylaxis" && (
+          <SurgicalProphylaxis patient={patient} onOpenDrug={(id) => go({ type: "drug", id })} />
+        )}
+        {view.type === "page" && view.key === "formulary" && (
+          <Formulary onOpenDrug={(id) => go({ type: "drug", id })} />
+        )}
+        {view.type === "page" && view.key === "anaphylaxis" && <Anaphylaxis />}
+        {view.type === "page" && view.key === "postexposure" && <PostExposureProphylaxis />}
+        {view.type === "page" && view.key === "pediatric-weight" && <PediatricWeight />}
+        {view.type === "page" && view.key === "pcg" && <PcgContinuousInfusion />}
+        {view.type === "page" && view.key === "stewardship" && <Stewardship />}
 
         <footer className="foot">
           データ版：{MANUAL_EDITION.title} {MANUAL_EDITION.label}（{MANUAL_EDITION.issuedOn} ／{" "}
