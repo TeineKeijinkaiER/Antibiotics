@@ -85,16 +85,19 @@ scripts/validate-data.mjs         データ品質ゲート
   アプリ内でもこの旨をバナー表示している（`antibiogram.json` の `meta.verified: false`）。
   突合の手順とツールは [docs/04_アンチバイオグラム突合手順.md](docs/04_アンチバイオグラム突合手順.md) を参照。
 
+  作成元Excelの提供は受けられないため、**印刷したシートと原本を並べての目視照合**を本線とする。
+
   ```bash
-  npm run antibiogram:check                                        # 自己整合チェック（原データ不要）
-  node scripts/diff-antibiogram.mjs 入院.csv --setting inpatient    # 原データCSVと機械突合
-  node scripts/diff-antibiogram.mjs --export --setting inpatient    # 目視照合用チェックシート出力
+  npm run antibiogram:check                        # 事前チェック（機械で裏が取れる範囲を確定）
+  npm run antibiogram:sheet > checksheet.html      # 原典と同じ列順・行順の照合シートを出力→A4横で印刷
+  npm run antibiogram:corrections corrections.txt  # 記入した訂正を確認（--apply で反映）
   ```
 
-  現状の自己整合チェックは 12組・126セルすべてで加重平均が一致しており、大腸菌・肺炎桿菌・
-  K. oxytoca・P. mirabilis・S. aureus・S. epidermidis の列対応は信頼度が高い。
-  一方、total 行を持たない菌（緑膿菌、腸球菌、レンサ球菌ほか）はこの方法では検証できないため、
-  原データとの突合でしか確認できない。
+  自己整合チェックは 12組・126セルすべてで加重平均が一致しており（例：S. aureus total の
+  CEZ 67% = MSSA の CEZ 100% × (1 − MRSA率 0.33)）、大腸菌・肺炎桿菌・K. oxytoca・
+  P. mirabilis・S. aureus・S. epidermidis の18行×2区分は列対応の信頼度が高い。
+  一方、total 行を持たない菌（緑膿菌、腸球菌、レンサ球菌ほか）は機械では検証できず、
+  **入院・外来あわせて44行が目視の重点確認対象**になる。照合シートではこれらに地色を敷いている。
 - イミペネム・シラスタチンは、標準投与量表（p.10、0.5g 6時間毎）と腎機能障害時の表（p.16、CCr>50 で 1g 6時間毎）の
   記載が異なる。原典どおり両方を保持し、薬剤詳細に注記している。
 - プログラム医療機器（SaMD）該当性の確認、原典PDF同梱の可否、菌の日本語名リストの監修は未決（docs/02 §5 参照）。
