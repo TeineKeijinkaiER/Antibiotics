@@ -6,7 +6,7 @@
 
 ## 現在のステータス
 
-**Phase 0（MVP）＋ Phase 1 実装済み・院内レビュー待ち。** 原典のデータ構造化とアプリ本体が動作します。
+**Phase 0〜2 実装済み・院内レビュー待ち。** 原典のデータ構造化とアプリ本体が動作し、完全オフラインで利用できます。
 
 | | |
 | --- | --- |
@@ -55,6 +55,18 @@ npm run build      # 検証 + 型チェック + 本番ビルド
 | 小児の体重・薬用量 | FR-009-4 | 年齢別体重平均値、Augsberger式・Young式、Von Harnack表 |
 | 適正使用指針・AWaRe | FR-009-5 | 適正使用指針と申請ルール、内服薬のAWaRe分類 |
 
+### Phase 2 で追加した機能
+
+| 機能 | 要件 | 内容 |
+| --- | --- | --- |
+| PWA・完全オフライン動作 | NFR-002 | 全アセットを Service Worker で precache。通信は初回インストール時のみ。ホーム画面に追加してアプリとして起動できる |
+| 更新の検知 | NFR-010 | 新しいデータ版を検知するとアプリ内にバナーを出し、その場で適用できる |
+| お気に入り・閲覧履歴 | FR-010-1/2 | よく使う薬剤・菌をホームにピン留め、直近10件の履歴。保存するのはIDのみで患者条件は保存しない |
+| AMR対策 | FR-009-5 | 抗微生物薬適正使用の手引き、AMRアクションプラン成果指標、参考文献 |
+
+オフライン動作は実ブラウザでネットワークを切断して検証しています（起動・検索・薬剤詳細・
+お気に入り・各リファレンスページまでエラーなく動作）。
+
 ## 構成
 
 ```
@@ -73,8 +85,15 @@ src/
     normalize.ts                  日本語の表記ゆれ正規化
     search.ts                     全文検索と適応外の双方向インデックス
     calc.ts                       CCr・IBW・AdjBW・mg/kg 換算・腎機能区分の解決
+    storage.ts                    お気に入り・閲覧履歴（localStorage）
+    sw.ts                         Service Worker の登録と更新検知
   components/                     画面
-scripts/validate-data.mjs         データ品質ゲート
+public/                           manifest・PWAアイコン（scripts/make-icons.mjs で生成）
+scripts/
+  validate-data.mjs               データ品質ゲート
+  make-sw.mjs                     Service Worker 生成（ビルド後に実行）
+  make-icons.mjs                  PWAアイコン生成（zlibのみ、依存なし）
+  check-antibiogram-consistency.mjs / make-checksheet.mjs / apply-corrections.mjs / diff-antibiogram.mjs
 ```
 
 ## 既知の要検証事項
