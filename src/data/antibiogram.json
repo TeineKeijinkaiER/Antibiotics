@@ -3,105 +3,1733 @@
     "year": "令和8年度",
     "period": "2025年1月〜2025年12月",
     "facility": "手稲渓仁会病院",
-    "gnrColumns": ["ABPC", "PIPC", "SBT/ABPC", "TAZ/PIPC", "MEPM", "CEZ", "CMZ", "CTRX", "CAZ", "CFPM", "AMK", "CLDM", "CPFX", "LVFX", "ST"],
-    "gpcColumns": ["PCG", "ABPC", "MEPM", "CEZ", "CTRX", "CLDM", "ST", "MINO", "VCM"],
+    "gnrColumns": [
+      "ABPC",
+      "PIPC",
+      "SBT/ABPC",
+      "TAZ/PIPC",
+      "MEPM",
+      "CEZ",
+      "CMZ",
+      "CTRX",
+      "CAZ",
+      "CFPM",
+      "AMK",
+      "CLDM",
+      "CPFX",
+      "LVFX",
+      "ST"
+    ],
+    "gpcColumns": [
+      "PCG",
+      "ABPC",
+      "MEPM",
+      "CEZ",
+      "CTRX",
+      "CLDM",
+      "ST",
+      "MINO",
+      "VCM"
+    ],
     "note": "検出株のうち感受性あり「S」の割合を示す。I（Intermediate）は感受性株とみなさない。算出方法：（当該抗菌薬に感受性の株数）÷（対象の株数）×100（%）。作成期間は1年間、入院・外来を分け、提出された全ての検体をカウント。",
     "empiricNote": "経験的治療においては一般に最低80%の感性率が必要とされるが、感染臓器や重症度によっては90%あるいは100%の感性率が必要とされる場合もある。",
     "verified": false,
     "verificationNote": "本データは原典PDF（p.70-71）のテキスト抽出から再構成したものであり、作成元Excelとの突合が未了である。ESBL産生率・MRSA/MRSE率を用いた算術整合チェック（例：S. aureus totalのCEZ 67% = MSSAのCEZ 100% × (1-MRSA率0.33)）で主要行の列対応を検証しているが、院内公開前に感染制御管理室・検査部による原データとの突合が必須。",
-    "source": { "edition": 9, "pages": [70, 71, 72] }
+    "source": {
+      "edition": 9,
+      "pages": [
+        70,
+        71,
+        72
+      ]
+    }
   },
   "rows": [
-    { "organismId": "e_coli", "setting": "inpatient", "isolates": 583, "susceptibility": { "ABPC": 66, "PIPC": 75, "SBT/ABPC": 76, "TAZ/PIPC": 96, "MEPM": 100, "CEZ": 92, "CMZ": 96, "CTRX": 98, "CAZ": 98, "CFPM": 99, "AMK": 99, "CPFX": 78, "LVFX": 73, "ST": 91 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "e_coli_esbl", "setting": "inpatient", "isolates": 122, "susceptibility": { "SBT/ABPC": 34, "TAZ/PIPC": 93, "MEPM": 100, "CMZ": 99, "AMK": 98, "CPFX": 19, "LVFX": 9, "ST": 63 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "e_coli_total", "setting": "inpatient", "isolates": 705, "susceptibility": { "ABPC": 54, "PIPC": 62, "SBT/ABPC": 69, "TAZ/PIPC": 96, "MEPM": 100, "CEZ": 76, "CMZ": 97, "CTRX": 81, "CAZ": 81, "CFPM": 82, "AMK": 99, "CPFX": 67, "LVFX": 62, "ST": 86 }, "annotations": ["ESBL産生菌の割合：17%"], "source": { "edition": 9, "pages": [70] } },
-
-    { "organismId": "k_pneumoniae", "setting": "inpatient", "isolates": 308, "susceptibility": { "PIPC": 84, "SBT/ABPC": 88, "TAZ/PIPC": 96, "MEPM": 100, "CEZ": 99, "CMZ": 99, "CTRX": 100, "CAZ": 100, "CFPM": 100, "AMK": 100, "CPFX": 94, "LVFX": 91, "ST": 94 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "k_pneumoniae_esbl", "setting": "inpatient", "isolates": 20, "susceptibility": { "SBT/ABPC": 10, "TAZ/PIPC": 60, "MEPM": 100, "CMZ": 90, "AMK": 100, "CPFX": 25, "LVFX": 20, "ST": 50 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "k_pneumoniae_total", "setting": "inpatient", "isolates": 328, "susceptibility": { "PIPC": 79, "SBT/ABPC": 83, "TAZ/PIPC": 94, "MEPM": 100, "CEZ": 93, "CMZ": 98, "CTRX": 94, "CAZ": 94, "CFPM": 94, "AMK": 100, "CPFX": 90, "LVFX": 87, "ST": 91 }, "annotations": ["ESBL産生菌の割合：6%"], "source": { "edition": 9, "pages": [70] } },
-
-    { "organismId": "k_oxytoca", "setting": "inpatient", "isolates": 109, "susceptibility": { "PIPC": 88, "SBT/ABPC": 72, "TAZ/PIPC": 91, "MEPM": 100, "CMZ": 100, "CTRX": 99, "CAZ": 100, "CFPM": 100, "AMK": 100, "CPFX": 99, "LVFX": 99, "ST": 95 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "k_oxytoca_esbl", "setting": "inpatient", "isolates": 14, "susceptibility": { "MEPM": 100, "CMZ": 100, "AMK": 100, "CPFX": 29, "LVFX": 29, "ST": 100 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "k_oxytoca_total", "setting": "inpatient", "isolates": 123, "susceptibility": { "PIPC": 78, "SBT/ABPC": 63, "TAZ/PIPC": 80, "MEPM": 100, "CMZ": 100, "CTRX": 88, "CAZ": 89, "CFPM": 89, "AMK": 100, "CPFX": 91, "LVFX": 91, "ST": 96 }, "annotations": ["ESBL又はK1型BL産生菌の割合：11%"], "source": { "edition": 9, "pages": [70] } },
-
-    { "organismId": "p_mirabilis", "setting": "inpatient", "isolates": 48, "susceptibility": { "ABPC": 94, "PIPC": 100, "SBT/ABPC": 98, "TAZ/PIPC": 100, "MEPM": 100, "CEZ": 98, "CMZ": 98, "CTRX": 100, "CAZ": 100, "CFPM": 100, "AMK": 100, "CPFX": 98, "LVFX": 96, "ST": 85 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "p_mirabilis_esbl", "setting": "inpatient", "isolates": 0, "susceptibility": {}, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "p_mirabilis_total", "setting": "inpatient", "isolates": 48, "susceptibility": { "ABPC": 94, "PIPC": 100, "SBT/ABPC": 98, "TAZ/PIPC": 100, "MEPM": 100, "CEZ": 98, "CMZ": 98, "CTRX": 100, "CAZ": 100, "CFPM": 100, "AMK": 100, "CPFX": 98, "LVFX": 96, "ST": 85 }, "annotations": ["ESBL産生菌の割合：0%"], "source": { "edition": 9, "pages": [70] } },
-
-    { "organismId": "p_vulgaris", "setting": "inpatient", "isolates": 14, "susceptibility": { "ABPC": 7, "PIPC": 100, "SBT/ABPC": 100, "TAZ/PIPC": 100, "MEPM": 100, "CMZ": 100, "CTRX": 100, "CAZ": 100, "CFPM": 100, "AMK": 100, "CPFX": 100, "LVFX": 100, "ST": 100 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "e_cloacae", "setting": "inpatient", "isolates": 291, "susceptibility": { "PIPC": 65, "TAZ/PIPC": 67, "MEPM": 100, "CTRX": 64, "CAZ": 65, "CFPM": 94, "AMK": 100, "CPFX": 95, "LVFX": 93, "ST": 97 }, "annotations": ["CREの割合：2%"], "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "k_aerogenes", "setting": "inpatient", "isolates": 88, "susceptibility": { "PIPC": 74, "TAZ/PIPC": 75, "MEPM": 99, "CTRX": 75, "CAZ": 75, "CFPM": 99, "AMK": 100, "CPFX": 98, "LVFX": 97, "ST": 97 }, "annotations": ["CREの割合：5%"], "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "c_freundii", "setting": "inpatient", "isolates": 22, "susceptibility": { "PIPC": 86, "TAZ/PIPC": 95, "MEPM": 100, "CTRX": 86, "CAZ": 82, "CFPM": 100, "AMK": 100, "CPFX": 100, "LVFX": 100, "ST": 100 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "s_marcescens", "setting": "inpatient", "isolates": 67, "susceptibility": { "PIPC": 99, "TAZ/PIPC": 99, "MEPM": 100, "CTRX": 99, "CAZ": 100, "CFPM": 100, "AMK": 100, "CPFX": 97, "LVFX": 96, "ST": 100 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "m_morganii", "setting": "inpatient", "isolates": 32, "susceptibility": { "PIPC": 78, "SBT/ABPC": 16, "TAZ/PIPC": 97, "MEPM": 100, "CMZ": 97, "CTRX": 100, "CAZ": 100, "CFPM": 100, "AMK": 100, "CPFX": 91, "LVFX": 91, "ST": 94 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "p_aeruginosa", "setting": "inpatient", "isolates": 405, "susceptibility": { "PIPC": 82, "TAZ/PIPC": 83, "MEPM": 88, "CAZ": 89, "CFPM": 91, "AMK": 95, "CPFX": 95, "LVFX": 85 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "acinetobacter", "setting": "inpatient", "isolates": 41, "susceptibility": { "PIPC": 61, "SBT/ABPC": 95, "TAZ/PIPC": 71, "MEPM": 95, "CAZ": 73, "CFPM": 90, "AMK": 100, "CPFX": 93, "LVFX": 93 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "b_fragilis", "setting": "inpatient", "isolates": 71, "susceptibility": { "SBT/ABPC": 90, "TAZ/PIPC": 99, "MEPM": 97, "CMZ": 77, "CLDM": 68 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "anaerobic_gnr_other", "setting": "inpatient", "isolates": 99, "susceptibility": { "SBT/ABPC": 87, "TAZ/PIPC": 100, "MEPM": 100, "CMZ": 59, "CLDM": 55 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "h_influenzae", "setting": "inpatient", "isolates": 48, "susceptibility": { "ABPC": 40, "SBT/ABPC": 50, "MEPM": 94, "CTRX": 100, "LVFX": 98 }, "source": { "edition": 9, "pages": [70] } },
-
-    { "organismId": "mssa", "setting": "inpatient", "isolates": 457, "susceptibility": { "CEZ": 100, "CLDM": 77, "ST": 100, "MINO": 99, "VCM": 100 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "mrsa", "setting": "inpatient", "isolates": 230, "susceptibility": { "CLDM": 24, "ST": 99, "MINO": 77, "VCM": 100 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "s_aureus_total", "setting": "inpatient", "isolates": 687, "susceptibility": { "CEZ": 67, "CLDM": 60, "ST": 99, "MINO": 92, "VCM": 100 }, "annotations": ["MRSAの割合：33%"], "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "msse", "setting": "inpatient", "isolates": 65, "susceptibility": { "CEZ": 100, "CLDM": 85, "ST": 97, "MINO": 100, "VCM": 100 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "mrse", "setting": "inpatient", "isolates": 302, "susceptibility": { "CLDM": 41, "ST": 76, "MINO": 79, "VCM": 100 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "s_epidermidis_total", "setting": "inpatient", "isolates": 367, "susceptibility": { "CEZ": 18, "CLDM": 49, "ST": 80, "MINO": 83, "VCM": 100 }, "annotations": ["MRSEの割合：82%"], "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "s_lugdunensis", "setting": "inpatient", "isolates": 14, "susceptibility": { "CEZ": 29, "CLDM": 64, "ST": 100, "MINO": 71, "VCM": 100 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "cns_other", "setting": "inpatient", "isolates": 133, "susceptibility": { "CEZ": 29, "CLDM": 58, "ST": 71, "MINO": 99, "VCM": 100 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "e_faecalis", "setting": "inpatient", "isolates": 323, "susceptibility": { "PCG": 99, "ABPC": 99, "VCM": 100 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "e_faecium", "setting": "inpatient", "isolates": 142, "susceptibility": { "PCG": 15, "ABPC": 16, "VCM": 100 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "vgs", "setting": "inpatient", "isolates": 123, "susceptibility": { "PCG": 78, "ABPC": 98, "CLDM": 84, "VCM": 100 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "sag", "setting": "inpatient", "isolates": 109, "susceptibility": { "PCG": 96, "ABPC": 97, "CLDM": 92, "VCM": 100 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "gas", "setting": "inpatient", "isolates": 21, "susceptibility": { "PCG": 100, "ABPC": 100, "CLDM": 81, "VCM": 100 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "gbs", "setting": "inpatient", "isolates": 94, "susceptibility": { "PCG": 100, "ABPC": 100, "CLDM": 71, "VCM": 100 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "ggs", "setting": "inpatient", "isolates": 8, "susceptibility": { "PCG": 100, "ABPC": 100, "CLDM": 86, "VCM": 100 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "s_pneumoniae_meningitis", "setting": "inpatient", "isolates": 1, "susceptibility": { "PCG": 100, "ABPC": 100, "CTRX": 100, "VCM": 100 }, "source": { "edition": 9, "pages": [70] } },
-    { "organismId": "s_pneumoniae_nonmeningitis", "setting": "inpatient", "isolates": 16, "susceptibility": { "PCG": 88, "ABPC": 75, "CTRX": 94, "CLDM": 38, "VCM": 100 }, "source": { "edition": 9, "pages": [70] } },
-
-    { "organismId": "e_coli", "setting": "outpatient", "isolates": 642, "susceptibility": { "ABPC": 71, "PIPC": 77, "SBT/ABPC": 79, "TAZ/PIPC": 99, "MEPM": 100, "CEZ": 96, "CMZ": 98, "CTRX": 99, "CAZ": 99, "CFPM": 99, "AMK": 100, "CPFX": 75, "LVFX": 70, "ST": 89 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "e_coli_esbl", "setting": "outpatient", "isolates": 89, "susceptibility": { "SBT/ABPC": 36, "TAZ/PIPC": 92, "MEPM": 100, "CMZ": 100, "AMK": 100, "CPFX": 18, "LVFX": 10, "ST": 56 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "e_coli_total", "setting": "outpatient", "isolates": 731, "susceptibility": { "ABPC": 63, "PIPC": 68, "SBT/ABPC": 74, "TAZ/PIPC": 98, "MEPM": 100, "CEZ": 84, "CMZ": 98, "CTRX": 87, "CAZ": 87, "CFPM": 87, "AMK": 100, "CPFX": 68, "LVFX": 62, "ST": 85 }, "annotations": ["ESBL産生菌の割合：12%"], "source": { "edition": 9, "pages": [71] } },
-
-    { "organismId": "k_pneumoniae", "setting": "outpatient", "isolates": 183, "susceptibility": { "PIPC": 92, "SBT/ABPC": 89, "TAZ/PIPC": 99, "MEPM": 100, "CEZ": 99, "CMZ": 100, "CTRX": 100, "CAZ": 100, "CFPM": 100, "AMK": 100, "CPFX": 93, "LVFX": 91, "ST": 90 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "k_pneumoniae_esbl", "setting": "outpatient", "isolates": 15, "susceptibility": { "SBT/ABPC": 7, "TAZ/PIPC": 47, "MEPM": 100, "CMZ": 100, "AMK": 100, "CPFX": 33, "LVFX": 33, "ST": 13 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "k_pneumoniae_total", "setting": "outpatient", "isolates": 198, "susceptibility": { "PIPC": 85, "SBT/ABPC": 83, "TAZ/PIPC": 95, "MEPM": 100, "CEZ": 91, "CMZ": 100, "CTRX": 92, "CAZ": 92, "CFPM": 92, "AMK": 100, "CPFX": 88, "LVFX": 87, "ST": 84 }, "annotations": ["ESBL産生菌の割合：8%"], "source": { "edition": 9, "pages": [71] } },
-
-    { "organismId": "k_oxytoca", "setting": "outpatient", "isolates": 65, "susceptibility": { "PIPC": 94, "SBT/ABPC": 85, "TAZ/PIPC": 95, "MEPM": 100, "CMZ": 100, "CTRX": 100, "CAZ": 100, "CFPM": 100, "AMK": 100, "CPFX": 95, "LVFX": 95, "ST": 100 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "k_oxytoca_esbl", "setting": "outpatient", "isolates": 9, "susceptibility": { "MEPM": 100, "CMZ": 100, "AMK": 100, "CPFX": 22, "LVFX": 22, "ST": 100 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "k_oxytoca_total", "setting": "outpatient", "isolates": 74, "susceptibility": { "PIPC": 82, "SBT/ABPC": 74, "TAZ/PIPC": 84, "MEPM": 100, "CMZ": 100, "CTRX": 88, "CAZ": 88, "CFPM": 88, "AMK": 100, "CPFX": 86, "LVFX": 86, "ST": 100 }, "annotations": ["ESBL又はK1型BL産生菌の割合：12%"], "source": { "edition": 9, "pages": [71] } },
-
-    { "organismId": "p_mirabilis", "setting": "outpatient", "isolates": 61, "susceptibility": { "ABPC": 84, "PIPC": 95, "SBT/ABPC": 97, "TAZ/PIPC": 100, "MEPM": 100, "CEZ": 98, "CMZ": 100, "CTRX": 100, "CAZ": 100, "CFPM": 100, "AMK": 100, "CPFX": 87, "LVFX": 85, "ST": 77 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "p_mirabilis_esbl", "setting": "outpatient", "isolates": 2, "susceptibility": { "SBT/ABPC": 50, "TAZ/PIPC": 100, "MEPM": 100, "CMZ": 100, "AMK": 100, "ST": 100 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "p_mirabilis_total", "setting": "outpatient", "isolates": 63, "susceptibility": { "ABPC": 81, "PIPC": 92, "SBT/ABPC": 95, "TAZ/PIPC": 100, "MEPM": 100, "CEZ": 95, "CMZ": 100, "CTRX": 97, "CAZ": 97, "CFPM": 97, "AMK": 100, "CPFX": 84, "LVFX": 83, "ST": 78 }, "annotations": ["ESBL産生菌の割合：3%"], "source": { "edition": 9, "pages": [71] } },
-
-    { "organismId": "p_vulgaris", "setting": "outpatient", "isolates": 15, "susceptibility": { "PIPC": 87, "SBT/ABPC": 87, "TAZ/PIPC": 100, "MEPM": 100, "CMZ": 100, "CTRX": 100, "CAZ": 100, "CFPM": 100, "AMK": 100, "CPFX": 100, "LVFX": 100, "ST": 93 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "e_cloacae", "setting": "outpatient", "isolates": 56, "susceptibility": { "PIPC": 80, "TAZ/PIPC": 89, "MEPM": 100, "CTRX": 89, "CAZ": 91, "CFPM": 100, "AMK": 100, "CPFX": 86, "LVFX": 84, "ST": 86 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "k_aerogenes", "setting": "outpatient", "isolates": 41, "susceptibility": { "PIPC": 85, "TAZ/PIPC": 88, "MEPM": 100, "CTRX": 80, "CAZ": 85, "CFPM": 100, "AMK": 100, "CPFX": 100, "LVFX": 98, "ST": 100 }, "annotations": ["CREの割合：7%"], "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "c_freundii", "setting": "outpatient", "isolates": 15, "susceptibility": { "PIPC": 100, "TAZ/PIPC": 100, "MEPM": 100, "CTRX": 100, "CAZ": 100, "CFPM": 100, "AMK": 100, "CPFX": 93, "LVFX": 80, "ST": 73 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "s_marcescens", "setting": "outpatient", "isolates": 36, "susceptibility": { "PIPC": 97, "TAZ/PIPC": 97, "MEPM": 100, "CTRX": 100, "CAZ": 100, "CFPM": 100, "AMK": 100, "CPFX": 100, "LVFX": 94, "ST": 100 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "m_morganii", "setting": "outpatient", "isolates": 19, "susceptibility": { "PIPC": 79, "SBT/ABPC": 26, "TAZ/PIPC": 95, "MEPM": 100, "CMZ": 100, "CTRX": 95, "CAZ": 89, "CFPM": 100, "AMK": 100, "CPFX": 100, "LVFX": 100, "ST": 95 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "p_aeruginosa", "setting": "outpatient", "isolates": 103, "susceptibility": { "PIPC": 89, "TAZ/PIPC": 90, "MEPM": 94, "CAZ": 95, "CFPM": 96, "AMK": 97, "CPFX": 84, "LVFX": 81 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "acinetobacter", "setting": "outpatient", "isolates": 17, "susceptibility": { "PIPC": 76, "SBT/ABPC": 100, "TAZ/PIPC": 94, "MEPM": 100, "CAZ": 100, "CFPM": 100, "AMK": 100, "CPFX": 88, "LVFX": 94 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "b_fragilis", "setting": "outpatient", "isolates": 31, "susceptibility": { "SBT/ABPC": 84, "TAZ/PIPC": 100, "MEPM": 100, "CMZ": 90, "CLDM": 60 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "anaerobic_gnr_other", "setting": "outpatient", "isolates": 56, "susceptibility": { "SBT/ABPC": 89, "TAZ/PIPC": 100, "MEPM": 98, "CMZ": 84, "CLDM": 75 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "h_influenzae", "setting": "outpatient", "isolates": 37, "susceptibility": { "ABPC": 38, "SBT/ABPC": 49, "MEPM": 89, "CTRX": 97, "LVFX": 100 }, "source": { "edition": 9, "pages": [71] } },
-
-    { "organismId": "mssa", "setting": "outpatient", "isolates": 352, "susceptibility": { "CEZ": 99, "CLDM": 82, "ST": 99, "MINO": 99, "VCM": 100 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "mrsa", "setting": "outpatient", "isolates": 83, "susceptibility": { "CLDM": 19, "ST": 100, "MINO": 88, "VCM": 100 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "s_aureus_total", "setting": "outpatient", "isolates": 435, "susceptibility": { "CEZ": 80, "CLDM": 70, "ST": 99, "MINO": 97, "VCM": 100 }, "annotations": ["MRSAの割合：19%"], "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "msse", "setting": "outpatient", "isolates": 44, "susceptibility": { "CEZ": 100, "CLDM": 66, "ST": 93, "MINO": 100, "VCM": 100 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "mrse", "setting": "outpatient", "isolates": 51, "susceptibility": { "CEZ": 4, "CLDM": 59, "ST": 84, "MINO": 94, "VCM": 100 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "s_epidermidis_total", "setting": "outpatient", "isolates": 95, "susceptibility": { "CEZ": 48, "CLDM": 62, "ST": 88, "MINO": 97, "VCM": 100 }, "annotations": ["MRSEの割合：54%"], "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "s_lugdunensis", "setting": "outpatient", "isolates": 22, "susceptibility": { "CEZ": 73, "CLDM": 82, "ST": 100, "MINO": 100, "VCM": 100 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "cns_other", "setting": "outpatient", "isolates": 83, "susceptibility": { "CEZ": 46, "CLDM": 60, "ST": 89, "MINO": 98, "VCM": 100 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "e_faecalis", "setting": "outpatient", "isolates": 146, "susceptibility": { "PCG": 99, "ABPC": 99, "VCM": 100 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "e_faecium", "setting": "outpatient", "isolates": 27, "susceptibility": { "PCG": 16, "ABPC": 16, "VCM": 100 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "vgs", "setting": "outpatient", "isolates": 81, "susceptibility": { "PCG": 69, "ABPC": 99, "CLDM": 89, "VCM": 100 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "sag", "setting": "outpatient", "isolates": 63, "susceptibility": { "PCG": 94, "ABPC": 98, "CLDM": 79, "VCM": 100 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "gas", "setting": "outpatient", "isolates": 25, "susceptibility": { "PCG": 100, "ABPC": 100, "CLDM": 64, "VCM": 100 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "gbs", "setting": "outpatient", "isolates": 205, "susceptibility": { "PCG": 100, "ABPC": 100, "CLDM": 54, "VCM": 100 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "ggs", "setting": "outpatient", "isolates": 33, "susceptibility": { "PCG": 100, "ABPC": 100, "CLDM": 73, "VCM": 100 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "s_pneumoniae_meningitis", "setting": "outpatient", "isolates": 1, "susceptibility": { "PCG": 100, "ABPC": 100, "CTRX": 100, "VCM": 100 }, "source": { "edition": 9, "pages": [71] } },
-    { "organismId": "s_pneumoniae_nonmeningitis", "setting": "outpatient", "isolates": 16, "susceptibility": { "PCG": 94, "ABPC": 75, "CTRX": 94, "CLDM": 31, "VCM": 100 }, "source": { "edition": 9, "pages": [71] } }
+    {
+      "organismId": "e_coli",
+      "setting": "inpatient",
+      "isolates": 583,
+      "susceptibility": {
+        "ABPC": 66,
+        "PIPC": 75,
+        "SBT/ABPC": 76,
+        "TAZ/PIPC": 96,
+        "MEPM": 100,
+        "CEZ": 92,
+        "CMZ": 96,
+        "CTRX": 98,
+        "CAZ": 98,
+        "CFPM": 99,
+        "AMK": 99,
+        "CPFX": 78,
+        "LVFX": 73,
+        "ST": 91
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "e_coli_esbl",
+      "setting": "inpatient",
+      "isolates": 122,
+      "susceptibility": {
+        "SBT/ABPC": 34,
+        "TAZ/PIPC": 93,
+        "MEPM": 100,
+        "CMZ": 99,
+        "AMK": 98,
+        "CPFX": 19,
+        "LVFX": 9,
+        "ST": 63
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "e_coli_total",
+      "setting": "inpatient",
+      "isolates": 705,
+      "susceptibility": {
+        "ABPC": 54,
+        "PIPC": 62,
+        "SBT/ABPC": 69,
+        "TAZ/PIPC": 96,
+        "MEPM": 100,
+        "CEZ": 76,
+        "CMZ": 97,
+        "CTRX": 81,
+        "CAZ": 81,
+        "CFPM": 82,
+        "AMK": 99,
+        "CPFX": 67,
+        "LVFX": 62,
+        "ST": 86
+      },
+      "annotations": [
+        "ESBL産生菌の割合：17%"
+      ],
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "k_pneumoniae",
+      "setting": "inpatient",
+      "isolates": 308,
+      "susceptibility": {
+        "PIPC": 84,
+        "SBT/ABPC": 88,
+        "TAZ/PIPC": 96,
+        "MEPM": 100,
+        "CEZ": 99,
+        "CMZ": 99,
+        "CTRX": 100,
+        "CAZ": 100,
+        "CFPM": 100,
+        "AMK": 100,
+        "CPFX": 94,
+        "LVFX": 91,
+        "ST": 94
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "k_pneumoniae_esbl",
+      "setting": "inpatient",
+      "isolates": 20,
+      "susceptibility": {
+        "SBT/ABPC": 10,
+        "TAZ/PIPC": 60,
+        "MEPM": 100,
+        "CMZ": 90,
+        "AMK": 100,
+        "CPFX": 25,
+        "LVFX": 20,
+        "ST": 50
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "k_pneumoniae_total",
+      "setting": "inpatient",
+      "isolates": 328,
+      "susceptibility": {
+        "PIPC": 79,
+        "SBT/ABPC": 83,
+        "TAZ/PIPC": 94,
+        "MEPM": 100,
+        "CEZ": 93,
+        "CMZ": 98,
+        "CTRX": 94,
+        "CAZ": 94,
+        "CFPM": 94,
+        "AMK": 100,
+        "CPFX": 90,
+        "LVFX": 87,
+        "ST": 91
+      },
+      "annotations": [
+        "ESBL産生菌の割合：6%"
+      ],
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "k_oxytoca",
+      "setting": "inpatient",
+      "isolates": 109,
+      "susceptibility": {
+        "PIPC": 88,
+        "SBT/ABPC": 72,
+        "TAZ/PIPC": 91,
+        "MEPM": 100,
+        "CMZ": 100,
+        "CTRX": 99,
+        "CAZ": 100,
+        "CFPM": 100,
+        "AMK": 100,
+        "CPFX": 99,
+        "LVFX": 99,
+        "ST": 95
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "k_oxytoca_esbl",
+      "setting": "inpatient",
+      "isolates": 14,
+      "susceptibility": {
+        "MEPM": 100,
+        "CMZ": 100,
+        "AMK": 100,
+        "CPFX": 29,
+        "LVFX": 29,
+        "ST": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "k_oxytoca_total",
+      "setting": "inpatient",
+      "isolates": 123,
+      "susceptibility": {
+        "PIPC": 78,
+        "SBT/ABPC": 63,
+        "TAZ/PIPC": 80,
+        "MEPM": 100,
+        "CMZ": 100,
+        "CTRX": 88,
+        "CAZ": 89,
+        "CFPM": 89,
+        "AMK": 100,
+        "CPFX": 91,
+        "LVFX": 91,
+        "ST": 96
+      },
+      "annotations": [
+        "ESBL又はK1型BL産生菌の割合：11%"
+      ],
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "p_mirabilis",
+      "setting": "inpatient",
+      "isolates": 48,
+      "susceptibility": {
+        "ABPC": 94,
+        "PIPC": 100,
+        "SBT/ABPC": 98,
+        "TAZ/PIPC": 100,
+        "MEPM": 100,
+        "CEZ": 98,
+        "CMZ": 98,
+        "CTRX": 100,
+        "CAZ": 100,
+        "CFPM": 100,
+        "AMK": 100,
+        "CPFX": 98,
+        "LVFX": 96,
+        "ST": 85
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "p_mirabilis_esbl",
+      "setting": "inpatient",
+      "isolates": 0,
+      "susceptibility": {},
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "p_mirabilis_total",
+      "setting": "inpatient",
+      "isolates": 48,
+      "susceptibility": {
+        "ABPC": 94,
+        "PIPC": 100,
+        "SBT/ABPC": 98,
+        "TAZ/PIPC": 100,
+        "MEPM": 100,
+        "CEZ": 98,
+        "CMZ": 98,
+        "CTRX": 100,
+        "CAZ": 100,
+        "CFPM": 100,
+        "AMK": 100,
+        "CPFX": 98,
+        "LVFX": 96,
+        "ST": 85
+      },
+      "annotations": [
+        "ESBL産生菌の割合：0%"
+      ],
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "p_vulgaris",
+      "setting": "inpatient",
+      "isolates": 14,
+      "susceptibility": {
+        "ABPC": 7,
+        "PIPC": 100,
+        "SBT/ABPC": 100,
+        "TAZ/PIPC": 100,
+        "MEPM": 100,
+        "CMZ": 100,
+        "CTRX": 100,
+        "CAZ": 100,
+        "CFPM": 100,
+        "AMK": 100,
+        "CPFX": 100,
+        "LVFX": 100,
+        "ST": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "e_cloacae",
+      "setting": "inpatient",
+      "isolates": 291,
+      "susceptibility": {
+        "PIPC": 65,
+        "TAZ/PIPC": 67,
+        "MEPM": 100,
+        "CTRX": 64,
+        "CAZ": 65,
+        "CFPM": 94,
+        "AMK": 100,
+        "CPFX": 95,
+        "LVFX": 93,
+        "ST": 97
+      },
+      "annotations": [
+        "CREの割合：2%"
+      ],
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "k_aerogenes",
+      "setting": "inpatient",
+      "isolates": 88,
+      "susceptibility": {
+        "PIPC": 74,
+        "TAZ/PIPC": 75,
+        "MEPM": 99,
+        "CTRX": 75,
+        "CAZ": 75,
+        "CFPM": 99,
+        "AMK": 100,
+        "CPFX": 98,
+        "LVFX": 97,
+        "ST": 97
+      },
+      "annotations": [
+        "CREの割合：5%"
+      ],
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "c_freundii",
+      "setting": "inpatient",
+      "isolates": 22,
+      "susceptibility": {
+        "PIPC": 86,
+        "TAZ/PIPC": 95,
+        "MEPM": 100,
+        "CTRX": 86,
+        "CAZ": 82,
+        "CFPM": 100,
+        "AMK": 100,
+        "CPFX": 100,
+        "LVFX": 100,
+        "ST": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "s_marcescens",
+      "setting": "inpatient",
+      "isolates": 67,
+      "susceptibility": {
+        "PIPC": 99,
+        "TAZ/PIPC": 99,
+        "MEPM": 100,
+        "CTRX": 99,
+        "CAZ": 100,
+        "CFPM": 100,
+        "AMK": 100,
+        "CPFX": 97,
+        "LVFX": 96,
+        "ST": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "m_morganii",
+      "setting": "inpatient",
+      "isolates": 32,
+      "susceptibility": {
+        "PIPC": 78,
+        "SBT/ABPC": 16,
+        "TAZ/PIPC": 97,
+        "MEPM": 100,
+        "CMZ": 97,
+        "CTRX": 100,
+        "CAZ": 100,
+        "CFPM": 100,
+        "AMK": 100,
+        "CPFX": 91,
+        "LVFX": 91,
+        "ST": 94
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "p_aeruginosa",
+      "setting": "inpatient",
+      "isolates": 405,
+      "susceptibility": {
+        "PIPC": 82,
+        "TAZ/PIPC": 83,
+        "MEPM": 88,
+        "CAZ": 89,
+        "CFPM": 91,
+        "AMK": 95,
+        "CPFX": 95,
+        "LVFX": 85
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "acinetobacter",
+      "setting": "inpatient",
+      "isolates": 41,
+      "susceptibility": {
+        "PIPC": 61,
+        "SBT/ABPC": 95,
+        "TAZ/PIPC": 71,
+        "MEPM": 95,
+        "CAZ": 73,
+        "CFPM": 90,
+        "AMK": 100,
+        "CPFX": 93,
+        "LVFX": 93
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "b_fragilis",
+      "setting": "inpatient",
+      "isolates": 71,
+      "susceptibility": {
+        "SBT/ABPC": 90,
+        "TAZ/PIPC": 99,
+        "MEPM": 97,
+        "CMZ": 77,
+        "CLDM": 68
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "anaerobic_gnr_other",
+      "setting": "inpatient",
+      "isolates": 99,
+      "susceptibility": {
+        "SBT/ABPC": 87,
+        "TAZ/PIPC": 100,
+        "MEPM": 100,
+        "CMZ": 59,
+        "CLDM": 55
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "h_influenzae",
+      "setting": "inpatient",
+      "isolates": 48,
+      "susceptibility": {
+        "ABPC": 40,
+        "SBT/ABPC": 50,
+        "MEPM": 94,
+        "CTRX": 100,
+        "LVFX": 98
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "mssa",
+      "setting": "inpatient",
+      "isolates": 457,
+      "susceptibility": {
+        "CEZ": 100,
+        "CLDM": 77,
+        "ST": 100,
+        "MINO": 99,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "mrsa",
+      "setting": "inpatient",
+      "isolates": 230,
+      "susceptibility": {
+        "CLDM": 24,
+        "ST": 99,
+        "MINO": 77,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "s_aureus_total",
+      "setting": "inpatient",
+      "isolates": 687,
+      "susceptibility": {
+        "CEZ": 67,
+        "CLDM": 60,
+        "ST": 99,
+        "MINO": 92,
+        "VCM": 100
+      },
+      "annotations": [
+        "MRSAの割合：33%"
+      ],
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "msse",
+      "setting": "inpatient",
+      "isolates": 65,
+      "susceptibility": {
+        "CEZ": 100,
+        "CLDM": 85,
+        "ST": 97,
+        "MINO": 100,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "mrse",
+      "setting": "inpatient",
+      "isolates": 302,
+      "susceptibility": {
+        "CLDM": 41,
+        "ST": 76,
+        "MINO": 79,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "s_epidermidis_total",
+      "setting": "inpatient",
+      "isolates": 367,
+      "susceptibility": {
+        "CEZ": 18,
+        "CLDM": 49,
+        "ST": 80,
+        "MINO": 83,
+        "VCM": 100
+      },
+      "annotations": [
+        "MRSEの割合：82%"
+      ],
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "s_lugdunensis",
+      "setting": "inpatient",
+      "isolates": 14,
+      "susceptibility": {
+        "CEZ": 29,
+        "CLDM": 64,
+        "ST": 100,
+        "MINO": 71,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "cns_other",
+      "setting": "inpatient",
+      "isolates": 133,
+      "susceptibility": {
+        "CEZ": 29,
+        "CLDM": 58,
+        "ST": 71,
+        "MINO": 99,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "e_faecalis",
+      "setting": "inpatient",
+      "isolates": 323,
+      "susceptibility": {
+        "PCG": 99,
+        "ABPC": 99,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "e_faecium",
+      "setting": "inpatient",
+      "isolates": 142,
+      "susceptibility": {
+        "PCG": 15,
+        "ABPC": 16,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "vgs",
+      "setting": "inpatient",
+      "isolates": 123,
+      "susceptibility": {
+        "PCG": 78,
+        "CLDM": 84,
+        "VCM": 100,
+        "CTRX": 98
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "sag",
+      "setting": "inpatient",
+      "isolates": 109,
+      "susceptibility": {
+        "PCG": 96,
+        "CLDM": 92,
+        "VCM": 100,
+        "CTRX": 97
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "gas",
+      "setting": "inpatient",
+      "isolates": 21,
+      "susceptibility": {
+        "PCG": 100,
+        "CLDM": 81,
+        "VCM": 100,
+        "CTRX": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "gbs",
+      "setting": "inpatient",
+      "isolates": 94,
+      "susceptibility": {
+        "PCG": 100,
+        "CLDM": 71,
+        "VCM": 100,
+        "CTRX": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "ggs",
+      "setting": "inpatient",
+      "isolates": 8,
+      "susceptibility": {
+        "PCG": 100,
+        "CLDM": 86,
+        "VCM": 100,
+        "CTRX": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "s_pneumoniae_meningitis",
+      "setting": "inpatient",
+      "isolates": 1,
+      "susceptibility": {
+        "PCG": 100,
+        "CTRX": 100,
+        "VCM": 100,
+        "MEPM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "s_pneumoniae_nonmeningitis",
+      "setting": "inpatient",
+      "isolates": 16,
+      "susceptibility": {
+        "PCG": 88,
+        "CTRX": 94,
+        "CLDM": 38,
+        "VCM": 100,
+        "MEPM": 75
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          70
+        ]
+      }
+    },
+    {
+      "organismId": "e_coli",
+      "setting": "outpatient",
+      "isolates": 642,
+      "susceptibility": {
+        "ABPC": 71,
+        "PIPC": 77,
+        "SBT/ABPC": 79,
+        "TAZ/PIPC": 99,
+        "MEPM": 100,
+        "CEZ": 96,
+        "CMZ": 98,
+        "CTRX": 99,
+        "CAZ": 99,
+        "CFPM": 99,
+        "AMK": 100,
+        "CPFX": 75,
+        "LVFX": 70,
+        "ST": 89
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "e_coli_esbl",
+      "setting": "outpatient",
+      "isolates": 89,
+      "susceptibility": {
+        "SBT/ABPC": 36,
+        "TAZ/PIPC": 92,
+        "MEPM": 100,
+        "CMZ": 100,
+        "AMK": 100,
+        "CPFX": 18,
+        "LVFX": 10,
+        "ST": 56
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "e_coli_total",
+      "setting": "outpatient",
+      "isolates": 731,
+      "susceptibility": {
+        "ABPC": 63,
+        "PIPC": 68,
+        "SBT/ABPC": 74,
+        "TAZ/PIPC": 98,
+        "MEPM": 100,
+        "CEZ": 84,
+        "CMZ": 98,
+        "CTRX": 87,
+        "CAZ": 87,
+        "CFPM": 87,
+        "AMK": 100,
+        "CPFX": 68,
+        "LVFX": 62,
+        "ST": 85
+      },
+      "annotations": [
+        "ESBL産生菌の割合：12%"
+      ],
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "k_pneumoniae",
+      "setting": "outpatient",
+      "isolates": 183,
+      "susceptibility": {
+        "PIPC": 92,
+        "SBT/ABPC": 89,
+        "TAZ/PIPC": 99,
+        "MEPM": 100,
+        "CEZ": 99,
+        "CMZ": 100,
+        "CTRX": 100,
+        "CAZ": 100,
+        "CFPM": 100,
+        "AMK": 100,
+        "CPFX": 93,
+        "LVFX": 91,
+        "ST": 90
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "k_pneumoniae_esbl",
+      "setting": "outpatient",
+      "isolates": 15,
+      "susceptibility": {
+        "SBT/ABPC": 7,
+        "TAZ/PIPC": 47,
+        "MEPM": 100,
+        "CMZ": 100,
+        "AMK": 100,
+        "CPFX": 33,
+        "LVFX": 33,
+        "ST": 13
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "k_pneumoniae_total",
+      "setting": "outpatient",
+      "isolates": 198,
+      "susceptibility": {
+        "PIPC": 85,
+        "SBT/ABPC": 83,
+        "TAZ/PIPC": 95,
+        "MEPM": 100,
+        "CEZ": 91,
+        "CMZ": 100,
+        "CTRX": 92,
+        "CAZ": 92,
+        "CFPM": 92,
+        "AMK": 100,
+        "CPFX": 88,
+        "LVFX": 87,
+        "ST": 84
+      },
+      "annotations": [
+        "ESBL産生菌の割合：8%"
+      ],
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "k_oxytoca",
+      "setting": "outpatient",
+      "isolates": 65,
+      "susceptibility": {
+        "PIPC": 94,
+        "SBT/ABPC": 85,
+        "TAZ/PIPC": 95,
+        "MEPM": 100,
+        "CMZ": 100,
+        "CTRX": 100,
+        "CAZ": 100,
+        "CFPM": 100,
+        "AMK": 100,
+        "CPFX": 95,
+        "LVFX": 95,
+        "ST": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "k_oxytoca_esbl",
+      "setting": "outpatient",
+      "isolates": 9,
+      "susceptibility": {
+        "MEPM": 100,
+        "CMZ": 100,
+        "AMK": 100,
+        "CPFX": 22,
+        "LVFX": 22,
+        "ST": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "k_oxytoca_total",
+      "setting": "outpatient",
+      "isolates": 74,
+      "susceptibility": {
+        "PIPC": 82,
+        "SBT/ABPC": 74,
+        "TAZ/PIPC": 84,
+        "MEPM": 100,
+        "CMZ": 100,
+        "CTRX": 88,
+        "CAZ": 88,
+        "CFPM": 88,
+        "AMK": 100,
+        "CPFX": 86,
+        "LVFX": 86,
+        "ST": 100
+      },
+      "annotations": [
+        "ESBL又はK1型BL産生菌の割合：12%"
+      ],
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "p_mirabilis",
+      "setting": "outpatient",
+      "isolates": 61,
+      "susceptibility": {
+        "ABPC": 84,
+        "PIPC": 95,
+        "SBT/ABPC": 97,
+        "TAZ/PIPC": 100,
+        "MEPM": 100,
+        "CEZ": 98,
+        "CMZ": 100,
+        "CTRX": 100,
+        "CAZ": 100,
+        "CFPM": 100,
+        "AMK": 100,
+        "CPFX": 87,
+        "LVFX": 85,
+        "ST": 77
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "p_mirabilis_esbl",
+      "setting": "outpatient",
+      "isolates": 2,
+      "susceptibility": {
+        "SBT/ABPC": 50,
+        "TAZ/PIPC": 100,
+        "MEPM": 100,
+        "CMZ": 100,
+        "AMK": 100,
+        "ST": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "p_mirabilis_total",
+      "setting": "outpatient",
+      "isolates": 63,
+      "susceptibility": {
+        "ABPC": 81,
+        "PIPC": 92,
+        "SBT/ABPC": 95,
+        "TAZ/PIPC": 100,
+        "MEPM": 100,
+        "CEZ": 95,
+        "CMZ": 100,
+        "CTRX": 97,
+        "CAZ": 97,
+        "CFPM": 97,
+        "AMK": 100,
+        "CPFX": 84,
+        "LVFX": 83,
+        "ST": 78
+      },
+      "annotations": [
+        "ESBL産生菌の割合：3%"
+      ],
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "p_vulgaris",
+      "setting": "outpatient",
+      "isolates": 15,
+      "susceptibility": {
+        "PIPC": 87,
+        "SBT/ABPC": 87,
+        "TAZ/PIPC": 100,
+        "MEPM": 100,
+        "CMZ": 100,
+        "CTRX": 100,
+        "CAZ": 100,
+        "CFPM": 100,
+        "AMK": 100,
+        "CPFX": 100,
+        "LVFX": 100,
+        "ST": 93
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "e_cloacae",
+      "setting": "outpatient",
+      "isolates": 56,
+      "susceptibility": {
+        "PIPC": 80,
+        "TAZ/PIPC": 89,
+        "MEPM": 100,
+        "CTRX": 89,
+        "CAZ": 91,
+        "CFPM": 100,
+        "AMK": 100,
+        "CPFX": 86,
+        "LVFX": 84,
+        "ST": 86
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "k_aerogenes",
+      "setting": "outpatient",
+      "isolates": 41,
+      "susceptibility": {
+        "PIPC": 85,
+        "TAZ/PIPC": 88,
+        "MEPM": 100,
+        "CTRX": 80,
+        "CAZ": 85,
+        "CFPM": 100,
+        "AMK": 100,
+        "CPFX": 100,
+        "LVFX": 98,
+        "ST": 100
+      },
+      "annotations": [
+        "CREの割合：7%"
+      ],
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "c_freundii",
+      "setting": "outpatient",
+      "isolates": 15,
+      "susceptibility": {
+        "PIPC": 100,
+        "TAZ/PIPC": 100,
+        "MEPM": 100,
+        "CTRX": 100,
+        "CAZ": 100,
+        "CFPM": 100,
+        "AMK": 100,
+        "CPFX": 93,
+        "LVFX": 80,
+        "ST": 73
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "s_marcescens",
+      "setting": "outpatient",
+      "isolates": 36,
+      "susceptibility": {
+        "PIPC": 97,
+        "TAZ/PIPC": 97,
+        "MEPM": 100,
+        "CTRX": 100,
+        "CAZ": 100,
+        "CFPM": 100,
+        "AMK": 100,
+        "CPFX": 100,
+        "LVFX": 94,
+        "ST": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "m_morganii",
+      "setting": "outpatient",
+      "isolates": 19,
+      "susceptibility": {
+        "PIPC": 79,
+        "SBT/ABPC": 26,
+        "TAZ/PIPC": 95,
+        "MEPM": 100,
+        "CMZ": 100,
+        "CTRX": 95,
+        "CAZ": 89,
+        "CFPM": 100,
+        "AMK": 100,
+        "CPFX": 100,
+        "LVFX": 100,
+        "ST": 95
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "p_aeruginosa",
+      "setting": "outpatient",
+      "isolates": 103,
+      "susceptibility": {
+        "PIPC": 89,
+        "TAZ/PIPC": 90,
+        "MEPM": 94,
+        "CAZ": 95,
+        "CFPM": 96,
+        "AMK": 97,
+        "CPFX": 84,
+        "LVFX": 81
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "acinetobacter",
+      "setting": "outpatient",
+      "isolates": 17,
+      "susceptibility": {
+        "PIPC": 76,
+        "SBT/ABPC": 100,
+        "TAZ/PIPC": 94,
+        "MEPM": 100,
+        "CAZ": 100,
+        "CFPM": 100,
+        "AMK": 100,
+        "CPFX": 88,
+        "LVFX": 94
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "b_fragilis",
+      "setting": "outpatient",
+      "isolates": 31,
+      "susceptibility": {
+        "SBT/ABPC": 84,
+        "TAZ/PIPC": 100,
+        "MEPM": 100,
+        "CMZ": 90,
+        "CLDM": 60
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "anaerobic_gnr_other",
+      "setting": "outpatient",
+      "isolates": 56,
+      "susceptibility": {
+        "SBT/ABPC": 89,
+        "TAZ/PIPC": 100,
+        "MEPM": 98,
+        "CMZ": 84,
+        "CLDM": 75
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "h_influenzae",
+      "setting": "outpatient",
+      "isolates": 37,
+      "susceptibility": {
+        "ABPC": 38,
+        "SBT/ABPC": 49,
+        "MEPM": 89,
+        "CTRX": 97,
+        "LVFX": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "mssa",
+      "setting": "outpatient",
+      "isolates": 352,
+      "susceptibility": {
+        "CEZ": 99,
+        "CLDM": 82,
+        "ST": 99,
+        "MINO": 99,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "mrsa",
+      "setting": "outpatient",
+      "isolates": 83,
+      "susceptibility": {
+        "CLDM": 19,
+        "ST": 100,
+        "MINO": 88,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "s_aureus_total",
+      "setting": "outpatient",
+      "isolates": 435,
+      "susceptibility": {
+        "CEZ": 80,
+        "CLDM": 70,
+        "ST": 99,
+        "MINO": 97,
+        "VCM": 100
+      },
+      "annotations": [
+        "MRSAの割合：19%"
+      ],
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "msse",
+      "setting": "outpatient",
+      "isolates": 44,
+      "susceptibility": {
+        "CEZ": 100,
+        "CLDM": 66,
+        "ST": 93,
+        "MINO": 100,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "mrse",
+      "setting": "outpatient",
+      "isolates": 51,
+      "susceptibility": {
+        "CEZ": 4,
+        "CLDM": 59,
+        "ST": 84,
+        "MINO": 94,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "s_epidermidis_total",
+      "setting": "outpatient",
+      "isolates": 95,
+      "susceptibility": {
+        "CEZ": 48,
+        "CLDM": 62,
+        "ST": 88,
+        "MINO": 97,
+        "VCM": 100
+      },
+      "annotations": [
+        "MRSEの割合：54%"
+      ],
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "s_lugdunensis",
+      "setting": "outpatient",
+      "isolates": 22,
+      "susceptibility": {
+        "CEZ": 73,
+        "CLDM": 82,
+        "ST": 100,
+        "MINO": 100,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "cns_other",
+      "setting": "outpatient",
+      "isolates": 83,
+      "susceptibility": {
+        "CEZ": 46,
+        "CLDM": 60,
+        "ST": 89,
+        "MINO": 98,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "e_faecalis",
+      "setting": "outpatient",
+      "isolates": 146,
+      "susceptibility": {
+        "PCG": 99,
+        "ABPC": 99,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "e_faecium",
+      "setting": "outpatient",
+      "isolates": 27,
+      "susceptibility": {
+        "PCG": 16,
+        "ABPC": 16,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "vgs",
+      "setting": "outpatient",
+      "isolates": 81,
+      "susceptibility": {
+        "PCG": 69,
+        "ABPC": 99,
+        "CLDM": 89,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "sag",
+      "setting": "outpatient",
+      "isolates": 63,
+      "susceptibility": {
+        "PCG": 94,
+        "ABPC": 98,
+        "CLDM": 79,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "gas",
+      "setting": "outpatient",
+      "isolates": 25,
+      "susceptibility": {
+        "PCG": 100,
+        "ABPC": 100,
+        "CLDM": 64,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "gbs",
+      "setting": "outpatient",
+      "isolates": 205,
+      "susceptibility": {
+        "PCG": 100,
+        "ABPC": 100,
+        "CLDM": 54,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "ggs",
+      "setting": "outpatient",
+      "isolates": 33,
+      "susceptibility": {
+        "PCG": 100,
+        "ABPC": 100,
+        "CLDM": 73,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "s_pneumoniae_meningitis",
+      "setting": "outpatient",
+      "isolates": 1,
+      "susceptibility": {
+        "PCG": 100,
+        "ABPC": 100,
+        "CTRX": 100,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    },
+    {
+      "organismId": "s_pneumoniae_nonmeningitis",
+      "setting": "outpatient",
+      "isolates": 16,
+      "susceptibility": {
+        "PCG": 94,
+        "ABPC": 75,
+        "CTRX": 94,
+        "CLDM": 31,
+        "VCM": 100
+      },
+      "source": {
+        "edition": 9,
+        "pages": [
+          71
+        ]
+      }
+    }
   ]
 }

@@ -1,0 +1,26 @@
+# 令和8年度アンチバイオグラム（入院）目視照合による訂正
+# グラム陽性球菌 — レンサ球菌・肺炎球菌の列ずれ
+#
+# 指摘内容:
+#   ・VGS / SAG / GAS / GBS / GGS … ABPC 列の値は CTRX 列のもの
+#   ・S. pneumoniae（髄膜炎・非髄膜炎）… ABPC 列の値は MEPM 列のもの
+#
+# 区分  菌名                        項目    正しい値
+
+# --- レンサ球菌: ABPC → CTRX ---
+入院	VGS	CTRX	98
+入院	VGS	ABPC	-
+入院	SAG	CTRX	97
+入院	SAG	ABPC	-
+入院	GAS	CTRX	100
+入院	GAS	ABPC	-
+入院	GBS	CTRX	100
+入院	GBS	ABPC	-
+入院	GGS	CTRX	100
+入院	GGS	ABPC	-
+
+# --- 肺炎球菌: ABPC → MEPM ---
+入院	S. pneumoniae（髄膜炎）	MEPM	100
+入院	S. pneumoniae（髄膜炎）	ABPC	-
+入院	S. pneumoniae（非髄膜炎）	MEPM	75
+入院	S. pneumoniae（非髄膜炎）	ABPC	-
