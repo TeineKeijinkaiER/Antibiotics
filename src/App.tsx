@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { PatientMode, PatientState, Drug } from "./types";
 import { DRUGS, DRUG_BY_ID, ORGANISM_BY_ID, MANUAL_EDITION } from "./data";
 import { searchDrugs, searchOrganisms, drugSuggestions } from "./lib/search";
@@ -16,7 +16,17 @@ import {
   PediatricWeight,
   PcgContinuousInfusion,
   Stewardship,
+  Amr,
 } from "./components/Reference";
+import {
+  getFavorites,
+  getHistory,
+  toggleFavorite,
+  pushHistory,
+  clearHistory,
+  type ItemRef,
+} from "./lib/storage";
+import { subscribeSwStatus, getSwStatus, applyUpdate, type SwStatus } from "./lib/sw";
 
 type View =
   | { type: "home" }
@@ -33,7 +43,8 @@ type PageKey =
   | "postexposure"
   | "pediatric-weight"
   | "pcg"
-  | "stewardship";
+  | "stewardship"
+  | "amr";
 
 const PAGES: { key: PageKey; title: string; sub: string }[] = [
   { key: "prophylaxis", title: "周術期予防抗菌薬", sub: "領域から推奨薬・1回量・投与期間" },
@@ -43,6 +54,7 @@ const PAGES: { key: PageKey; title: string; sub: string }[] = [
   { key: "formulary", title: "当院採用注射抗菌薬一覧", sub: "規格・薬価・投与時間・配合変化" },
   { key: "pediatric-weight", title: "小児の体重・薬用量", sub: "年齢別体重、Augsberger式ほか" },
   { key: "stewardship", title: "適正使用指針・AWaRe", sub: "申請ルールとAWaRe分類" },
+  { key: "amr", title: "AMR対策", sub: "抗微生物薬適正使用の手引き・参考文献" },
 ];
 
 type SearchTarget = "drug" | "organism";
@@ -140,6 +152,11 @@ export default function App() {
   const [target, setTarget] = useState<SearchTarget>("drug");
   const [showPatient, setShowPatient] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
+  const [favorites, setFavorites] = useState<ItemRef[]>(getFavorites);
+  const [history, setHistory] = useState<ItemRef[]>(getHistory);
+  const [swStatus, setSwStatus] = useState<SwStatus>(getSwStatus);
+
+  useEffect(() => subscribeSwStatus(setSwStatus), []);
 
   const drugResults = useMemo(
     () => (target === "drug" && query ? searchDrugs(query) : []),
@@ -155,8 +172,38 @@ export default function App() {
   const go = (v: View) => {
     setView(v);
     setNotice(null);
+    if (v.type === "drug") setHistory(pushHistory({ kind: "drug", id: v.id }));
+    if (v.type === "organism") setHistory(pushHistory({ kind: "organism", id: v.id }));
     window.scrollTo({ top: 0 });
   };
+
+  const currentItem: ItemRef | null =
+    view.type === "drug"
+      ? { kind: "drug", id: view.id }
+      : view.type === "organism"
+        ? { kind: "organism", id: view.id }
+        : null;
+
+  const isFav = (item: ItemRef) =>
+    favorites.some((f) => f.kind === item.kind && f.id === item.id);
+
+  const labelOf = (item: ItemRef) =>
+    item.kind === "drug"
+      ? DRUG_BY_ID.get(item.id)?.genericName.ja
+      : ORGANISM_BY_ID.get(item.id)?.japaneseName;
+
+  const itemList = (items: ItemRef[]) =>
+    items
+      .filter((i) => labelOf(i) != null)
+      .map((i) => (
+        <button
+          key={`${i.kind}-${i.id}`}
+          className="tab"
+          onClick={() => go(i.kind === "drug" ? { type: "drug", id: i.id } : { type: "organism", id: i.id })}
+        >
+          {labelOf(i)}
+        </button>
+      ));
 
   const switchMode = () => {
     const next: PatientMode = mode === "adult" ? "pediatric" : "adult";
@@ -170,7 +217,14 @@ export default function App() {
   return (
     <>
       <header className={`topbar mode-${mode}`}>
-        <button className="brand link-btn" style={{ textDecoration: "none" }} onClick={() => go({ type: "home" })}>
+        <button
+          className="brand link-btn"
+          style={{ textDecoration: "none" }}
+          onClick={() => {
+            setQuery("");
+            go({ type: "home" });
+          }}
+        >
           抗菌薬投与ナビ
         </button>
         <span className={`mode-badge ${mode}`}>{MODE_LABEL[mode]}</span>
@@ -184,6 +238,15 @@ export default function App() {
       </header>
 
       <main className="wrap">
+        {swStatus === "update-available" && (
+          <div className="banner warn">
+            <b>新しいデータ版が利用できます。</b>
+            表示中の内容は古い可能性があります。
+            <button className="link-btn" onClick={() => void applyUpdate()}>
+              今すぐ更新する
+            </button>
+          </div>
+        )}
         {notice && <div className="banner info">{notice}</div>}
 
         {showPatient && (
@@ -193,9 +256,20 @@ export default function App() {
         )}
 
         {view.type !== "home" && (
-          <button className="back" onClick={() => go({ type: "home" })}>
-            ← ホーム
-          </button>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+            <button className="back" onClick={() => setView({ type: "home" })}>
+              ← ホーム
+            </button>
+            {currentItem && (
+              <button
+                className="tab"
+                aria-pressed={isFav(currentItem)}
+                onClick={() => setFavorites(toggleFavorite(currentItem))}
+              >
+                {isFav(currentItem) ? "★ お気に入り登録済み" : "☆ お気に入りに追加"}
+              </button>
+            )}
+          </div>
         )}
 
         {view.type === "home" && (
@@ -221,6 +295,29 @@ export default function App() {
                 aria-label={target === "drug" ? "抗菌薬を検索" : "菌名を検索"}
               />
             </div>
+
+            {!query && favorites.length > 0 && (
+              <section className="section" style={{ marginTop: 0 }}>
+                <h3>お気に入り</h3>
+                <div className="tabs">{itemList(favorites)}</div>
+              </section>
+            )}
+
+            {!query && history.length > 0 && (
+              <section className="section" style={{ marginTop: favorites.length > 0 ? 20 : 0 }}>
+                <h3>最近見たもの</h3>
+                <div className="tabs">{itemList(history)}</div>
+                <button
+                  className="link-btn"
+                  onClick={() => {
+                    clearHistory();
+                    setHistory([]);
+                  }}
+                >
+                  履歴を消す
+                </button>
+              </section>
+            )}
 
             {target === "drug" && (
               <div className="list">
@@ -346,11 +443,13 @@ export default function App() {
         {view.type === "page" && view.key === "pediatric-weight" && <PediatricWeight />}
         {view.type === "page" && view.key === "pcg" && <PcgContinuousInfusion />}
         {view.type === "page" && view.key === "stewardship" && <Stewardship />}
+        {view.type === "page" && view.key === "amr" && <Amr />}
 
         <footer className="foot">
           データ版：{MANUAL_EDITION.title} {MANUAL_EDITION.label}（{MANUAL_EDITION.issuedOn} ／{" "}
           {MANUAL_EDITION.facility} {MANUAL_EDITION.author}）
           <br />
+          {swStatus === "ready" && <>オフライン利用可（端末に保存済み）<br /></>}
           本アプリが示す投与量は当院でコンセンサスの得られた標準的な投与量であり、最終的な投与判断は主治医が行います。
           使用時は添付文書を改めて精読し、必要に応じて感染症科・ICT／ASTへコンサルテーションしてください。
         </footer>

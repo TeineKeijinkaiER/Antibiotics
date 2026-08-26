@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run validate && tsc -b && vite build",
+    "build": "npm run validate && tsc -b && vite build && node scripts/make-sw.mjs",
     "preview": "vite preview",
     "validate": "node scripts/validate-data.mjs && node scripts/check-antibiogram-consistency.mjs",
+    "icons": "node scripts/make-icons.mjs",
     "antibiogram:check": "node scripts/check-antibiogram-consistency.mjs",
     "antibiogram:sheet": "node scripts/make-checksheet.mjs",
     "antibiogram:corrections": "node scripts/apply-corrections.mjs",

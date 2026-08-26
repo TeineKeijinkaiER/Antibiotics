@@ -304,6 +304,74 @@ export function PcgContinuousInfusion() {
   );
 }
 
+/* ---------------- AMR対策（要件 FR-009-5） ---------------- */
+
+export function Amr() {
+  const a = REFERENCE.amr;
+  const b = REFERENCE.bibliography;
+
+  return (
+    <div>
+      <div className="detail-head">
+        <h2>{a.title}</h2>
+        <p className="en">AMR（Antimicrobial resistance）対策 ／ 原典 p.75-76</p>
+      </div>
+
+      {a.sections.map((s) => (
+        <section className="section" key={s.heading}>
+          <h3>{s.heading}</h3>
+          {s.paragraphs.map((p, i) => (
+            <p key={i} style={{ fontSize: 13.5, color: "var(--ink-2)", margin: "0 0 10px" }}>
+              {p}
+            </p>
+          ))}
+        </section>
+      ))}
+
+      <section className="section">
+        <h3>日本のAMRアクションプラン 成果指標</h3>
+        <ul className="notes" style={{ fontSize: 14 }}>
+          {a.targets.map((t, i) => (
+            <li key={i}>{t}</li>
+          ))}
+        </ul>
+        <div className="banner info" style={{ marginTop: 10 }}>{a.targetsNote}</div>
+      </section>
+
+      <section className="section">
+        <h3>『抗微生物薬適正使用の手引き』について</h3>
+        <p style={{ fontSize: 13.5, color: "var(--ink-2)", margin: 0 }}>{a.guideNote}</p>
+        <div className="dose-ind" style={{ marginTop: 14 }}>閲覧場所</div>
+        <ul className="notes">
+          {a.links.map((l) => (
+            <li key={l.label}>
+              {l.url ? (
+                <a href={l.url} target="_blank" rel="noreferrer">
+                  {l.label}
+                </a>
+              ) : (
+                <b>{l.label}</b>
+              )}
+              {l.note && <> — {l.note}</>}
+            </li>
+          ))}
+        </ul>
+        <p className="source-line">原典 p.{a.source.pages.join(", ")}</p>
+      </section>
+
+      <section className="section">
+        <h3>{b.title}</h3>
+        <ol className="notes" style={{ fontSize: 12.5 }}>
+          {b.items.map((it, i) => (
+            <li key={i}>{it}</li>
+          ))}
+        </ol>
+        <p className="source-line">原典 p.{b.source.pages.join(", ")}</p>
+      </section>
+    </div>
+  );
+}
+
 /* ---------------- 適正使用指針・AWaRe（要件 FR-009-5） ---------------- */
 
 export function Stewardship() {

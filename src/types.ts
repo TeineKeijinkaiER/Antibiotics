@@ -322,6 +322,20 @@ export type ReferenceData = {
     groups: { category: string; drugs: { generic: string; brand: string }[] }[];
     source: Source;
   };
+  amr: {
+    title: string;
+    sections: { heading: string; paragraphs: string[] }[];
+    targets: string[];
+    targetsNote: string;
+    guideNote: string;
+    links: { label: string; url: string | null; note?: string }[];
+    source: Source;
+  };
+  bibliography: {
+    title: string;
+    items: string[];
+    source: Source;
+  };
 };
 
 export type PatientMode = "adult" | "pediatric";

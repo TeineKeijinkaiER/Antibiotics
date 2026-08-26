@@ -4,3 +4,8 @@ dist/
 *.log
 .DS_Store
 tsconfig.tsbuildinfo
+
+# 検証用の使い捨てスクリプト
+.pwa-test.mjs
+.sheet.mjs
+.verify.mjs
