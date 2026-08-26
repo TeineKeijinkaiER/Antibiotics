@@ -1617,9 +1617,9 @@
       "isolates": 81,
       "susceptibility": {
         "PCG": 69,
-        "ABPC": 99,
         "CLDM": 89,
-        "VCM": 100
+        "VCM": 100,
+        "CTRX": 99
       },
       "source": {
         "edition": 9,
@@ -1634,9 +1634,9 @@
       "isolates": 63,
       "susceptibility": {
         "PCG": 94,
-        "ABPC": 98,
         "CLDM": 79,
-        "VCM": 100
+        "VCM": 100,
+        "CTRX": 98
       },
       "source": {
         "edition": 9,
@@ -1651,9 +1651,9 @@
       "isolates": 25,
       "susceptibility": {
         "PCG": 100,
-        "ABPC": 100,
         "CLDM": 64,
-        "VCM": 100
+        "VCM": 100,
+        "CTRX": 100
       },
       "source": {
         "edition": 9,
@@ -1668,9 +1668,9 @@
       "isolates": 205,
       "susceptibility": {
         "PCG": 100,
-        "ABPC": 100,
         "CLDM": 54,
-        "VCM": 100
+        "VCM": 100,
+        "CTRX": 100
       },
       "source": {
         "edition": 9,
@@ -1685,9 +1685,9 @@
       "isolates": 33,
       "susceptibility": {
         "PCG": 100,
-        "ABPC": 100,
         "CLDM": 73,
-        "VCM": 100
+        "VCM": 100,
+        "CTRX": 100
       },
       "source": {
         "edition": 9,
@@ -1702,9 +1702,9 @@
       "isolates": 1,
       "susceptibility": {
         "PCG": 100,
-        "ABPC": 100,
         "CTRX": 100,
-        "VCM": 100
+        "VCM": 100,
+        "MEPM": 100
       },
       "source": {
         "edition": 9,
@@ -1719,10 +1719,10 @@
       "isolates": 16,
       "susceptibility": {
         "PCG": 94,
-        "ABPC": 75,
         "CTRX": 94,
         "CLDM": 31,
-        "VCM": 100
+        "VCM": 100,
+        "MEPM": 75
       },
       "source": {
         "edition": 9,
