@@ -13,12 +13,20 @@ function tier(pct: number): "good" | "warn" | "bad" {
 const LOW_ISOLATE_THRESHOLD = 30;
 
 export function AntibiogramNotice() {
-  if (ANTIBIOGRAM.meta.verified) return null;
+  const { verified, verifiedOn } = ANTIBIOGRAM.meta;
+  if (!verified) {
+    return (
+      <div className="banner warn">
+        <b>このアンチバイオグラムは検証待ちです。</b>
+        {ANTIBIOGRAM.meta.verificationNote}
+      </div>
+    );
+  }
+  if (!verifiedOn) return null;
   return (
-    <div className="banner warn">
-      <b>このアンチバイオグラムは検証待ちです。</b>
-      {ANTIBIOGRAM.meta.verificationNote}
-    </div>
+    <p className="source-line">
+      原本照合済み（{verifiedOn} 感染制御管理室）
+    </p>
   );
 }
 

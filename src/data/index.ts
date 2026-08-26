@@ -38,6 +38,8 @@ export const ANTIBIOGRAM = antibiogramJson as unknown as {
     note: string;
     empiricNote: string;
     verified: boolean;
+    /** 原本との照合を完了した日（verified が true のときに入る） */
+    verifiedOn?: string;
     verificationNote: string;
   };
   rows: AntibiogramRow[];

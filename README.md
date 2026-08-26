@@ -79,28 +79,27 @@ scripts/validate-data.mjs         データ品質ゲート
 
 ## 既知の要検証事項
 
-- **アンチバイオグラム（p.70-71）は原データとの突合が未了。** PDF のテキスト抽出では表の列が崩れるため、
-  ESBL産生率・MRSA/MRSE率を用いた算術整合チェック（例：S. aureus total の CEZ 67% = MSSA の CEZ 100% × (1 − MRSA率 0.33)）
-  で主要行の列対応を検証しているが、**院内公開前に作成元 Excel との突合が必須**。
-  アプリ内でもこの旨をバナー表示している（`antibiogram.json` の `meta.verified: false`）。
-  突合の手順とツールは [docs/04_アンチバイオグラム突合手順.md](docs/04_アンチバイオグラム突合手順.md) を参照。
-
-  作成元Excelの提供は受けられないため、**印刷したシートと原本を並べての目視照合**を本線とする。
-
-  ```bash
-  npm run antibiogram:check                        # 事前チェック（機械で裏が取れる範囲を確定）
-  npm run antibiogram:sheet > checksheet.html      # 原典と同じ列順・行順の照合シートを出力→A4横で印刷
-  npm run antibiogram:corrections corrections.txt  # 記入した訂正を確認（--apply で反映）
-  ```
-
-  自己整合チェックは 12組・126セルすべてで加重平均が一致しており（例：S. aureus total の
-  CEZ 67% = MSSA の CEZ 100% × (1 − MRSA率 0.33)）、大腸菌・肺炎桿菌・K. oxytoca・
-  P. mirabilis・S. aureus・S. epidermidis の18行×2区分は列対応の信頼度が高い。
-  一方、total 行を持たない菌（緑膿菌、腸球菌、レンサ球菌ほか）は機械では検証できず、
-  **入院・外来あわせて44行が目視の重点確認対象**になる。照合シートではこれらに地色を敷いている。
 - イミペネム・シラスタチンは、標準投与量表（p.10、0.5g 6時間毎）と腎機能障害時の表（p.16、CCr>50 で 1g 6時間毎）の
   記載が異なる。原典どおり両方を保持し、薬剤詳細に注記している。
+- アンチバイオグラムで感性率が菌数分の整数にならないセルが4つある（入院GGSのCLDM、外来B. fragilisのCLDM、
+  外来E. faeciumのPCG・ABPC）。その抗菌薬の被検株数が菌数と異なることを示唆するもので、原本とは一致している。
+  分母の扱いは検査部への確認事項として残っている。
 - プログラム医療機器（SaMD）該当性の確認、原典PDF同梱の可否、菌の日本語名リストの監修は未決（docs/02 §5 参照）。
+
+## アンチバイオグラムの原本照合
+
+**2026-08-26 に入院・外来 全80行の目視照合を完了**（`antibiogram.json` の `meta.verified: true`）。
+グラム陽性球菌で列ずれが見つかり、レンサ球菌5行の ABPC → CTRX、肺炎球菌2行の ABPC → MEPM を
+入院・外来それぞれに適用した（計28セル）。グラム陰性桿菌は訂正なし。
+手順と実施記録は [docs/04_アンチバイオグラム突合手順.md](docs/04_アンチバイオグラム突合手順.md) を参照。
+
+```bash
+npm run antibiogram:check                        # 自己整合チェック（加重平均で列ずれを検出）
+npm run antibiogram:sheet > checksheet.html      # 原典と同じ列順・行順の照合シート → A4横で印刷
+npm run antibiogram:corrections corrections.txt  # 記入した訂正を確認（--apply で反映）
+```
+
+年次改訂時は `meta.verified` を `false` に戻し、同じ手順を通す。
 
 ## 免責
 

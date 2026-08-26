@@ -33,8 +33,9 @@
     ],
     "note": "検出株のうち感受性あり「S」の割合を示す。I（Intermediate）は感受性株とみなさない。算出方法：（当該抗菌薬に感受性の株数）÷（対象の株数）×100（%）。作成期間は1年間、入院・外来を分け、提出された全ての検体をカウント。",
     "empiricNote": "経験的治療においては一般に最低80%の感性率が必要とされるが、感染臓器や重症度によっては90%あるいは100%の感性率が必要とされる場合もある。",
-    "verified": false,
-    "verificationNote": "本データは原典PDF（p.70-71）のテキスト抽出から再構成したものであり、作成元Excelとの突合が未了である。ESBL産生率・MRSA/MRSE率を用いた算術整合チェック（例：S. aureus totalのCEZ 67% = MSSAのCEZ 100% × (1-MRSA率0.33)）で主要行の列対応を検証しているが、院内公開前に感染制御管理室・検査部による原データとの突合が必須。",
+    "verified": true,
+    "verifiedOn": "2026-08-26",
+    "verificationNote": "2026-08-26、感染制御管理室により原本（原典 p.70-71）との目視照合を実施し、入院・外来 全80行の一致を確認した。照合の結果、グラム陽性球菌でレンサ球菌5行（VGS・SAG・GAS・GBS・GGS）のABPC列の値をCTRX列へ、肺炎球菌2行（髄膜炎・非髄膜炎）のABPC列の値をMEPM列へ移す訂正を入院・外来それぞれに適用した（corrections/2026-visual-inpatient-gpc.txt、corrections/2026-visual-outpatient-gpc.txt）。グラム陰性桿菌は訂正なし。照合者・確認者は照合シート原本に記載。",
     "source": {
       "edition": 9,
       "pages": [
