@@ -412,7 +412,8 @@
             "unit": "mg",
             "per": "perDay",
             "basis": "actual",
-            "maxPerDose": 4000
+            "maxPerDose": 4000,
+            "divisionsPerDay": 3
           }
         }
       ]
@@ -497,7 +498,8 @@
             "unit": "mg",
             "per": "perDay",
             "basis": "actual",
-            "maxPerDose": 4500
+            "maxPerDose": 4500,
+            "divisionsPerDay": 3
           }
         },
         {
@@ -508,7 +510,8 @@
             "unit": "mg",
             "per": "perDay",
             "basis": "actual",
-            "maxPerDose": 4500
+            "maxPerDose": 4500,
+            "divisionsPerDay": 2
           }
         }
       ]

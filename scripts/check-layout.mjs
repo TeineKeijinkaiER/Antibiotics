@@ -29,6 +29,11 @@ const SCREENS = [
   { name: "02-oral-modepick", steps: ["内服薬"] },
   { name: "03-oral-aware", steps: ["内服薬", "成人"] },
   { name: "04-oral-access-list", steps: ["内服薬", "成人", "Access"] },
+  { name: "04b-oral-other-genres", steps: ["内服薬", "成人", "その他（AWaRe分類対象外の"] },
+  {
+    name: "04c-oral-other-antifungal",
+    steps: ["内服薬", "成人", "その他（AWaRe分類対象外の", "抗真菌薬"],
+  },
   { name: "05-injectable-class", steps: ["注射薬", "成人"] },
   { name: "06-organisms", steps: ["菌種別"] },
   { name: "07-other", steps: ["その他"] },

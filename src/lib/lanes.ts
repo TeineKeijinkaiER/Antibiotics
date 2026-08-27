@@ -7,7 +7,7 @@
  */
 
 import { DRUGS } from "../data";
-import type { AwareClass, Drug, PatientMode, Route } from "../types";
+import type { AwareClass, Drug, DrugCategory, PatientMode, Route } from "../types";
 
 export type DrugLane = "oral" | "injectable";
 
@@ -87,6 +87,43 @@ export function countByBucket(drugs: Drug[]): Record<AwareBucket, number> {
   const counts: Record<AwareBucket, number> = { Access: 0, Watch: 0, Reserve: 0, other: 0 };
   for (const d of drugs) counts[awareBucketOf(d)] += 1;
   return counts;
+}
+
+/**
+ * AWaRe分類対象外（"other"）の薬剤を、系統ジャンルで分ける。
+ *
+ * WHOのAWaRe分類は抗菌薬（antibacterial）のみを対象とするため、
+ * 抗真菌薬・抗ウイルス薬・抗結核薬・駆虫薬はいずれも分類の対象外で「その他」に一括りになる。
+ * 「その他」の中で薬剤名をいきなり並べると18〜20剤が一列に並んでしまうため、
+ * 系統ジャンルのボタンをもう1階層挟む。
+ */
+export const OTHER_GENRE_LABEL: Record<DrugCategory, string> = {
+  antibacterial: "抗菌薬（分類外）",
+  antifungal: "抗真菌薬",
+  antiviral: "抗ウイルス薬",
+  antituberculous: "抗結核薬",
+  anthelmintic: "駆虫薬",
+};
+
+const OTHER_GENRE_ORDER: DrugCategory[] = [
+  "antifungal",
+  "antiviral",
+  "antituberculous",
+  "anthelmintic",
+  "antibacterial",
+];
+
+export function otherGenresInLane(
+  drugs: Drug[],
+): { category: DrugCategory; label: string; count: number }[] {
+  const otherDrugs = drugs.filter((d) => awareBucketOf(d) === "other");
+  const counts = new Map<DrugCategory, number>();
+  for (const d of otherDrugs) counts.set(d.category, (counts.get(d.category) ?? 0) + 1);
+  return OTHER_GENRE_ORDER.filter((c) => counts.has(c)).map((category) => ({
+    category,
+    label: OTHER_GENRE_LABEL[category],
+    count: counts.get(category)!,
+  }));
 }
 
 /* ---------------- 系統による絞り込み（注射薬レーン） ---------------- */
