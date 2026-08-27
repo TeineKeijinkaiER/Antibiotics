@@ -23,6 +23,38 @@ npm run validate   # データ品質ゲートのみ実行
 npm run build      # 検証 + 型チェック + 本番ビルド
 ```
 
+## PWAとして使う（オフライン・ホーム画面への追加）
+
+`npm run build` で `dist/` に Service Worker（`sw.js`）と `manifest.webmanifest` が生成され、
+ビルド済みアプリはインストール可能な PWA として配信できます。
+
+- **オフライン動作**: 初回アクセス時に全アセットをキャッシュし、以降はネットワークなしで起動・動作します
+  （画面遷移はキャッシュ済み `index.html` を返し、アセットは cache-first）
+- **ホーム画面への追加**: iOS Safari は「共有 → ホーム画面に追加」、Android Chrome は
+  自動表示されるインストールバナーまたはメニューの「アプリをインストール」から追加できます
+- **更新の反映**: 新しいビルドを配信すると、次回アクセス時に画面下部へ更新通知が出るので
+  ボタン一つで最新版に切り替わります（`src/lib/sw.ts` の `applyUpdate`）
+- サブパス配信（例: `https://<user>.github.io/Antibiotics/`）でも `vite.config.ts` の
+  `base: "./"` と `manifest.webmanifest` / `sw.js` の相対パス解決により問題なく動作します
+
+### GitHub Pages への公開
+
+`.github/workflows/deploy.yml` により、対象ブランチへの push で自動的に
+`npm run build` → GitHub Pages へのデプロイが実行されます（GitHub Actions の
+Pages デプロイ機能を使用。`gh-pages` ブランチは使いません）。
+
+初回のみ、リポジトリの **Settings → Pages → Build and deployment → Source** を
+「GitHub Actions」に切り替える必要があります（リポジトリ管理者の操作）。
+
+公開URLはプロジェクトページ形式になります: `https://<組織/ユーザー名>.github.io/Antibiotics/`
+
+> ワークフローのトリガーは現在のデフォルトブランチ（`claude/antibiotic-app-planning-b4e13g`）に
+> 設定しています。今後 `main` 等の恒久的なデフォルトブランチへ移行した場合は、
+> `.github/workflows/deploy.yml` の `on.push.branches` を書き換えてください。
+
+院内利用前提のアプリを GitHub Pages（一般公開）で配信してよいかは、
+患者データを扱わないとはいえ運用ポリシー次第のため、公開前に組織側で確認してください。
+
 ## ドキュメント
 
 | ファイル | 内容 |

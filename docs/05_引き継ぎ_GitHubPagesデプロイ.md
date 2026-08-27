@@ -1,7 +1,17 @@
-# 引き継ぎ資料：GitHub Pages デプロイ自動化（未着手）
+# 引き継ぎ資料：GitHub Pages デプロイ自動化（対応済み）
 
 作成日: 2026-08-27
 作業ブランチ: `claude/antibiotic-app-planning-b4e13g`
+
+> 追記（同日・別セッション、ブランチ `claude/pwa-support-adjustment-2hfail`）:
+> 下記「次にやること」を実施済み。`npm run build` を実地実行し `dist/index.html` の
+> `<script>`/`<link>` が相対パス（`./assets/...`）になっていることを確認した。
+> `.github/workflows/deploy.yml` を新規作成し、GitHub Actions の Pages デプロイ
+> （`actions/configure-pages` + `upload-pages-artifact` + `deploy-pages`）を設定した。
+> トリガーは現状確認できた唯一のブランチ `claude/antibiotic-app-planning-b4e13g` に
+> 設定している（`main`/`master` は存在しない）。デプロイ手順は README に追記した。
+> リポジトリの Pages ソースを「GitHub Actions」に切り替える操作は管理者権限が必要なため未実施
+> ——ユーザー側での対応が必要。
 
 ## やりたいこと
 
