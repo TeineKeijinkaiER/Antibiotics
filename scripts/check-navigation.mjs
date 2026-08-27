@@ -202,6 +202,52 @@ const pedText = await page.locator("main").innerText();
 check(/1日 400-800mg/.test(pedText), "小児: 体重20kgで1日400-800mgと換算される");
 check(!/上限でクリップ/.test(pedText), "小児: 体重あたりの上限を絶対量として誤クリップしない");
 
+/* ---- その他（AWaRe分類対象外）のジャンル分け ---- */
+console.log("\nその他（AWaRe分類対象外）のジャンル分け");
+await home();
+await click("内服薬");
+await click("成人");
+await click("その他（AWaRe分類対象外の");
+await page.waitForTimeout(250);
+const genreButtons = await page.locator(".top-btn").allInnerTexts();
+for (const label of ["抗真菌薬", "抗ウイルス薬", "抗結核薬", "駆虫薬"]) {
+  check(genreButtons.some((t) => t.includes(label)), `ジャンルボタンに「${label}」がある`);
+}
+await click("抗真菌薬");
+check((await page.locator(".result").count()) > 0, "ジャンルを選ぶと薬剤名が一覧される");
+const genreListText = await page.locator("main").innerText();
+check(/フルコナゾール|ボリコナゾール/.test(genreListText), "選んだジャンルの薬剤が含まれる");
+check(!/オセルタミビル/.test(genreListText), "他ジャンルの薬剤は含まれない");
+
+/* ---- 小児ではTDM画面を出さない ---- */
+console.log("\n小児ではTDM画面を出さない");
+await openDrug("注射薬", "小児", "バンコマイシン");
+check(
+  (await page.locator('button:has-text("TDM対象")').count()) === 0,
+  "小児の薬剤詳細にTDM対象バッジを出さない",
+);
+check(
+  /TDM投与設計は成人を対象/.test(await page.locator("main").innerText()),
+  "小児の薬剤詳細にTDMは成人向けである旨を出す",
+);
+
+await openDrug("注射薬", "成人", "バンコマイシン");
+check(
+  (await page.locator('button:has-text("TDM対象")').count()) === 1,
+  "成人の薬剤詳細にはTDM対象バッジを出す",
+);
+await click("TDM対象");
+check((await page.locator("#tdm-first").count()) === 1, "成人ではTDM投与設計画面が開く");
+
+// ヘッダーから集団を切り替えた場合も、その場でTDM画面を止める
+await page.locator('header button:has-text("小児に切替")').click();
+await page.waitForTimeout(300);
+check(
+  /TDM投与設計は成人を対象/.test(await page.locator("main").innerText()),
+  "TDM画面表示中に小児へ切り替えると成人向けの案内に切り替わる",
+);
+check((await page.locator("#tdm-first").count()) === 0, "小児では投与設計フォームを表示しない");
+
 await browser.close();
 console.log(failures.length > 0 ? `\n失敗 ${failures.length}件` : "\n画面構成: 全て合格");
 process.exit(failures.length > 0 ? 1 : 0);

@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import type { PatientMode, PatientState } from "./types";
 import { DRUG_BY_ID, ORGANISM_BY_ID, MANUAL_EDITION } from "./data";
 import { searchOrganisms } from "./lib/search";
-import { LANE_LABEL, type AwareBucket, type DrugLane } from "./lib/lanes";
+import { LANE_LABEL, OTHER_GENRE_LABEL, type AwareBucket, type DrugLane } from "./lib/lanes";
 import { PatientPanel, emptyPatient } from "./components/PatientPanel";
 import { DrugDetail } from "./components/DrugDetail";
-import { DrugList, LanePicker, ModePicker } from "./components/DrugLane";
+import { DrugList, LanePicker, ModePicker, OtherGenreMenu } from "./components/DrugLane";
+import type { DrugCategory } from "./types";
 import {
   Opening,
   OtherMenu,
@@ -55,8 +56,16 @@ type View =
   | { type: "mode"; lane: DrugLane }
   /** 薬剤名の入力欄と分類ボタン */
   | { type: "picker"; lane: DrugLane }
+  /** AWaRe分類対象外のジャンル選択（内服薬レーンの「その他」） */
+  | { type: "other-genre"; lane: DrugLane }
   /** 分類を選んだ後の薬剤一覧 */
-  | { type: "drugs"; lane: DrugLane; bucket?: AwareBucket; drugClass?: string }
+  | {
+      type: "drugs";
+      lane: DrugLane;
+      bucket?: AwareBucket;
+      drugClass?: string;
+      otherCategory?: DrugCategory;
+    }
   | { type: "organisms" }
   | { type: "drug"; id: string }
   | { type: "organism"; id: string }
@@ -153,7 +162,8 @@ export default function App() {
 
   /** その画面が薬剤レーンの中か（集団バッジを出すか） */
   const laneOf = (): DrugLane | null => {
-    if (view.type === "picker" || view.type === "drugs") return view.lane;
+    if (view.type === "picker" || view.type === "drugs" || view.type === "other-genre")
+      return view.lane;
     if (view.type === "drug") {
       const d = DRUG_BY_ID.get(view.id);
       if (!d) return null;
@@ -172,6 +182,7 @@ export default function App() {
    */
   const needsPatient =
     view.type === "picker" ||
+    view.type === "other-genre" ||
     view.type === "drugs" ||
     view.type === "drug" ||
     view.type === "designer" ||
@@ -313,16 +324,33 @@ export default function App() {
             patient={patient}
             onOpenDrug={(id) => go({ type: "drug", id })}
             onPickBucket={(bucket) => go({ type: "drugs", lane: view.lane, bucket })}
+            onPickOtherGenre={() => go({ type: "other-genre", lane: view.lane })}
             onPickClass={(drugClass) => go({ type: "drugs", lane: view.lane, drugClass })}
             onOpenPage={openPage}
           />
+        )}
+
+        {/* ---------------- その他（AWaRe分類対象外）のジャンル選択 ---------------- */}
+        {view.type === "other-genre" && mode && (
+          <>
+            <div className="detail-head">
+              <h2>その他</h2>
+            </div>
+            <OtherGenreMenu
+              lane={view.lane}
+              mode={mode}
+              onPick={(category) =>
+                go({ type: "drugs", lane: view.lane, otherCategory: category })
+              }
+            />
+          </>
         )}
 
         {/* ---------------- 薬剤一覧 ---------------- */}
         {view.type === "drugs" && mode && (
           <>
             <div className="detail-head">
-              <h2>{view.bucket ?? view.drugClass}</h2>
+              <h2>{view.bucket ?? view.drugClass ?? OTHER_GENRE_LABEL[view.otherCategory!]}</h2>
             </div>
             <DrugList
               lane={view.lane}
@@ -330,6 +358,7 @@ export default function App() {
               patient={patient}
               bucket={view.bucket}
               drugClass={view.drugClass}
+              otherCategory={view.otherCategory}
               onOpenDrug={(id) => go({ type: "drug", id })}
             />
           </>
@@ -399,22 +428,29 @@ export default function App() {
             return <OrganismDetail organism={organism} />;
           })()}
 
-        {view.type === "designer" && (
+        {/*
+         * TDMの投与設計は成人向けの表のため小児では扱わない。
+         * ヘッダーの「小児に切替」でこの画面のまま集団が変わりうるため、その場合はここで止める
+         * （薬剤詳細からの入口は既に mode==="adult" のときしか出さない）。
+         */}
+        {view.type === "designer" && mode === "pediatric" && (
           <>
-            {mode === "pediatric" && (
-              <div className="banner warn">
-                <b>この投与設計の表は成人を対象としています。</b>
-                小児のTDMは薬剤部（TDM担当者）に相談してください。
-              </div>
-            )}
-            <Designer
-              designerKey={view.key}
-              patient={patient}
-              fromDrugId={view.fromDrugId}
-              onOpenPatient={() => setShowPatient(true)}
-              onOpenDrug={(id) => go({ type: "drug", id })}
-            />
+            <div className="detail-head">
+              <h2>投与設計（TDM）</h2>
+            </div>
+            <p className="empty" style={{ padding: "12px 0" }}>
+              原典のTDM投与設計は成人を対象としています。小児のTDMは薬剤部（TDM担当者）に相談してください。
+            </p>
           </>
+        )}
+        {view.type === "designer" && mode === "adult" && (
+          <Designer
+            designerKey={view.key}
+            patient={patient}
+            fromDrugId={view.fromDrugId}
+            onOpenPatient={() => setShowPatient(true)}
+            onOpenDrug={(id) => go({ type: "drug", id })}
+          />
         )}
 
         {view.type === "about" && (

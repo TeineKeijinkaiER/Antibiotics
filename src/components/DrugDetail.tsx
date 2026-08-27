@@ -105,8 +105,11 @@ export function DrugDetail({
           {drug.renalAdjustmentNotRequired && (
             <span className="badge renal-ok">腎機能低下時も常用量可</span>
           )}
-          {/* TDM対象の薬剤はバッジ自体から投与設計へ飛べるようにする（スクロール不要） */}
-          {drug.tdm &&
+          {/*
+           * TDM対象の薬剤はバッジ自体から投与設計へ飛べるようにする（スクロール不要）。
+           * TDMの投与設計表（eGFR区分等）は成人向けのため、小児では出さない。
+           */}
+          {drug.tdm && mode === "adult" &&
             (drug.tdm.designer ? (
               <button
                 className="badge tdm badge-link"
@@ -244,8 +247,17 @@ export function DrugDetail({
         </section>
       )}
 
-      {/* ---- TDM ---- */}
-      {drug.tdm && (
+      {/* ---- TDM（成人向けの表のため小児では表示しない） ---- */}
+      {mode === "pediatric" && drug.tdm && (
+        <section className="section">
+          <h3>TDM</h3>
+          <p className="empty" style={{ padding: "12px 0" }}>
+            原典のTDM投与設計は成人を対象としています。小児のTDMは薬剤部（TDM担当者）に相談してください。
+          </p>
+        </section>
+      )}
+
+      {mode === "adult" && drug.tdm && (
         <section className="section">
           <h3>TDM</h3>
           <dl className="kv">

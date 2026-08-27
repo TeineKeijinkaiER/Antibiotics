@@ -3,12 +3,14 @@ import type { Drug, PatientMode, PatientState } from "../types";
 import { REFERENCE } from "../data";
 import { searchDrugs, drugSuggestions } from "../lib/search";
 import { convertPerKg, resolveRenalBand } from "../lib/calc";
+import type { DrugCategory } from "../types";
 import {
   AWARE_BUCKETS,
   classesInLane,
   countByBucket,
   drugsInLane,
   isInLane,
+  otherGenresInLane,
   primaryDoseOf,
   awareBucketOf,
   type AwareBucket,
@@ -74,11 +76,12 @@ function DrugCard({
           この患者の腎機能では：<b>{renalDose}</b>
         </div>
       )}
-      {(drug.requiresApplication || drug.consultSpecialist || drug.tdm) && (
+      {/* TDMの投与設計は成人向けの表のため、小児ではバッジ自体を出さない */}
+      {(drug.requiresApplication || drug.consultSpecialist || (drug.tdm && mode === "adult")) && (
         <div className="badges">
           {drug.requiresApplication && <span className="badge app">要申請</span>}
           {drug.consultSpecialist && <span className="badge consult">要コンサルト</span>}
-          {drug.tdm && <span className="badge tdm">TDM対象</span>}
+          {drug.tdm && mode === "adult" && <span className="badge tdm">TDM対象</span>}
         </div>
       )}
     </button>
@@ -93,6 +96,7 @@ export function LanePicker({
   patient,
   onOpenDrug,
   onPickBucket,
+  onPickOtherGenre,
   onPickClass,
   onOpenPage,
 }: {
@@ -101,6 +105,7 @@ export function LanePicker({
   patient: PatientState;
   onOpenDrug: (id: string) => void;
   onPickBucket: (b: AwareBucket) => void;
+  onPickOtherGenre: () => void;
   onPickClass: (c: string) => void;
   onOpenPage: (key: string) => void;
 }) {
@@ -178,11 +183,12 @@ export function LanePicker({
           </div>
 
           <div className="sub-actions">
-            <button className="sub-btn" onClick={() => onPickBucket("other")}>
+            <button className="sub-btn" onClick={onPickOtherGenre}>
               その他（AWaRe分類対象外の {counts.other} 剤）
             </button>
             <p className="dose-note">
-              抗真菌薬・抗ウイルス薬・抗結核薬などはWHOのAWaRe分類の対象外です。
+              抗真菌薬・抗ウイルス薬・抗結核薬・駆虫薬などはWHOのAWaRe分類の対象外です。
+              ジャンルを選ぶと薬剤名が一覧できます。
             </p>
           </div>
 
@@ -222,6 +228,40 @@ export function LanePicker({
   );
 }
 
+/* ---------------- 「その他」のジャンル選択 ---------------- */
+
+export function OtherGenreMenu({
+  lane,
+  mode,
+  onPick,
+}: {
+  lane: Lane;
+  mode: PatientMode;
+  onPick: (category: DrugCategory) => void;
+}) {
+  const genres = useMemo(
+    () => otherGenresInLane(drugsInLane(lane, mode)),
+    [lane, mode],
+  );
+
+  return (
+    <>
+      <p className="dose-note" style={{ marginBottom: 12 }}>
+        WHOのAWaRe分類は抗菌薬を対象とするため、これらのジャンルは分類の対象外です。
+      </p>
+      <div className="top-grid">
+        {genres.map((g) => (
+          <button key={g.category} className="top-btn compact" onClick={() => onPick(g.category)}>
+            {g.label}
+            <span className="top-btn-count">{g.count}</span>
+          </button>
+        ))}
+      </div>
+      {genres.length === 0 && <p className="empty">該当する薬剤がありません。</p>}
+    </>
+  );
+}
+
 /* ---------------- 薬剤名を選ぶ画面 ---------------- */
 
 export function DrugList({
@@ -230,6 +270,7 @@ export function DrugList({
   patient,
   bucket,
   drugClass,
+  otherCategory,
   onOpenDrug,
 }: {
   lane: Lane;
@@ -237,14 +278,18 @@ export function DrugList({
   patient: PatientState;
   bucket?: AwareBucket;
   drugClass?: string;
+  otherCategory?: DrugCategory;
   onOpenDrug: (id: string) => void;
 }) {
   const drugs = useMemo(() => {
     const all = drugsInLane(lane, mode);
+    if (otherCategory) {
+      return all.filter((d) => awareBucketOf(d) === "other" && d.category === otherCategory);
+    }
     if (bucket) return all.filter((d) => awareBucketOf(d) === bucket);
     if (drugClass) return all.filter((d) => d.class === drugClass);
     return all;
-  }, [lane, mode, bucket, drugClass]);
+  }, [lane, mode, bucket, drugClass, otherCategory]);
 
   return (
     <div className="list">
