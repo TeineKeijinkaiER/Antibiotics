@@ -18,6 +18,47 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      // 更新競合で旧ハッシュのJSだけ読み込めない場合、アプリ用キャッシュを1度だけ
+      // 自動修復する。患者条件や免責確認（localStorage）は削除しない。
+      (() => {
+        const recoveryKey = "abx-navi/chunk-recovery/v1";
+        window.addEventListener(
+          "error",
+          (event) => {
+            const target = event.target;
+            if (!(target instanceof HTMLScriptElement) || !/\/assets\/index-[^/]+\.js$/.test(target.src)) return;
+
+            if (sessionStorage.getItem(recoveryKey)) {
+              document.getElementById("root").innerHTML =
+                '<main style="max-width:640px;margin:48px auto;padding:24px;font-family:system-ui,sans-serif">' +
+                '<h1 style="font-size:20px">アプリを更新できませんでした</h1>' +
+                '<p>ネットワーク接続を確認して、ブラウザまたはホーム画面のアプリを閉じてから、もう一度開いてください。</p>' +
+                '<button onclick="location.reload()" style="padding:10px 16px">再読み込み</button></main>';
+              return;
+            }
+
+            sessionStorage.setItem(recoveryKey, "1");
+            Promise.all([
+              "serviceWorker" in navigator
+                ? navigator.serviceWorker.getRegistrations().then((items) => {
+                    const appScope = new URL("./", document.baseURI).href;
+                    return Promise.all(items.filter((item) => item.scope === appScope).map((item) => item.unregister()));
+                  })
+                : Promise.resolve(),
+              "caches" in window
+                ? caches.keys().then((names) => Promise.all(names.filter((name) => name.startsWith("abx-navi-")).map((name) => caches.delete(name))))
+                : Promise.resolve(),
+            ]).finally(() => {
+              const url = new URL(location.href);
+              url.searchParams.set("recover", Date.now().toString());
+              location.replace(url.href);
+            });
+          },
+          true,
+        );
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

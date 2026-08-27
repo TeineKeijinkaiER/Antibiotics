@@ -7,6 +7,7 @@
  *
  * 方針:
  *   - install で全アセットをキャッシュに入れる（1つでも失敗したら install を失敗させる）
+ *   - 更新版は waiting に留め、画面の「今すぐ更新する」でのみ切り替える
  *   - navigation リクエストはキャッシュの index.html を返す（オフラインでも起動する）
  *   - それ以外は cache-first（アセットはハッシュ付きファイル名なので不変）
  *   - activate で古いバージョンのキャッシュを削除する
@@ -56,7 +57,8 @@ self.addEventListener("install", (event) => {
       const cache = await caches.open(CACHE);
       // 1つでも欠けるとオフラインで動かないため addAll（全件成功が条件）を使う
       await cache.addAll(ASSETS);
-      await self.skipWaiting();
+      // 既存ページの読込中に即時activateすると、旧index.htmlが参照する旧JSを
+      // 旧キャッシュごと削除して白画面になる。更新版はwaitingに留める。
     })(),
   );
 });
@@ -108,11 +110,27 @@ self.addEventListener("fetch", (event) => {
       const cache = await caches.open(CACHE);
       const cached = await cache.match(request, { ignoreVary: true });
       if (cached) return cached;
+
+      // 旧index.htmlの読込途中でSWが切り替わった端末の回復処理。
+      // 旧ハッシュのJS/CSSが配信先から消えていても、現行キャッシュの同種アセットを返す。
+      const currentAsset = async () => {
+        const suffix = request.destination === "script" ? ".js" : request.destination === "style" ? ".css" : null;
+        if (!suffix || !url.pathname.includes("/assets/")) return null;
+        const currentPath = ASSETS.find((path) => path.startsWith("./assets/") && path.endsWith(suffix));
+        return currentPath ? await cache.match(currentPath, { ignoreVary: true }) : null;
+      };
+
       try {
         const response = await fetch(request);
         if (response.ok && response.type === "basic") cache.put(request, response.clone());
+        if (!response.ok) {
+          const fallback = await currentAsset();
+          if (fallback) return fallback;
+        }
         return response;
       } catch (err) {
+        const fallback = await currentAsset();
+        if (fallback) return fallback;
         // オフラインかつ未キャッシュ。空の応答よりエラーを明示する
         return new Response("", { status: 504, statusText: "オフライン（未キャッシュ）" });
       }

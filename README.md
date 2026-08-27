@@ -143,6 +143,7 @@ npm run check:navigation  # 画面構成の回帰テスト（要 vite preview）
 npm run check:tdm         # TDMの安全要件の回帰テスト（要 vite preview）
 npm run check:disclaimer  # 適用範囲の明示とアプリの説明の回帰テスト（要 vite preview）
 npm run check:medical-ui   # 適応外表示・用量強調・菌種別からの遷移（要 vite preview）
+npm run check:sw           # 更新時の白画面防止・旧ハッシュ回復処理（build後）
 ```
 
 `check:tdm` は「患者条件が未入力のときに用量の既定値を出さない」という安全要件を含みます。

@@ -11,3 +11,6 @@ createRoot(document.getElementById("root")!).render(
     <App />
   </StrictMode>,
 );
+
+// Reactが正常に起動したら、index.htmlの一度限りの更新回復フラグを解除する。
+requestAnimationFrame(() => sessionStorage.removeItem("abx-navi/chunk-recovery/v1"));

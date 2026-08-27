@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run validate && tsc -b && vite build && node scripts/make-sw.mjs",
+    "build": "npm run validate && tsc -b && vite build && node scripts/make-sw.mjs && node scripts/check-sw-update.mjs",
     "preview": "vite preview",
     "validate": "node scripts/validate-data.mjs && node scripts/check-antibiogram-consistency.mjs",
     "icons": "node scripts/make-icons.mjs",
@@ -18,7 +18,8 @@
     "check:tdm": "node scripts/check-tdm.mjs",
     "check:navigation": "node scripts/check-navigation.mjs",
     "check:disclaimer": "node scripts/check-disclaimer.mjs",
-    "check:medical-ui": "node scripts/check-medical-ui.mjs"
+    "check:medical-ui": "node scripts/check-medical-ui.mjs",
+    "check:sw": "node scripts/check-sw-update.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",
