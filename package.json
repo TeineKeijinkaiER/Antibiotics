@@ -15,7 +15,8 @@
     "antibiogram:diff": "node scripts/diff-antibiogram.mjs",
     "typecheck": "tsc -b --noEmit",
     "check:layout": "node scripts/check-layout.mjs",
-    "check:tdm": "node scripts/check-tdm.mjs"
+    "check:tdm": "node scripts/check-tdm.mjs",
+    "check:disclaimer": "node scripts/check-disclaimer.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

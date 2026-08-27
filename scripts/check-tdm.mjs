@@ -28,6 +28,14 @@ const check = (cond, label) => {
 
 const browser = await chromium.launch({ executablePath: EXEC });
 const context = await browser.newContext({ viewport: { width: 900, height: 1000 } });
+// 初回起動時の免責確認を済ませた状態で始める（TDMの検査が目的のため）
+await context.addInitScript(() => {
+  try {
+    localStorage.setItem("abx-navi/disclaimer-acknowledged/v1", "1");
+  } catch {
+    /* noop */
+  }
+});
 const page = await context.newPage();
 
 const openPatientPanel = async () => {

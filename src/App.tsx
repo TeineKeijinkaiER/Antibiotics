@@ -19,12 +19,15 @@ import {
   Stewardship,
   Amr,
 } from "./components/Reference";
+import { About, DisclaimerGate } from "./components/About";
 import {
   getFavorites,
   getHistory,
   toggleFavorite,
   pushHistory,
   clearHistory,
+  hasAcknowledgedDisclaimer,
+  acknowledgeDisclaimer,
   type ItemRef,
 } from "./lib/storage";
 import { subscribeSwStatus, getSwStatus, applyUpdate, type SwStatus } from "./lib/sw";
@@ -39,6 +42,7 @@ type View =
   | { type: "organism"; id: string }
   | { type: "offlabel" }
   | { type: "designer"; key: string; fromDrugId?: string }
+  | { type: "about" }
   | { type: "page"; key: PageKey };
 
 type PageKey =
@@ -92,6 +96,7 @@ export default function App() {
   const [favorites, setFavorites] = useState<ItemRef[]>(getFavorites);
   const [history, setHistory] = useState<ItemRef[]>(getHistory);
   const [swStatus, setSwStatus] = useState<SwStatus>(getSwStatus);
+  const [agreed, setAgreed] = useState(hasAcknowledgedDisclaimer);
 
   useEffect(() => subscribeSwStatus(setSwStatus), []);
 
@@ -99,6 +104,18 @@ export default function App() {
     () => (organismQuery ? searchOrganisms(organismQuery) : []),
     [organismQuery],
   );
+
+  // 免責事項を読ませないまま使わせない（初回のみ）
+  if (!agreed) {
+    return (
+      <DisclaimerGate
+        onAgree={() => {
+          acknowledgeDisclaimer();
+          setAgreed(true);
+        }}
+      />
+    );
+  }
 
   const go = (v: View) => {
     setView(v);
@@ -220,6 +237,9 @@ export default function App() {
         <button className="link-btn" onClick={() => setShowPatient((v) => !v)}>
           患者条件{showPatient ? "を閉じる" : ""}
         </button>
+        <button className="link-btn" onClick={() => go({ type: "about" })}>
+          アプリの説明
+        </button>
       </header>
 
       <main className="wrap">
@@ -302,6 +322,10 @@ export default function App() {
             <section className="section">
               <h3>その他の機能</h3>
               <div className="tile-grid">
+                <button className="tile" onClick={() => go({ type: "about" })}>
+                  <b>アプリの説明</b>
+                  <span>使い方・注意事項・更新・免責事項</span>
+                </button>
                 {Object.entries(DESIGNERS).map(([key, d]) => (
                   <button key={key} className="tile" onClick={() => go({ type: "designer", key })}>
                     <b>{d.title}</b>
@@ -426,6 +450,10 @@ export default function App() {
           </>
         )}
 
+        {view.type === "about" && (
+          <About swStatus={swStatus} onApplyUpdate={() => void applyUpdate()} />
+        )}
+
         {view.type === "page" && view.key === "prophylaxis" && (
           <SurgicalProphylaxis patient={patient} onOpenDrug={(id) => go({ type: "drug", id })} />
         )}
@@ -449,9 +477,16 @@ export default function App() {
               <br />
             </>
           )}
+          <b>{MANUAL_EDITION.facility}の院内利用を想定したアプリです。</b>
+          適応外使用・採用薬・使用申請のルール・アンチバイオグラムは当院の取り決めまたは当院のデータであり、
+          他施設ではそのまま当てはまりません。
           本アプリが示す投与量は当院でコンセンサスの得られた標準的な投与量であり、最終的な投与判断は主治医が行います。
           使用時は添付文書を改めて精読し、必要に応じて感染症科・ICT／ASTへコンサルテーションしてください。
           入力した患者条件は端末内にのみ保持され、外部に送信されません。
+          <br />
+          <button className="link-btn" onClick={() => go({ type: "about" })}>
+            アプリの説明・免責事項の全文 →
+          </button>
         </footer>
       </main>
     </>

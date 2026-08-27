@@ -23,6 +23,8 @@ const WIDTHS = [375, 768, 1280];
 
 /** 画面ごとの到達手順。click は表示テキストの部分一致で押す */
 const SCREENS = [
+  // 免責画面は初回のみ表示されるため、確認済みフラグを立てずに開く
+  { name: "00-disclaimer", steps: [], skipAcknowledge: true },
   { name: "01-home", steps: [] },
   { name: "02-oral-modepick", steps: ["内服薬"] },
   { name: "03-oral-adult", steps: ["内服薬", "成人"] },
@@ -37,7 +39,11 @@ const SCREENS = [
   { name: "12-anaphylaxis", steps: ["アナフィラキシー対応"] },
   { name: "13-pediatric-weight", steps: ["小児の体重・薬用量"] },
   { name: "14-stewardship", steps: ["適正使用指針・AWaRe"] },
+  { name: "15-about", steps: ["アプリの説明"] },
 ];
+
+/** 免責事項の確認済みフラグ。立てておかないと初回の確認画面で止まる */
+const ACK_KEY = "abx-navi/disclaimer-acknowledged/v1";
 
 const audit = () => {
   const problems = [];
@@ -104,6 +110,18 @@ for (const width of WIDTHS) {
 
   for (const screen of SCREENS) {
     await page.goto(BASE, { waitUntil: "networkidle" });
+    await page.evaluate(
+      ([key, acknowledged]) => {
+        try {
+          if (acknowledged) localStorage.setItem(key, "1");
+          else localStorage.removeItem(key);
+        } catch {
+          /* noop */
+        }
+      },
+      [ACK_KEY, !screen.skipAcknowledge],
+    );
+    await page.reload({ waitUntil: "networkidle" });
     try {
       for (const step of screen.steps) await clickByText(page, step);
     } catch (err) {
