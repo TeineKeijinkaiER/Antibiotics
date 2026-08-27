@@ -32,10 +32,21 @@ export type PerKgDose = {
   /** "perDose" = 1回あたり / "perDay" = 1日あたり */
   per: "perDose" | "perDay";
   basis: WeightBasis;
-  /** 1回量の上限（換算値をクリップする） */
+  /**
+   * 上限。原典の「〜まで」の記載に対応する。
+   *
+   * 単位を取り違えると桁違いの誤った用量を表示するため、
+   * **絶対量（mg等）** と **体重あたり（mg/kg）** を別のキーに分けている。
+   * 例: 「400mg/kg/dayまで」は maxPerDay ではなく maxPerKgPerDay に入れる。
+   */
+  /** 1回量の上限（絶対量。換算値をクリップする） */
   maxPerDose?: number;
-  /** 1日量の上限 */
+  /** 1日量の上限（絶対量） */
   maxPerDay?: number;
+  /** 1回量の上限（体重あたり mg/kg）。換算前の mg/kg をクリップする */
+  maxPerKgPerDose?: number;
+  /** 1日量の上限（体重あたり mg/kg/day）。換算前の mg/kg をクリップする */
+  maxPerKgPerDay?: number;
 };
 
 /** 1つの用法用量。原典の表記をそのまま `text` に保持する */

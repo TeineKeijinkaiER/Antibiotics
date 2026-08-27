@@ -291,6 +291,36 @@ for (const row of reference.pediatricWeight?.table ?? []) {
   }
 }
 
+/* ---------- 上限（maxPer*）の単位取り違え検査 ----------
+ *
+ * 原典の「400mg/kg/dayまで」のような**体重あたり**の上限を、絶対量の
+ * maxPerDay / maxPerDose に入れると、換算値が桁違いに小さくクリップされる
+ * （20kgの小児でアンピシリンが 2000-4000mg → 400mg になる等）。
+ * 絶対量の上限が mg/kg の値そのものを下回っていたら、まず取り違えを疑う。
+ */
+
+for (const drug of drugs) {
+  for (const mode of ["adult", "pediatric"]) {
+    for (const [route, doses] of Object.entries(drug[mode] ?? {})) {
+      for (const dose of doses) {
+        const pk = dose.perKg;
+        if (!pk) continue;
+        const amounts = Array.isArray(pk.amount) ? pk.amount : [pk.amount];
+        const maxAmount = Math.max(...amounts);
+        const abs = pk.per === "perDose" ? pk.maxPerDose : pk.maxPerDay;
+        if (abs != null && abs <= maxAmount) {
+          fail(
+            `Drug(${drug.id}).${mode}.${route}: 絶対量の上限 ${abs}${pk.unit} が ` +
+              `体重あたりの用量 ${maxAmount}${pk.unit}/kg 以下です。` +
+              `原典が「${maxAmount}${pk.unit}/kg/dayまで」のような体重あたりの上限なら ` +
+              `maxPerKgPerDay / maxPerKgPerDose に入れてください（"${dose.text}"）`,
+          );
+        }
+      }
+    }
+  }
+}
+
 /* ---------- 大項目レーンの網羅性（UI再編 版2.1・要件 FR-011-1） ----------
  *
  * ホームの大項目は「内服薬（po）／注射薬（iv・im・inhalation）」で薬剤を分ける。

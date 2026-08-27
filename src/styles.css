@@ -532,6 +532,79 @@ footer.foot {
 .sub-btn:hover { border-color: var(--accent); color: var(--accent); }
 
 .lane-intro { font-size: 13px; color: var(--ink-2); margin: 0 0 12px; line-height: 1.8; }
+
+/* ---------- 戻る／ホーム ---------- */
+.navkey {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 7px 16px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.navkey:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ---------- 周術期: 体重帯と1回投与量 ---------- */
+.dose-card {
+  background: var(--surface);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius);
+  padding: 12px 14px 10px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow);
+}
+.dose-card-name {
+  background: none;
+  border: none;
+  padding: 0 0 8px;
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.wband-list { display: grid; gap: 4px; }
+.wband {
+  display: grid;
+  /* 体重帯を固定幅にして、その隣に用量を置く。用量の頭が縦に揃う */
+  grid-template-columns: 6.5em 1fr;
+  gap: 10px;
+  align-items: baseline;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  font-size: 14px;
+}
+.wband-weight {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.wband-dose { display: grid; gap: 3px; }
+.wband-conv {
+  justify-self: start;
+  font-size: 13px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 5px;
+  padding: 2px 9px;
+}
+.wband.dim { opacity: 0.4; }
+.wband.active {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  opacity: 1;
+}
+.wband.active .wband-weight { color: var(--accent); }
+.wband.active .wband-conv { background: var(--surface); font-weight: 700; }
+
+/* 換算値が主役になる小児では大きめに出す */
+.dose-conv.strong { font-size: 15px; font-weight: 700; }
 .crumbs { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 
 .tab-count {

@@ -86,22 +86,48 @@ function roundDose(v: number): number {
 export function convertPerKg(
   dose: PerKgDose,
   p: PatientState,
-): { text: string; clipped: boolean; basisLabel: string } | null {
+): {
+  text: string;
+  clipped: boolean;
+  basisLabel: string;
+  /** 自動適用できない上限（1日量に対する「1回◯mgまで」等）。表示して判断を委ねる */
+  uncappedNote?: string;
+} | null {
   const w = weightForBasis(p, dose.basis);
   if (w == null) return null;
 
   const amounts = Array.isArray(dose.amount) ? dose.amount : [dose.amount];
   let clipped = false;
-  const limit = dose.per === "perDose" ? dose.maxPerDose : dose.maxPerDay;
+
+  // 体重あたりの上限は換算前の mg/kg に、絶対量の上限は換算後の mg に効かせる。
+  // 両者を取り違えると桁違いの用量になるため、キーで厳密に分ける。
+  const perKgLimit =
+    dose.per === "perDose" ? dose.maxPerKgPerDose : dose.maxPerKgPerDay;
+  const absLimit = dose.per === "perDose" ? dose.maxPerDose : dose.maxPerDay;
 
   const values = amounts.map((a) => {
-    let v = a * w.value;
-    if (limit != null && v > limit) {
-      v = limit;
+    let perKg = a;
+    if (perKgLimit != null && perKg > perKgLimit) {
+      perKg = perKgLimit;
+      clipped = true;
+    }
+    let v = perKg * w.value;
+    if (absLimit != null && v > absLimit) {
+      v = absLimit;
       clipped = true;
     }
     return roundDose(v);
   });
+
+  // 1日量に「1回◯mgまで」が付く場合、分割回数が原典の文章にしかないため自動では適用できない。
+  // 黙って無視すると上限が失われるので、注記として必ず見せる。
+  let uncappedNote: string | undefined;
+  if (dose.per === "perDay" && dose.maxPerDose != null) {
+    uncappedNote = `1回あたり ${dose.maxPerDose}${dose.unit} を上限とすること`;
+  }
+  if (dose.per === "perDay" && dose.maxPerKgPerDose != null) {
+    uncappedNote = `1回あたり ${dose.maxPerKgPerDose}${dose.unit}/kg を上限とすること`;
+  }
 
   const joined = values.length > 1 ? `${values[0]}-${values[1]}` : `${values[0]}`;
   const perLabel = dose.per === "perDose" ? "1回" : "1日";
@@ -109,6 +135,7 @@ export function convertPerKg(
     text: `${perLabel} ${joined}${dose.unit}`,
     clipped,
     basisLabel: `${w.label} ${roundDose(w.value)}kg`,
+    uncappedNote,
   };
 }
 
