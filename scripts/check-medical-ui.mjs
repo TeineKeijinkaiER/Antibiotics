@@ -49,6 +49,28 @@ check(primaryHeadings.some((t) => t.includes("通常量")), "通常量を強調�
 check(primaryHeadings.some((t) => t.includes("腎機能低下時")), "腎機能・透析用量を強調カードで表示する");
 check((await page.locator(".renal-row").allInnerTexts()).some((t) => t.includes("血液透析")), "透析時用量を腎機能カード内に表示する");
 
+console.log("薬剤詳細のピーク・トラフ・AUC表");
+await openDrug("注射薬", "成人", "バンコマイシン");
+await page.setViewportSize({ width: 375, height: 1000 });
+const targetLayout = await page.locator(".tdm-kv").evaluate((grid) => {
+  const label = grid.querySelector(".tdm-target-label");
+  const values = [...grid.querySelectorAll(".tdm-target-value")];
+  return {
+    labelWidth: label?.getBoundingClientRect().width ?? Infinity,
+    gridWidth: grid.getBoundingClientRect().width,
+    valueWidths: values.map((value) => ({
+      width: value.getBoundingClientRect().width,
+      scrollWidth: value.scrollWidth,
+      height: value.getBoundingClientRect().height,
+      lineHeight: Number.parseFloat(getComputedStyle(value).lineHeight),
+    })),
+  };
+});
+check(targetLayout.labelWidth <= 124, "TDMピーク・トラフ表: 左タイトル列を124px以下に抑える");
+check(targetLayout.valueWidths.every((v) => v.width >= targetLayout.gridWidth * 0.5), "TDMピーク・トラフ表: 右数値列を表幅の50%以上確保する");
+check(targetLayout.valueWidths.every((v) => v.scrollWidth <= v.width + 1 && v.height <= v.lineHeight * 2 + 1), "TDMピーク・トラフ表: 数値をはみ出さず1-2行以内で表示する");
+await page.setViewportSize({ width: 900, height: 1000 });
+
 console.log("アンチバイオグラムから薬剤への遷移");
 await page.goto(BASE, { waitUntil: "networkidle" });
 await click("菌種別");

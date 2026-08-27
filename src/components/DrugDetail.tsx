@@ -304,14 +304,14 @@ export function DrugDetail({
       {mode === "adult" && drug.tdm && (
         <section className="section">
           <h3>TDM</h3>
-          <dl className="kv">
+          <dl className="kv tdm-kv">
             {drug.tdm.targets.map((t, i) => (
               <div key={i} style={{ display: "contents" }}>
-                <dt>
-                  {t.type === "trough" ? "トラフ" : t.type === "peak" ? "ピーク" : "AUC"}
-                  {t.condition ? `（${t.condition}）` : ""}
+                <dt className="tdm-target-label">
+                  <span>{t.type === "trough" ? "トラフ" : t.type === "peak" ? "ピーク" : "AUC"}</span>
+                  {t.condition && <span className="tdm-condition">（{t.condition}）</span>}
                 </dt>
-                <dd className="mono">
+                <dd className="mono tdm-target-value">
                   {t.value} {t.unit}
                 </dd>
               </div>

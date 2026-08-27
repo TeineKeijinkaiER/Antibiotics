@@ -342,6 +342,31 @@ input, select { font: inherit; color: inherit; }
 .kv dt { color: var(--ink-3); }
 .kv dd { margin: 0; overflow-wrap: anywhere; }
 
+/* 薬剤詳細のTDM表。長い条件文で左列が広がり、数値列を圧迫させない */
+.tdm-kv {
+  grid-template-columns: minmax(96px, 124px) minmax(0, 1fr);
+  column-gap: 12px;
+  align-items: start;
+}
+.tdm-kv dt,
+.tdm-kv dd { min-width: 0; }
+.tdm-target-label { display: grid; gap: 1px; line-height: 1.45; }
+.tdm-condition {
+  font-size: 10.5px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.tdm-target-value {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.45;
+  white-space: nowrap;
+}
+
+@media (max-width: 360px) {
+  .tdm-kv { grid-template-columns: 88px minmax(0, 1fr); gap: 5px 10px; }
+}
+
 ul.notes { margin: 8px 0 0; padding-left: 1.2em; font-size: 13px; color: var(--ink-2); }
 ul.notes li { margin-bottom: 3px; }
 
