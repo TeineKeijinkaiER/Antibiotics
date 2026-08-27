@@ -58,40 +58,47 @@ export function Formulary({ onOpenDrug }: { onOpenDrug: (id: string) => void }) 
         byClass.map(([className, list]) => (
           <section className="section" key={className}>
             <h3>{className}</h3>
-            <div className="scroll">
-              <table className="abx">
-                <thead>
-                  <tr>
-                    <th>商品名</th>
-                    <th>略語</th>
-                    <th>規格</th>
-                    <th>薬価</th>
-                    <th>静注</th>
-                    <th>点滴静注</th>
-                    <th>筋注</th>
-                    <th>申請書</th>
+            <table className="doc">
+              <colgroup>
+                <col style={{ width: "26%" }} />
+                <col style={{ width: "9%" }} />
+                <col style={{ width: "17%" }} />
+                <col style={{ width: "10%" }} />
+                <col style={{ width: "28%" }} />
+                <col style={{ width: "10%" }} />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>商品名</th>
+                  <th>略語</th>
+                  <th>規格</th>
+                  <th>薬価</th>
+                  <th>投与（静注／点滴／筋注）</th>
+                  <th>申請書</th>
+                </tr>
+              </thead>
+              <tbody>
+                {list.map(({ drug, formulation: f }) => (
+                  <tr key={f.brandName}>
+                    <td data-label="商品名">
+                      <button className="link-btn" onClick={() => onOpenDrug(drug.id)}>
+                        {f.brandName}
+                      </button>
+                    </td>
+                    <td className="mono" data-label="略語">{drug.abbr ?? "—"}</td>
+                    <td className="mono" data-label="規格">{f.strength}</td>
+                    <td className="mono" data-label="薬価">
+                      {f.price != null ? f.price.toLocaleString() : "—"}
+                    </td>
+                    <td data-label="投与">
+                      静注 {f.ivPush ? "○" : "×"} ／ 点滴 {f.drip === false ? "×" : f.drip} ／ 筋注{" "}
+                      {f.im ? "○" : "×"}
+                    </td>
+                    <td data-label="申請書">{drug.requiresApplication ? "○" : "—"}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {list.map(({ drug, formulation: f }) => (
-                    <tr key={f.brandName}>
-                      <td style={{ whiteSpace: "normal", minWidth: 180 }}>
-                        <button className="link-btn" onClick={() => onOpenDrug(drug.id)}>
-                          {f.brandName}
-                        </button>
-                      </td>
-                      <td className="mono">{drug.abbr ?? "—"}</td>
-                      <td className="mono">{f.strength}</td>
-                      <td className="mono">{f.price != null ? f.price.toLocaleString() : "—"}</td>
-                      <td>{f.ivPush ? "○" : "×"}</td>
-                      <td>{f.drip === false ? "×" : f.drip}</td>
-                      <td>{f.im ? "○" : "×"}</td>
-                      <td>{drug.requiresApplication ? "○" : "—"}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
             {list.some(({ formulation }) => formulation.notes?.length) && (
               <ul className="notes">
                 {list.flatMap(({ formulation }) =>

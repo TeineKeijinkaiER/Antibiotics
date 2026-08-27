@@ -10,6 +10,7 @@
 
 const FAVORITES_KEY = "abx-navi/favorites/v1";
 const HISTORY_KEY = "abx-navi/history/v1";
+const DISCLAIMER_KEY = "abx-navi/disclaimer-acknowledged/v1";
 const HISTORY_LIMIT = 10;
 
 export type ItemKind = "drug" | "organism";
@@ -68,6 +69,28 @@ export function pushHistory(item: ItemRef): ItemRef[] {
 export function clearHistory(): void {
   try {
     localStorage.removeItem(HISTORY_KEY);
+  } catch {
+    /* noop */
+  }
+}
+
+/* ---------- 免責事項の確認（初回起動時に1度だけ） ---------- */
+
+/**
+ * 保存できない環境では毎回未確認として扱う。
+ * 免責を読ませないまま使わせるより、毎回表示するほうが安全側に倒れる。
+ */
+export function hasAcknowledgedDisclaimer(): boolean {
+  try {
+    return localStorage.getItem(DISCLAIMER_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+export function acknowledgeDisclaimer(): void {
+  try {
+    localStorage.setItem(DISCLAIMER_KEY, "1");
   } catch {
     /* noop */
   }

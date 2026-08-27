@@ -96,7 +96,18 @@ export function DrugDetail({
           {drug.renalAdjustmentNotRequired && (
             <span className="badge renal-ok">腎機能低下時も常用量可</span>
           )}
-          {drug.tdm && <span className="badge tdm">TDM対象</span>}
+          {/* TDM対象の薬剤はバッジ自体から投与設計へ飛べるようにする（スクロール不要） */}
+          {drug.tdm &&
+            (drug.tdm.designer ? (
+              <button
+                className="badge tdm badge-link"
+                onClick={() => onOpenDesigner(drug.tdm!.designer!)}
+              >
+                TDM対象 — 初回投与量と採血タイミングを見る →
+              </button>
+            ) : (
+              <span className="badge tdm">TDM対象</span>
+            ))}
           {drug.aware && <span className="badge aware">AWaRe: {drug.aware}</span>}
         </div>
       </div>
@@ -137,7 +148,7 @@ export function DrugDetail({
         )}
         {hasOtherMode && (
           <button className="link-btn" onClick={onSwitchMode}>
-            {otherModeLabel}用量を見る →（モードが切り替わります）
+            {otherModeLabel}用量を見る →（このレーンの表示が{otherModeLabel}に切り替わります）
           </button>
         )}
         {relatedPage && (
@@ -269,7 +280,7 @@ export function DrugDetail({
               onClick={() => onOpenDesigner(drug.tdm!.designer!)}
             >
               <b>投与設計ツールを開く →</b>
-              <span>患者条件から初期投与量を算出します</span>
+              <span>初回投与量・採血のタイミング・目標血中濃度を確認できます</span>
             </button>
           )}
           <p className="source-line">原典 p.{drug.tdm.source.pages.join(", ")}</p>
