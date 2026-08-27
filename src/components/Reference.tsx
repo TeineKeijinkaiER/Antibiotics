@@ -64,20 +64,22 @@ export function Anaphylaxis() {
 
       <section className="section">
         <h3>必要な薬剤</h3>
-        <div className="scroll">
-          <table className="abx">
-            <tbody>
-              {a.drugs.map((d) => (
-                <tr key={d.name}>
-                  <td style={{ whiteSpace: "normal" }}>
-                    <b>{d.name}</b>
-                  </td>
-                  <td style={{ whiteSpace: "normal" }}>{d.role}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <table className="doc">
+          <colgroup>
+            <col style={{ width: "32%" }} />
+            <col style={{ width: "68%" }} />
+          </colgroup>
+          <tbody>
+            {a.drugs.map((d) => (
+              <tr key={d.name}>
+                <td data-label="薬剤">
+                  <b>{d.name}</b>
+                </td>
+                <td data-label="役割">{d.role}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </section>
 
       <section className="section">
@@ -428,18 +430,20 @@ export function Stewardship() {
         {a.groups.map((g) => (
           <div className="dose-row" key={g.category}>
             <div className="dose-ind">{g.category}</div>
-            <div className="scroll">
-              <table className="abx">
-                <tbody>
-                  {g.drugs.map((d) => (
-                    <tr key={d.generic}>
-                      <td className="mono" style={{ whiteSpace: "normal" }}>{d.generic}</td>
-                      <td style={{ whiteSpace: "normal" }}>{d.brand}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <table className="doc">
+              <colgroup>
+                <col style={{ width: "45%" }} />
+                <col style={{ width: "55%" }} />
+              </colgroup>
+              <tbody>
+                {g.drugs.map((d) => (
+                  <tr key={d.generic}>
+                    <td className="mono" data-label="一般名">{d.generic}</td>
+                    <td data-label="商品名">{d.brand}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         ))}
         <p className="source-line">原典 p.{a.source.pages.join(", ")}</p>

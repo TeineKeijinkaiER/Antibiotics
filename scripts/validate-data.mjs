@@ -291,6 +291,38 @@ for (const row of reference.pediatricWeight?.table ?? []) {
   }
 }
 
+/* ---------- 大項目レーンの網羅性（UI再編 版2.1・要件 FR-011-1） ----------
+ *
+ * ホームの大項目は「内服薬（po）／注射薬（iv・im・inhalation）」で薬剤を分ける。
+ * どちらのレーンにも現れない薬剤があると、検索窓からしか到達できない薬剤が生まれる。
+ */
+
+const INJECTABLE_ROUTES = ["iv", "im", "inhalation"];
+const hasDose = (drug, mode, route) => (drug[mode]?.[route]?.length ?? 0) > 0;
+const inOral = (drug, mode) => hasDose(drug, mode, "po");
+const inInjectable = (drug, mode) => INJECTABLE_ROUTES.some((r) => hasDose(drug, mode, r));
+
+for (const drug of drugs) {
+  const reachable = ["adult", "pediatric"].some(
+    (mode) => inOral(drug, mode) || inInjectable(drug, mode),
+  );
+  if (!reachable) {
+    fail(
+      `Drug(${drug.id}): 内服・注射のどちらの用量も持たないため、大項目のどちらのレーンにも現れません`,
+    );
+  }
+}
+
+const laneCounts = {
+  "内服×成人": drugs.filter((d) => inOral(d, "adult")).length,
+  "内服×小児": drugs.filter((d) => inOral(d, "pediatric")).length,
+  "注射×成人": drugs.filter((d) => inInjectable(d, "adult")).length,
+  "注射×小児": drugs.filter((d) => inInjectable(d, "pediatric")).length,
+};
+for (const [lane, n] of Object.entries(laneCounts)) {
+  if (n === 0) fail(`レーン「${lane}」に該当する薬剤が1件もありません`);
+}
+
 /* ---------- 出力 ---------- */
 
 const counts = {
@@ -304,6 +336,7 @@ const counts = {
 };
 
 console.log("データ件数:", JSON.stringify(counts, null, 0));
+console.log("レーン件数:", JSON.stringify(laneCounts, null, 0));
 
 for (const w of warnings) console.warn(`  warn  ${w}`);
 

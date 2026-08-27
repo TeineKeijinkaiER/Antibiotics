@@ -289,9 +289,15 @@ input, select { font: inherit; color: inherit; }
 }
 .renal-row.active .band { color: var(--accent); }
 
-.kv { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; font-size: 13.5px; }
-.kv dt { color: var(--ink-3); white-space: nowrap; }
-.kv dd { margin: 0; }
+/* auto だと最長の dt に左列が引きずられて過大になるため上限を設ける */
+.kv {
+  display: grid;
+  grid-template-columns: minmax(5.5em, max-content) 1fr;
+  gap: 4px 16px;
+  font-size: 13.5px;
+}
+.kv dt { color: var(--ink-3); }
+.kv dd { margin: 0; overflow-wrap: anywhere; }
 
 ul.notes { margin: 8px 0 0; padding-left: 1.2em; font-size: 13px; color: var(--ink-2); }
 ul.notes li { margin-bottom: 3px; }
@@ -301,6 +307,8 @@ ul.notes li { margin-bottom: 3px; }
   color: var(--ink-3);
   margin-top: 8px;
   font-family: ui-monospace, monospace;
+  /* 長いURLは途中で折り返す（区切れない文字列がページ幅を押し広げるのを防ぐ） */
+  overflow-wrap: anywhere;
 }
 
 /* ---------- patient panel ---------- */
@@ -309,7 +317,9 @@ ul.notes li { margin-bottom: 3px; }
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 12px;
 }
-.field { display: grid; gap: 4px; }
+/* min-width:0 がないと、datetime-local など固有の最小幅を持つ入力が
+   グリッドのトラックを押し広げ、ページ全体に横スクロールを生む */
+.field { display: grid; gap: 4px; min-width: 0; }
 .field label { font-size: 12px; color: var(--ink-3); font-weight: 700; }
 .field input, .field select {
   padding: 9px 10px;
@@ -318,7 +328,10 @@ ul.notes li { margin-bottom: 3px; }
   background: var(--surface);
   font-size: 15px;
   width: 100%;
+  min-width: 0;
 }
+/* 日時入力は表示幅を要するため1行を占有させる */
+.field.wide { grid-column: 1 / -1; }
 .field input.invalid { border-color: var(--danger); }
 .field .hint { font-size: 11px; color: var(--danger); }
 
@@ -335,22 +348,36 @@ ul.notes li { margin-bottom: 3px; }
 .derived .item span { font-size: 11px; color: var(--ink-3); }
 .derived .item b { font-size: 16px; }
 
-/* ---------- antibiogram ---------- */
+/* ---------- tables ----------
+ * 数値表（table.abx）と文章表（table.doc）を分ける。
+ * 以前は全テーブルが table.abx を使っており、白スペース禁止（nowrap）が
+ * 日本語の長文セルにも効いて列幅の配分が崩れていた。
+ */
 .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-table.abx { border-collapse: collapse; width: 100%; font-size: 13px; }
-table.abx th, table.abx td {
+table.abx, table.doc { border-collapse: collapse; width: 100%; font-size: 13px; }
+table.abx th, table.abx td, table.doc th, table.doc td {
   padding: 7px 9px;
   border-bottom: 1px solid var(--rule-soft);
   text-align: left;
-  white-space: nowrap;
+  vertical-align: top;
 }
-table.abx thead th {
+table.abx thead th, table.doc thead th {
   font-size: 11px;
   color: var(--ink-3);
   border-bottom: 1px solid var(--rule);
   font-family: ui-monospace, monospace;
+  vertical-align: bottom;
 }
 table.abx td.pct { font-variant-numeric: tabular-nums; font-weight: 700; }
+
+/* 数値表: 折り返さず横スクロールさせる（略号と％は改行すると読めない） */
+table.abx th, table.abx td { white-space: nowrap; }
+
+/* 文章表: 折り返す。列幅は各表で col に width を指定して決め打ちする */
+table.doc { table-layout: fixed; line-height: 1.7; }
+table.doc th, table.doc td { overflow-wrap: anywhere; word-break: normal; }
+table.doc ul { margin: 0; padding-left: 1.1em; }
+table.doc li { margin-bottom: 2px; }
 .tierpill {
   display: inline-block;
   min-width: 46px;
@@ -399,7 +426,116 @@ footer.foot {
 .tile b { font-size: 14.5px; }
 .tile span { font-size: 12px; color: var(--ink-3); }
 
+/* ---------- 大項目レーン ---------- */
+.lane-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.lane-tile {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 20px 18px;
+  text-align: left;
+  display: grid;
+  gap: 4px;
+  box-shadow: var(--shadow);
+}
+.lane-tile:hover { border-color: var(--accent); }
+.lane-tile b { font-size: 19px; letter-spacing: 0.01em; }
+.lane-tile span { font-size: 12.5px; color: var(--ink-3); line-height: 1.7; }
+
+.lane-intro { font-size: 13px; color: var(--ink-2); margin: 0 0 12px; line-height: 1.8; }
+.crumbs { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+.tab-count {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.75;
+}
+.tab:disabled { opacity: 0.4; cursor: default; }
+
+.count-tag {
+  float: right;
+  font-size: 11px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink-3);
+}
+
+/* ---------- TDM ---------- */
+.badge-link {
+  border: 1px solid currentColor;
+  background: var(--adult-soft);
+  color: var(--adult);
+  text-align: left;
+}
+.badge-link:hover { background: var(--adult); color: var(--surface); }
+
+.dose-load { font-size: 14.5px; margin-bottom: 2px; }
+.dose-load-tag {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 700;
+  border-radius: 3px;
+  padding: 0 6px;
+  margin-right: 7px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  vertical-align: 1px;
+}
+.dose-load-tag.maint { background: var(--surface-2); color: var(--ink-3); }
+
+.sampling-grid { display: grid; gap: 10px; }
+.sampling-item {
+  display: grid;
+  gap: 2px;
+  padding: 10px 13px;
+  border-radius: 6px;
+  background: var(--surface);
+  border: 1px solid var(--rule-soft);
+}
+.sampling-item span { font-size: 11px; color: var(--ink-3); font-weight: 700; }
+.sampling-item b { font-size: 14px; font-weight: 400; }
+
+.check-line { display: flex; gap: 8px; align-items: center; margin: 16px 0; font-size: 14px; }
+
 @media (max-width: 560px) {
   .renal-row { grid-template-columns: 1fr; }
   .gate-choices { grid-template-columns: 1fr; }
+  .count-tag { float: none; display: block; margin-top: 2px; }
+}
+
+/* 狭い画面では文章表をカードに落とす。横スクロールを利用者に強いない */
+@media (max-width: 480px) {
+  table.doc, table.doc tbody, table.doc tr, table.doc td { display: block; width: 100%; }
+  table.doc thead { position: absolute; left: -9999px; }
+  table.doc tr {
+    background: var(--surface);
+    border: 1px solid var(--rule-soft);
+    border-radius: var(--radius);
+    padding: 4px 12px 10px;
+    margin-bottom: 10px;
+  }
+  /* 見出しを値の上に積むと縦に伸びすぎるため、ラベルと値を横に並べる */
+  table.doc td {
+    display: grid;
+    grid-template-columns: 6.5em 1fr;
+    gap: 0 10px;
+    align-items: baseline;
+    border-bottom: none;
+    padding: 5px 0 0;
+  }
+  table.doc td::before {
+    content: attr(data-label);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink-3);
+    font-family: ui-monospace, monospace;
+    line-height: 1.9;
+  }
+  table.doc td:empty { display: none; }
+  /* 1列目（名称）は値を目立たせたいのでラベルを出さず全幅にする */
+  table.doc td:first-child { grid-template-columns: 1fr; font-size: 15px; padding-top: 8px; }
+  table.doc td:first-child::before { display: none; }
 }

@@ -72,28 +72,31 @@ export function SurgicalProphylaxis({
           </p>
         )}
 
-        <div className="scroll">
-          <table className="abx">
-            <thead>
-              <tr>
-                <th>領域</th>
-                <th>臓器</th>
-                <th>主な予防抗菌薬</th>
+        <table className="doc">
+          <colgroup>
+            <col style={{ width: "22%" }} />
+            <col style={{ width: "40%" }} />
+            <col style={{ width: "38%" }} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>領域</th>
+              <th>臓器</th>
+              <th>主な予防抗菌薬</th>
+            </tr>
+          </thead>
+          <tbody>
+            {entries.map((e) => (
+              <tr key={e.id}>
+                <td data-label="領域">{e.field}</td>
+                <td data-label="臓器">{e.organs.join("、")}</td>
+                <td data-label="主な予防抗菌薬">
+                  <b>{e.recommended.join("、")}</b>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {entries.map((e) => (
-                <tr key={e.id}>
-                  <td style={{ whiteSpace: "normal" }}>{e.field}</td>
-                  <td style={{ whiteSpace: "normal" }}>{e.organs.join("、")}</td>
-                  <td style={{ whiteSpace: "normal" }}>
-                    <b>{e.recommended.join("、")}</b>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </section>
 
       {/* ---- 1回投与量（体重帯で自動選択） ---- */}
@@ -152,28 +155,32 @@ export function SurgicalProphylaxis({
           <span>β-ラクタムアレルギーあり</span>
         </label>
         {allergy ? (
-          <div className="scroll">
-            <table className="abx">
-              <thead>
-                <tr>
-                  <th>創分類</th>
-                  <th>グラム陽性菌</th>
-                  <th>グラム陰性菌</th>
-                  <th>嫌気性菌</th>
+          <table className="doc">
+            <colgroup>
+              <col style={{ width: "25%" }} />
+              <col style={{ width: "25%" }} />
+              <col style={{ width: "25%" }} />
+              <col style={{ width: "25%" }} />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>創分類</th>
+                <th>グラム陽性菌</th>
+                <th>グラム陰性菌</th>
+                <th>嫌気性菌</th>
+              </tr>
+            </thead>
+            <tbody>
+              {PROPHYLAXIS.betaLactamAllergy.map((r) => (
+                <tr key={r.id}>
+                  <td data-label="創分類">{r.woundClass}</td>
+                  <td data-label="グラム陽性菌">{r.gramPositive.join("、") || "—"}</td>
+                  <td data-label="グラム陰性菌">{r.gramNegative.join("、") || "—"}</td>
+                  <td data-label="嫌気性菌">{r.anaerobe.join("、") || "—"}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {PROPHYLAXIS.betaLactamAllergy.map((r) => (
-                  <tr key={r.id}>
-                    <td style={{ whiteSpace: "normal" }}>{r.woundClass}</td>
-                    <td style={{ whiteSpace: "normal" }}>{r.gramPositive.join("、") || "—"}</td>
-                    <td style={{ whiteSpace: "normal" }}>{r.gramNegative.join("、") || "—"}</td>
-                    <td style={{ whiteSpace: "normal" }}>{r.anaerobe.join("、") || "—"}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         ) : (
           <p className="dose-note">チェックすると代替薬の一覧を表示します。</p>
         )}
