@@ -48,7 +48,7 @@ function DoseTable({
   activeBand: string | null;
 }) {
   return (
-    <div className="renal-grid">
+    <div className="renal-grid tdm-dose-grid">
       {rows.map((row) => {
         const state = activeBand == null ? "" : activeBand === row.band ? "active" : "dim";
         return (
@@ -274,7 +274,6 @@ const VCM_BANDS: {
 const VCM_HD_BAND = "血液透析 (HD)";
 
 function VancomycinDesigner({ patient, onOpenPatient }: DesignerProps) {
-  const [severe, setSevere] = useState(false);
   const tdm = DRUG_BY_ID.get("vancomycin")?.tdm;
   const { weight, egfr } = patient;
   const onHd = patient.rrt === "hd";
@@ -342,27 +341,22 @@ function VancomycinDesigner({ patient, onOpenPatient }: DesignerProps) {
         {!onHd && matched && egfr != null && <ResolvedNote text={`eGFR ${egfr}`} />}
         <DoseTable rows={rows} activeBand={activeBand} />
         <p className="dose-note" style={{ marginTop: 8 }}>
-          ローディングの母液は生食250mLで溶解し2時間で投与。点滴時間は1g/hr以上かけること。
+          ローディングの母液は生食250mL。各投与は60分以上とし、最大1g/時を採用する場合は投与量に応じて延長します。
         </p>
         <p className="source-line">原典 p.31</p>
       </section>
 
       {tdm && <SamplingSection tdm={tdm} patient={patient} />}
 
-      <label className="check-line">
-        <input type="checkbox" checked={severe} onChange={(e) => setSevere(e.target.checked)} />
-        <span>菌血症・心内膜炎・骨髄炎・髄膜炎・院内肺炎 のいずれか</span>
-      </label>
-
       <TargetSection
-        targets={[{ label: severe ? "トラフ（重症例）" : "トラフ（通常）", value: severe ? "15–20 µg/mL" : "10–15 µg/mL" }]}
-        note="ピークの目標値はありません。"
+        targets={[{ label: "AUC/MIC（基本目標）", value: "400–600" }]}
+        note="AUC評価が利用できない場合のトラフ値は補助指標です。トラフ15–20 µg/mLを一律に目標とすると腎障害リスクが高まるため、AST・薬剤部へ相談してください。"
       />
 
       <section className="section">
-        <h3>AUCガイドによるTDM</h3>
+        <h3>AUCガイドによるTDM（基本方針）</h3>
         <p style={{ fontSize: 13.5, color: "var(--ink-2)", margin: 0 }}>
-          MRSA菌血症で<b>感染症科・ASTによる推奨がある場合</b>に使用します。日本化学療法学会が提供する
+          MRSA感染症では日本化学療法学会が提供する
           Practical AUC-guided TDM（PAT）を用い、本アプリでは計算しません。目標 AUC/MIC は 400〜600。
           MICが1の菌株に使用し、MICが2以上の場合は他の抗MRSA薬への変更を検討します。透析患者には適用できません。
           Peak（投与終了後60分）とTrough（投与直前）の2点採血が必要なため、実施時は速やかに薬剤部（病棟薬剤師）へ連絡してください。
@@ -659,7 +653,7 @@ function VoriconazoleDesigner({ patient, onOpenPatient }: DesignerProps) {
   const tdm = DRUG_BY_ID.get("voriconazole")?.tdm;
   const w = patient.weight;
   const ccr = cockcroftGault(patient);
-  const ivContraindicated = ccr != null && ccr <= 30;
+  const ivAvoid = ccr != null && ccr < 30;
 
   const OVER40 = "体重 40kg 以上";
   const UNDER40 = "体重 40kg 未満";
@@ -715,15 +709,15 @@ function VoriconazoleDesigner({ patient, onOpenPatient }: DesignerProps) {
         <button className="tab" aria-pressed={route === "po"} onClick={() => setRoute("po")}>経口（50mg・200mg錠）</button>
       </div>
 
-      {ivContraindicated && route === "iv" && (
-        <div className="banner danger">
-          <b>CCr {r1(ccr!)} mL/min — 注射剤は投与禁忌です。</b>
-          可溶化剤のSBECDが蓄積するため、CCrが30mL/min以下では注射剤を使用しません。経口剤での治療を考慮してください（原典 p.36）。
+      {ivAvoid && route === "iv" && (
+        <div className="banner warn">
+          <b>CCr {r1(ccr!)} mL/min — やむを得ない場合を除き注射剤を避けます。</b>
+          可溶化剤SBECDへの曝露が増えるため、経口剤での治療を考慮してください（現行添付文書に基づく修正）。
         </div>
       )}
-      {ccr != null && ccr > 30 && ccr <= 50 && route === "iv" && (
+      {ccr != null && ccr >= 30 && ccr <= 50 && route === "iv" && (
         <div className="banner warn">
-          CCr {r1(ccr)} mL/min — 中等度以上の腎障害（CCr 30–50mL/min）ではSBECDが蓄積します。経口剤での治療を考慮してください。
+          CCr {r1(ccr)} mL/min — 治療上の有益性が危険性を上回る場合に限って注射剤を使用し、腎機能を定期的に確認します。経口剤も考慮してください。
         </div>
       )}
 

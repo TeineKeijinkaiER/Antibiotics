@@ -1,6 +1,6 @@
 import type { Drug, PatientState, PatientMode, Route, Dose, RenalBand } from "../types";
 import { RENAL_BAND_LABEL, OFFLABEL_CATEGORY_LABEL } from "../types";
-import { convertPerKg, resolveRenalBand } from "../lib/calc";
+import { convertPerKg, renalRuleForPatient, resolveRenalBand } from "../lib/calc";
 import { offLabelForDrug } from "../lib/search";
 import { DISEASE_BY_ID } from "../data";
 
@@ -95,7 +95,15 @@ export function DrugDetail({
   const otherModeLabel = mode === "adult" ? "小児" : "成人";
   const hasOtherMode = !!(mode === "adult" ? drug.pediatric : drug.adult);
   const activeBand = resolveRenalBand(patient);
-  const offLabel = offLabelForDrug(drug.id);
+  const activeIvRule = renalRuleForPatient(drug, patient, "iv");
+  const activePoRule = renalRuleForPatient(drug, patient, "po");
+  const usesCustomRenalRules = !!(drug.renalRules?.iv || drug.renalRules?.po);
+  const renalInputResolved = !!patient.rrt || usesCustomRenalRules
+    ? !!patient.rrt || !!activeIvRule || !!activePoRule
+    : activeBand != null;
+  const offLabel = offLabelForDrug(drug.id).filter((use) =>
+    (use.populations ?? ["adult"]).includes(mode),
+  );
 
   return (
     <div>
@@ -144,7 +152,7 @@ export function DrugDetail({
       )}
 
       {/* ---- 通常量 ---- */}
-      <section className="section">
+      <section className="section dosing-primary">
         <h3>通常量（{mode === "adult" ? "成人" : "小児"}）</h3>
         {dosing && Object.keys(dosing).length > 0 ? (
           (Object.keys(dosing) as Route[]).map((route) => (
@@ -179,7 +187,7 @@ export function DrugDetail({
 
       {/* ---- 腎機能（原典の腎機能低下時の表は成人向けのため、小児では表示しない） ---- */}
       {mode === "pediatric" && (drug.renal || drug.renalPo) && (
-        <section className="section">
+        <section className="section dosing-primary">
           <h3>腎機能低下時・透析・CHDF</h3>
           <p className="empty" style={{ padding: "12px 0" }}>
             原典の腎機能低下時の投与量表は成人を対象としています。
@@ -189,16 +197,16 @@ export function DrugDetail({
       )}
 
       {mode === "adult" && (drug.renal || drug.renalPo || drug.renalNote) && (
-        <section className="section">
+        <section className="section dosing-primary">
           <h3>腎機能低下時・透析・CHDF</h3>
           {drug.renalAdjustmentNotRequired && (
             <div className="banner info">
               原典★印：<b>腎機能低下時も常用量投与が可能な薬剤</b>です。
             </div>
           )}
-          {activeBand == null && (
+          {!renalInputResolved && (
             <p className="dose-note" style={{ marginBottom: 8 }}>
-              患者条件（年齢・性別・体重・Cr）を入力すると、該当する区分を自動でハイライトします。
+              患者条件（この薬剤で用いるCCrまたはeGFR）を入力すると、該当区分を自動でハイライトします。
             </p>
           )}
 
@@ -206,7 +214,14 @@ export function DrugDetail({
             <>
               <div className="dose-ind" style={{ color: "var(--accent)" }}>注射</div>
               <div className="renal-grid" style={{ marginBottom: 14 }}>
-                {BAND_ORDER.filter((b) => drug.renal![b]).map((band) => (
+                {drug.renalRules?.iv ? drug.renalRules.iv.rules.map((rule) => {
+                  return (
+                    <div key={rule.label} className={`renal-row ${activeIvRule == null ? "" : activeIvRule === rule ? "active" : "dim"}`}>
+                      <div className="band">{rule.label}</div>
+                      <div>{rule.dose}</div>
+                    </div>
+                  );
+                }) : BAND_ORDER.filter((b) => drug.renal![b]).map((band) => (
                   <div
                     key={band}
                     className={
@@ -218,6 +233,14 @@ export function DrugDetail({
                     <div>{drug.renal![band]}</div>
                   </div>
                 ))}
+                {drug.renalRules?.iv && (["hd", "chdf"] as RenalBand[])
+                  .filter((band) => drug.renal![band])
+                  .map((band) => (
+                    <div key={band} className={`renal-row ${activeBand == null ? "" : activeBand === band ? "active" : "dim"}`}>
+                      <div className="band">{RENAL_BAND_LABEL[band]}</div>
+                      <div>{drug.renal![band]}</div>
+                    </div>
+                  ))}
               </div>
             </>
           )}
@@ -226,7 +249,14 @@ export function DrugDetail({
             <>
               <div className="dose-ind" style={{ color: "var(--accent)" }}>経口</div>
               <div className="renal-grid" style={{ marginBottom: 14 }}>
-                {BAND_ORDER.filter((b) => drug.renalPo![b]).map((band) => (
+                {drug.renalRules?.po ? drug.renalRules.po.rules.map((rule) => {
+                  return (
+                    <div key={rule.label} className={`renal-row ${activePoRule == null ? "" : activePoRule === rule ? "active" : "dim"}`}>
+                      <div className="band">{rule.label}</div>
+                      <div>{rule.dose}</div>
+                    </div>
+                  );
+                }) : BAND_ORDER.filter((b) => drug.renalPo![b]).map((band) => (
                   <div
                     key={band}
                     className={
@@ -238,6 +268,14 @@ export function DrugDetail({
                     <div>{drug.renalPo![band]}</div>
                   </div>
                 ))}
+                {drug.renalRules?.po && (["hd", "chdf"] as RenalBand[])
+                  .filter((band) => drug.renalPo![band])
+                  .map((band) => (
+                    <div key={band} className={`renal-row ${activeBand == null ? "" : activeBand === band ? "active" : "dim"}`}>
+                      <div className="band">{RENAL_BAND_LABEL[band]}</div>
+                      <div>{drug.renalPo![band]}</div>
+                    </div>
+                  ))}
               </div>
             </>
           )}
@@ -326,28 +364,30 @@ export function DrugDetail({
 
       {/* ---- 適応外使用 ---- */}
       {offLabel.length > 0 && (
-        <section className="section">
-          <h3>適応外使用（院内承認済み）</h3>
-          <div className="banner danger">
-            適応外使用は薬機法上、<b>患者への十分な説明と文書での同意</b>が必要です。
-            「適応症及び用法・用量に関する使用」「用法・用量に関する使用」は
-            <b>重症例での使用に限り検討</b>し、通常の感染症治療では適応範囲内で治療すること（原典 p.52）。
-          </div>
-          {offLabel.map((use) => (
-            <div className="dose-row" key={use.id}>
-              <div className="dose-ind">{OFFLABEL_CATEGORY_LABEL[use.category]}</div>
-              <div className="dose-text">
-                {use.diseaseIds
-                  .map((id) => DISEASE_BY_ID.get(id)?.name ?? id)
-                  .join("、")}
-              </div>
-              {use.dosageText && <div className="dose-conv">{use.dosageText}</div>}
-              <div className="dose-note">
-                {use.productLabel}　／　原典 p.{use.source.pages.join(", ")}
-              </div>
+        <details className="section offlabel-details" key={`${drug.id}-${mode}-offlabel`}>
+          <summary>適応外使用（院内承認済み・{offLabel.length}件）</summary>
+          <div className="offlabel-body">
+            <div className="banner danger">
+              適応外使用は薬機法上、<b>患者への十分な説明と文書での同意</b>が必要です。
+              「適応症及び用法・用量に関する使用」「用法・用量に関する使用」は
+              <b>重症例での使用に限り検討</b>し、通常の感染症治療では適応範囲内で治療すること（原典 p.52）。
             </div>
-          ))}
-        </section>
+            {offLabel.map((use) => (
+              <div className="dose-row" key={use.id}>
+                <div className="dose-ind">{OFFLABEL_CATEGORY_LABEL[use.category]}</div>
+                <div className="dose-text">
+                  {use.diseaseIds
+                    .map((id) => DISEASE_BY_ID.get(id)?.name ?? id)
+                    .join("、")}
+                </div>
+                {use.dosageText && <div className="offlabel-dose">{use.dosageText}</div>}
+                <div className="dose-note">
+                  {use.productLabel}　／　原典 p.{use.source.pages.join(", ")}
+                </div>
+              </div>
+            ))}
+          </div>
+        </details>
       )}
 
       {/* ---- 製剤情報 ---- */}

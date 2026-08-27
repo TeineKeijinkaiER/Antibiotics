@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import type { Drug, PatientMode, PatientState } from "../types";
 import { REFERENCE } from "../data";
 import { searchDrugs, drugSuggestions } from "../lib/search";
-import { convertPerKg, resolveRenalBand } from "../lib/calc";
+import { convertPerKg, renalDoseForPatient } from "../lib/calc";
 import type { DrugCategory } from "../types";
 import {
   AWARE_BUCKETS,
@@ -48,13 +48,11 @@ function DrugCard({
   onOpen: () => void;
 }) {
   const primary = primaryDoseOf(drug, lane, mode);
-  const band = resolveRenalBand(patient);
   // 腎機能低下時の表は成人向けのため、小児では出さない
   const renalDose =
-    mode === "adult" && band
-      ? (lane === "oral" ? drug.renalPo?.[band] : drug.renal?.[band]) ??
-        drug.renal?.[band] ??
-        drug.renalPo?.[band]
+    mode === "adult"
+      ? renalDoseForPatient(drug, patient, lane === "oral" ? "po" : "iv") ??
+        renalDoseForPatient(drug, patient, lane === "oral" ? "iv" : "po")
       : undefined;
   const conv =
     primary?.perKg && !(mode === "pediatric" && patient.weight == null)

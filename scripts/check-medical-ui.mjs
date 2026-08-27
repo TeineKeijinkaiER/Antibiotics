@@ -1,0 +1,65 @@
+#!/usr/bin/env node
+import { chromium } from "playwright";
+
+const BASE = process.env.BASE_URL ?? "http://localhost:4173";
+const EXEC = process.env.CHROMIUM_PATH ?? "/opt/pw-browsers/chromium-1194/chrome-linux/chrome";
+const failures = [];
+const check = (condition, label) => {
+  console.log(`  ${condition ? "ok " : "NG "} ${label}`);
+  if (!condition) failures.push(label);
+};
+
+const browser = await chromium.launch({ executablePath: EXEC });
+const context = await browser.newContext({ viewport: { width: 900, height: 1000 } });
+await context.addInitScript(() => localStorage.setItem("abx-navi/disclaimer-acknowledged/v1", "1"));
+const page = await context.newPage();
+const click = async (text) => {
+  await page.locator(`button:has-text("${text}")`).first().click();
+  await page.waitForTimeout(150);
+};
+const openDrug = async (lane, mode, query) => {
+  await page.goto(BASE, { waitUntil: "networkidle" });
+  await click(lane);
+  await click(mode);
+  await page.fill('input[aria-label="薬剤名を入力"]', query);
+  await page.locator(".result").first().click();
+};
+
+console.log("適応外使用の表示制御");
+await openDrug("注射薬", "成人", "セフェピム");
+const adultDetails = page.locator(".offlabel-details");
+check(await adultDetails.count() === 1, "成人では適応外使用の入口を表示する");
+check(!(await adultDetails.evaluate((el) => el.open)), "成人の適応外使用は初期状態で折り畳む");
+check(await page.locator(".offlabel-details .dose-conv").count() === 0, "適応外用量に緑色の換算用クラスを使わない");
+await adultDetails.locator("summary").click();
+check(await page.locator(".offlabel-details .offlabel-dose").count() > 0, "クリック後に適応外用量を表示する");
+
+await click("小児に切替");
+const pediatricDetails = page.locator(".offlabel-details");
+check(await pediatricDetails.count() === 1, "明示的な小児適応外使用は小児画面に表示する");
+await pediatricDetails.locator("summary").click();
+const pediatricText = await pediatricDetails.innerText();
+check(pediatricText.includes("小児の肺炎"), "小児画面にセフェピム小児肺炎を表示する");
+check(!pediatricText.includes("緑膿菌菌血症"), "成人向け適応外使用を小児画面に混在させない");
+
+console.log("通常量・腎機能用量の強調");
+await openDrug("注射薬", "成人", "イミペネム");
+const primaryHeadings = await page.locator("section.dosing-primary > h3").allInnerTexts();
+check(primaryHeadings.some((t) => t.includes("通常量")), "通常量を強調カードで表示する");
+check(primaryHeadings.some((t) => t.includes("腎機能低下時")), "腎機能・透析用量を強調カードで表示する");
+check((await page.locator(".renal-row").allInnerTexts()).some((t) => t.includes("血液透析")), "透析時用量を腎機能カード内に表示する");
+
+console.log("アンチバイオグラムから薬剤への遷移");
+await page.goto(BASE, { waitUntil: "networkidle" });
+await click("菌種別");
+await page.fill('input[aria-label="菌名を入力"]', "大腸菌");
+await page.locator(".result").first().click();
+await page.getByRole("button", { name: "アンピシリンの薬剤画面を開く", exact: true }).click();
+check((await page.locator(".detail-head h2").innerText()).includes("アンピシリン"), "抗菌薬略号クリックで該当薬剤画面へ遷移する");
+
+await browser.close();
+if (failures.length) {
+  console.error(`\n不合格 ${failures.length}件`);
+  process.exit(1);
+}
+console.log("\n今回の医学・UI修正: 全て合格");

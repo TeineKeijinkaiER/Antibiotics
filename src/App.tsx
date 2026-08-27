@@ -425,7 +425,12 @@ export default function App() {
           (() => {
             const organism = ORGANISM_BY_ID.get(view.id);
             if (!organism) return <p className="empty">菌が見つかりません。</p>;
-            return <OrganismDetail organism={organism} />;
+            return (
+              <OrganismDetail
+                organism={organism}
+                onOpenDrug={(id) => go({ type: "drug", id })}
+              />
+            );
           })()}
 
         {/*
@@ -464,7 +469,10 @@ export default function App() {
           <Formulary onOpenDrug={(id) => go({ type: "drug", id })} />
         )}
         {view.type === "page" && view.key === "offlabel" && (
-          <OffLabelSearch onOpenDrug={(id) => go({ type: "drug", id })} />
+          <OffLabelSearch
+            mode={mode ?? "adult"}
+            onOpenDrug={(id) => go({ type: "drug", id })}
+          />
         )}
         {view.type === "page" && view.key === "postexposure" && <PostExposureProphylaxis />}
         {view.type === "page" && view.key === "pediatric-weight" && <PediatricWeight />}

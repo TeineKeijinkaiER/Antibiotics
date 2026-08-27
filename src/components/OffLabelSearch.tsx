@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import type { OffLabelCategory, OffLabelUse } from "../types";
+import type { OffLabelCategory, OffLabelUse, PatientMode } from "../types";
 import { OFFLABEL_CATEGORY_LABEL } from "../types";
 import { searchOffLabelByDisease, searchOffLabelByDrug } from "../lib/search";
 import { OFFLABEL, DRUG_BY_ID, DISEASE_BY_ID } from "../data";
@@ -32,7 +32,7 @@ function UseRow({
       <div className="dose-text" style={{ fontSize: 13.5 }}>
         {use.diseaseIds.map((id) => DISEASE_BY_ID.get(id)?.name ?? id).join("、")}
       </div>
-      {use.dosageText && <div className="dose-conv">{use.dosageText}</div>}
+      {use.dosageText && <div className="offlabel-dose">{use.dosageText}</div>}
       <div className="source-line">原典 p.{use.source.pages.join(", ")}</div>
     </div>
   );
@@ -40,8 +40,10 @@ function UseRow({
 
 export function OffLabelSearch({
   onOpenDrug,
+  mode,
 }: {
   onOpenDrug: (id: string) => void;
+  mode: PatientMode;
 }) {
   const [by, setBy] = useState<By>("disease");
   const [query, setQuery] = useState("");
@@ -52,7 +54,8 @@ export function OffLabelSearch({
       prev.includes(c) ? prev.filter((x) => x !== c) : [...prev, c],
     );
 
-  const inCategory = (u: OffLabelUse) => categories.includes(u.category);
+  const inCategory = (u: OffLabelUse) =>
+    categories.includes(u.category) && (u.populations ?? ["adult"]).includes(mode);
 
   const results = useMemo(() => {
     if (!query.trim()) {
@@ -72,13 +75,15 @@ export function OffLabelSearch({
       .map((r) => ({ heading: r.drug.genericName.ja, uses: r.uses.filter(inCategory) }))
       .filter((r) => r.uses.length > 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [by, query, categories]);
+  }, [by, query, categories, mode]);
 
   return (
     <div>
       <div className="detail-head">
         <h2>適応外使用</h2>
-        <p className="en">薬剤名・疾患名のどちらからでも検索できます（原典 p.52-56）</p>
+        <p className="en">
+          {mode === "adult" ? "成人" : "小児"}で原典に明示された項目を、薬剤名・疾患名から検索できます（原典 p.52-56）
+        </p>
       </div>
 
       <div className="banner danger">

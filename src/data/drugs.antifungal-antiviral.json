@@ -129,7 +129,7 @@
         }
       ]
     },
-    "renal": {
+  "renal": {
       "gt50": "200mg 24時間毎（重症又は難治性真菌感染症には400mg 24時間毎）",
       "ccr10_50": "100-200mg 24時間毎（50%Dose）",
       "lt10": "100-200mg 24時間毎（50%Dose）",
@@ -388,9 +388,19 @@
       "ccr10_50": "経口薬での治療を考慮。体重40kg以上：初日1回300mg 1日2回、2日目以降1回150-200mg 1日2回／体重40kg以下：初日1回150mg 1日2回、2日目以降1回100mg 1日2回",
       "lt10": "経口薬での治療を考慮",
       "hd": "経口薬の使用を考慮",
-      "chdf": "4mg/kg 経口 12時間毎"
-    },
-    "renalNote": "経口剤では投与量の調節は必要ない。注射剤では可溶化剤としてSBECDが添加されており、中等度以上の腎障害（CCr 30-50mL/min）ではSBECDが蓄積する。CCrが30mL/min以下では注射剤は投与禁忌。肥満患者では補正体重を用いた投与設計を考慮する",
+    "chdf": "4mg/kg 経口 12時間毎"
+  },
+  "renalRules": {
+    "iv": {
+      "metric": "ccr",
+      "rules": [
+        { "label": "CCr > 50 mL/min", "min": 50.000001, "dose": "通常量" },
+        { "label": "CCr 30–50 mL/min", "min": 30, "max": 50.000001, "dose": "有益性が危険性を上回る場合に限り注射剤を使用し、腎機能を定期的に確認。経口剤を考慮" },
+        { "label": "CCr < 30 mL/min", "max": 30, "dose": "やむを得ない場合を除き注射剤を避け、経口剤を考慮" }
+      ]
+    }
+  },
+  "renalNote": "経口剤では投与量の調節は必要ない。注射剤には可溶化剤SBECDが含まれる。CCr 30-50mL/minでは治療上の有益性が危険性を上回る場合に限り、腎機能を定期的に確認する。CCr 30mL/min未満では、やむを得ない場合を除き注射剤を避け、経口剤を考慮する。肥満患者では補正体重による投与設計を考慮する",
     "tdm": {
       "designer": "voriconazole",
       "targets": [
@@ -406,12 +416,12 @@
           "unit": "µg/mL",
           "condition": null
         },
-        {
-          "type": "trough",
-          "value": "2-4",
-          "unit": "µg/mL",
-          "condition": "注射剤（p.12・p.17の記載）"
-        }
+      {
+        "type": "trough",
+        "value": "1-4",
+        "unit": "µg/mL",
+        "condition": "注射剤・経口剤共通"
+      }
       ],
       "sampling": {
         "trough": "投与直前（透析患者の場合は透析前）",
@@ -419,7 +429,7 @@
       },
       "firstTdmDose": "投与開始2-5日目",
       "cautions": [
-        "CCrが30mL/min以下では注射剤は投与禁忌",
+      "CCr 30mL/min未満では、やむを得ない場合を除き注射剤を避け、経口剤を考慮する",
         "副作用の視覚障害は一過性の場合が多いが、血中濃度上昇と関連性が報告されている",
         "主に肝臓で代謝されるためCYP2C9、2C19、3A4と相互作用を引き起こす薬剤の併用には注意",
         "血中濃度測定は院外（外注）— 月曜朝採血：火曜測定→水曜or木曜報告／木曜朝採血：金曜測定→土曜or翌週月曜報告",
@@ -884,7 +894,7 @@
       "hd": "透析日のみ透析後に2.5-5mg/kg",
       "chdf": "5-7.5mg/kg 24時間毎"
     },
-    "renalPo": {
+  "renalPo": {
       "gt50": "単純ヘルペス: 常用量／帯状疱疹: 800mg 8時間毎",
       "ccr10_50": "単純ヘルペス: 常用量を12-24時間毎／帯状疱疹: 400-800mg 12-24時間毎",
       "lt10": "単純ヘルペス: 常用量を24-48時間毎／帯状疱疹: 400-800mg 24時間毎"
@@ -1418,7 +1428,7 @@
       "iv": [
         {
           "indication": null,
-          "text": "Loading 200mg、その後100mg 24時間毎"
+        "text": "初日200mg、2日目以降100mg 1日1回。非侵襲的治療例は5日間を基本とし、改善しない場合は最大10日間；侵襲的人工呼吸器・ECMO使用例は最大10日間"
         }
       ]
     },
@@ -1426,7 +1436,7 @@
       "iv": [
         {
           "indication": "体重3.5kg以上40kg未満",
-          "text": "初日1回5mg/kg 1日1回、2日目以降2.5mg/kg 1日1回",
+        "text": "初日1回5mg/kg 1日1回、2日目以降2.5mg/kg 1日1回。非侵襲的治療例は5日間を基本とし、改善しない場合は最大10日間；侵襲的人工呼吸器・ECMO使用例は最大10日間",
           "perKg": {
             "amount": 5,
             "unit": "mg",
@@ -1501,7 +1511,7 @@
         },
         {
           "indication": "予防",
-          "text": "1回75mg、7-10日間"
+        "text": "1回75mg 1日1回、7-10日間"
         }
       ]
     },
@@ -1549,8 +1559,19 @@
     "renalPo": {
       "gt50": "治療: 常用量（CCr >30）／予防: 常用量（CCr >30）",
       "ccr10_50": "治療 — CCr 10-30: 1回75mg 1日1回、5日間／予防 — CCr 15-30: 1回75mgを隔日投与、7-10日間",
-      "hd": "初回75mg投与後、2回目のHD後に75mg追加投与"
-    },
+    "hd": "初回75mg投与後、2回目のHD後に75mg追加投与"
+  },
+  "renalRules": {
+    "po": {
+      "metric": "ccr",
+      "rules": [
+        { "label": "CCr > 30 mL/min", "min": 30.000001, "dose": "治療・予防とも通常量" },
+        { "label": "CCr 15–30 mL/min", "min": 15, "max": 30.000001, "dose": "治療：75mg 1日1回、5日間／予防：75mg 隔日、7-10日間" },
+        { "label": "CCr 10–<15 mL/min", "min": 10, "max": 15, "dose": "治療：75mg 1日1回、5日間／予防：原典に記載なし（薬剤部へ確認）" },
+        { "label": "CCr < 10 mL/min", "max": 10, "dose": "原典に非透析時の記載なし（薬剤部へ確認）" }
+      ]
+    }
+  },
     "source": {
       "edition": 9,
       "pages": [
@@ -1639,7 +1660,7 @@
       "po": [
         {
           "indication": null,
-          "text": "1回800mg 1日2回"
+        "text": "1回800mg 1日2回、5日間"
         }
       ]
     },
@@ -1683,21 +1704,39 @@
       "po": [
         {
           "indication": null,
-          "text": "1回 Nirmatrelvir 300mg / Ritonavir 100mg 1日2回"
+        "text": "1回 Nirmatrelvir 300mg / Ritonavir 100mg 1日2回、5日間"
         }
       ]
     },
     "pediatric": {
       "po": [
         {
-          "indication": "12歳以上かつ40kg以上",
-          "text": "1回 Nirmatrelvir 300mg / Ritonavir 100mg 1日2回"
+        "indication": "6歳以上かつ40kg以上",
+        "text": "1回 Nirmatrelvir 300mg / Ritonavir 100mg 1日2回、5日間"
+      },
+      {
+        "indication": "6歳以上かつ20kg以上40kg未満",
+        "text": "1回 Nirmatrelvir 150mg / Ritonavir 100mg 1日2回、5日間",
+        "note": "腎機能障害のある40kg未満の小児を対象とした臨床試験は実施されていない"
         }
       ]
     },
-    "renalPo": {
-      "ccr10_50": "CCr 30-60: 1回 Nirmatrelvir 150mg / Ritonavir 100mg 1日2回"
-    },
+  "renalPo": {
+    "gt50": "eGFR 60以上：通常量を5日間",
+    "ccr10_50": "eGFR 30以上60未満：1回 Nirmatrelvir 150mg / Ritonavir 100mg 1日2回、5日間",
+    "lt10": "eGFR 30未満：投与は推奨しない"
+  },
+  "renalRules": {
+    "po": {
+      "metric": "egfr",
+      "rules": [
+        { "label": "eGFR ≥ 60 mL/min/1.73m²", "min": 60, "dose": "通常量を5日間" },
+        { "label": "eGFR 30–<60 mL/min/1.73m²", "min": 30, "max": 60, "dose": "1回 Nirmatrelvir 150mg / Ritonavir 100mg 1日2回、5日間" },
+        { "label": "eGFR < 30 mL/min/1.73m²", "max": 30, "dose": "投与は推奨しない" }
+      ]
+    }
+  },
+  "renalNote": "本剤の腎機能区分はCockcroft-Gault CCrではなくeGFRで判定する。腎機能障害のある6歳以上40kg未満の小児では臨床試験が実施されていない",
     "source": {
       "edition": 9,
       "pages": [

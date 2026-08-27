@@ -83,6 +83,19 @@ export const RENAL_BAND_LABEL: Record<RenalBand, string> = {
 
 export type RenalDosing = Partial<Record<RenalBand, string>>;
 
+export type RenalDoseRule = {
+  /** 表示ラベル。範囲は [min, max) として判定する */
+  label: string;
+  min?: number;
+  max?: number;
+  dose: string;
+};
+
+export type RenalRuleSet = {
+  metric: "ccr" | "egfr";
+  rules: RenalDoseRule[];
+};
+
 export type TdmTarget = {
   type: "trough" | "peak" | "auc";
   /** 表示用の値表記 */
@@ -146,6 +159,8 @@ export type Drug = {
   /** 腎機能低下時（静注）。経口は renalPo */
   renal?: RenalDosing;
   renalPo?: RenalDosing;
+  /** 薬剤固有の腎機能指標・閾値。存在する場合は固定3区分より優先する */
+  renalRules?: Partial<Record<"iv" | "po", RenalRuleSet>>;
   /** 腎機能について原典が特記する事項 */
   renalNote?: string;
 
@@ -182,6 +197,8 @@ export type OffLabelUse = {
   diseaseIds: string[];
   /** 用法用量が指定されている場合 */
   dosageText?: string;
+  /** 原典で対象集団が明示された場合。未指定は成人のみとして安全側に扱う */
+  populations?: PatientMode[];
   source: Source;
 };
 

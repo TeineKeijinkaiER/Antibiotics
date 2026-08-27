@@ -49,6 +49,10 @@ export const PROPHYLAXIS = prophylaxisJson as unknown as ProphylaxisData;
 export const REFERENCE = referenceJson as unknown as ReferenceData;
 
 export const DRUG_BY_ID = new Map(DRUGS.map((d) => [d.id, d]));
+/** アンチバイオグラムの略号から薬剤詳細へ遷移するための索引 */
+export const DRUG_BY_ABBR = new Map(
+  DRUGS.filter((d) => d.abbr).map((d) => [d.abbr!, d]),
+);
 export const ORGANISM_BY_ID = new Map(ORGANISMS.map((o) => [o.id, o]));
 export const DISEASE_BY_ID = new Map(DISEASES.map((d) => [d.id, d]));
 

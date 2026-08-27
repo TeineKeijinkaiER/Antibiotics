@@ -115,6 +115,15 @@ for (const drug of drugs) {
       if (!VALID_BAND.has(band)) fail(`${where}.${key}: 腎機能区分が不正です — ${band}`);
     }
   }
+  for (const [route, set] of Object.entries(drug.renalRules ?? {})) {
+    if (!["iv", "po"].includes(route)) fail(`${where}.renalRules: route が不正です — ${route}`);
+    if (!["ccr", "egfr"].includes(set.metric)) fail(`${where}.renalRules.${route}: metric が不正です`);
+    if (!Array.isArray(set.rules) || set.rules.length === 0) fail(`${where}.renalRules.${route}: rules が空です`);
+    for (const rule of set.rules ?? []) {
+      if (!rule.label || !rule.dose) fail(`${where}.renalRules.${route}: label/dose がありません`);
+      if (rule.min != null && rule.max != null && rule.min >= rule.max) fail(`${where}.renalRules.${route}: 範囲が不正です`);
+    }
+  }
 
   if (drug.tdm) {
     checkSource(drug.tdm.source, `${where}.tdm`);
@@ -154,12 +163,18 @@ for (const d of diseases) {
 /* ---------- OffLabelUse ---------- */
 
 const VALID_OFFLABEL_CATEGORY = new Set(["indication", "indication_and_dosage", "dosage"]);
+const VALID_POPULATION = new Set(["adult", "pediatric"]);
 for (const use of offlabel) {
   const where = `OffLabelUse(${use.id})`;
   checkSource(use.source, where);
   if (!drugIds.has(use.drugId)) fail(`${where}: drugId の参照切れ — ${use.drugId}`);
   if (!VALID_OFFLABEL_CATEGORY.has(use.category)) fail(`${where}: category が不正です — ${use.category}`);
   if (!use.productLabel) fail(`${where}: productLabel がありません`);
+  if (use.populations && (
+    !Array.isArray(use.populations) ||
+    use.populations.length === 0 ||
+    use.populations.some((p) => !VALID_POPULATION.has(p))
+  )) fail(`${where}: populations が不正です`);
   if (!Array.isArray(use.diseaseIds) || use.diseaseIds.length === 0) {
     fail(`${where}: diseaseIds が空です`);
   }

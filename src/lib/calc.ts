@@ -1,4 +1,4 @@
-import type { PatientState, PerKgDose, RenalBand, Drug } from "../types";
+import type { PatientState, PerKgDose, RenalBand, Drug, RenalDoseRule } from "../types";
 
 /**
  * Cockcroft-Gault 式による CCr（原典 p.16）
@@ -196,6 +196,32 @@ export function renalDoseFor(
   if (band == null) return null;
   const table = route === "po" ? drug.renalPo : drug.renal;
   return table?.[band] ?? null;
+}
+
+/** 薬剤固有の指標・閾値を含め、患者に該当する腎機能用量を返す */
+export function renalRuleForPatient(
+  drug: Drug,
+  patient: PatientState,
+  route: "iv" | "po",
+): RenalDoseRule | null {
+  if (patient.rrt) return null;
+  const set = drug.renalRules?.[route];
+  if (!set) return null;
+  const value = set.metric === "egfr" ? patient.egfr : cockcroftGault(patient);
+  if (value == null) return null;
+  return set.rules.find((rule) =>
+    (rule.min == null || value >= rule.min) && (rule.max == null || value < rule.max),
+  ) ?? null;
+}
+
+export function renalDoseForPatient(
+  drug: Drug,
+  patient: PatientState,
+  route: "iv" | "po",
+): string | null {
+  if (patient.rrt) return renalDoseFor(drug, resolveRenalBand(patient), route);
+  if (drug.renalRules?.[route]) return renalRuleForPatient(drug, patient, route)?.dose ?? null;
+  return renalDoseFor(drug, resolveRenalBand(patient), route);
 }
 
 /** 入力値の妥当性（要件 FR-001-6） */

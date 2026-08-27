@@ -17,7 +17,8 @@
     "check:layout": "node scripts/check-layout.mjs",
     "check:tdm": "node scripts/check-tdm.mjs",
     "check:navigation": "node scripts/check-navigation.mjs",
-    "check:disclaimer": "node scripts/check-disclaimer.mjs"
+    "check:disclaimer": "node scripts/check-disclaimer.mjs",
+    "check:medical-ui": "node scripts/check-medical-ui.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

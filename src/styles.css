@@ -263,6 +263,21 @@ input, select { font: inherit; color: inherit; }
   font-family: ui-monospace, SFMono-Regular, monospace;
 }
 
+.dosing-primary {
+  padding: 14px 16px;
+  border: 1px solid var(--rule);
+  border-radius: 9px;
+  background: var(--surface-2);
+}
+.dosing-primary > h3 {
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 800;
+  border-bottom-color: var(--ink-3);
+}
+.dosing-primary .dose-text,
+.dosing-primary .renal-row > div:last-child { font-weight: 700; }
+
 .dose-row {
   display: grid;
   gap: 3px;
@@ -271,7 +286,7 @@ input, select { font: inherit; color: inherit; }
 }
 .dose-row:last-child { border-bottom: none; }
 .dose-ind { font-size: 12.5px; color: var(--ink-3); font-weight: 700; }
-.dose-text { font-size: 14.5px; }
+.dose-text { font-size: 14.5px; overflow-wrap: anywhere; }
 .dose-conv {
   font-size: 13px;
   color: var(--accent);
@@ -282,6 +297,21 @@ input, select { font: inherit; color: inherit; }
   margin-top: 3px;
 }
 .dose-note { font-size: 12.5px; color: var(--ink-3); }
+.offlabel-dose {
+  font-size: 13px;
+  color: inherit;
+  padding-top: 2px;
+}
+.offlabel-details { border-top: 1px solid var(--rule); padding-top: 10px; }
+.offlabel-details > summary {
+  cursor: pointer;
+  color: var(--ink-2);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.offlabel-body { margin-top: 12px; }
+.abx-drug-link { font-family: inherit; font-weight: 800; }
 
 .renal-grid { display: grid; gap: 8px; }
 .renal-row {
@@ -625,6 +655,11 @@ footer.foot {
 }
 
 /* ---------- TDM ---------- */
+.tdm-dose-grid .renal-row {
+  grid-template-columns: minmax(84px, 112px) minmax(0, 1fr);
+}
+.tdm-dose-grid .renal-row > div:last-child { min-width: 0; }
+
 .badge-link {
   border: 1px solid currentColor;
   background: var(--adult-soft);
@@ -698,5 +733,6 @@ footer.foot {
   table.doc td:empty { display: none; }
   /* 1列目（名称）は値を目立たせたいのでラベルを出さず全幅にする */
   table.doc td:first-child { grid-template-columns: 1fr; font-size: 15px; padding-top: 8px; }
+  table.doc td:first-child { min-width: 0; overflow-x: hidden; word-break: break-all; }
   table.doc td:first-child::before { display: none; }
 }

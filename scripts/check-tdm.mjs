@@ -81,6 +81,20 @@ check((await page.locator(".renal-row").count()) === 6, "VCM: 全6区分（eGFR5
 check((await page.locator(".renal-row.active").count()) === 0, "VCM: どの区分も強調しない");
 check((await page.locator(".banner.danger").count()) === 0, "VCM: 上限警告を出さない");
 
+/* 左の区分名が幅を取りすぎて、右の用量列をつぶさない */
+await page.setViewportSize({ width: 600, height: 1000 });
+const tdmColumns = await page.locator(".tdm-dose-grid .renal-row").first().evaluate((row) => {
+  const cells = row.children;
+  return {
+    row: row.getBoundingClientRect().width,
+    left: cells[0].getBoundingClientRect().width,
+    right: cells[1].getBoundingClientRect().width,
+  };
+});
+check(tdmColumns.left <= 112, "TDM: 左の区分名列を112px以下に抑える");
+check(tdmColumns.right >= tdmColumns.row * 0.6, "TDM: 右の用量・数値列を行幅の60%以上確保する");
+await page.setViewportSize({ width: 900, height: 1000 });
+
 await page.goto(BASE, { waitUntil: "networkidle" });
 await openDesigner("ゲンタマイシン");
 check((await page.locator(".renal-row").count()) === 2, "AG: 全2区分を表示する");

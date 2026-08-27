@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Organism, AntibiogramSetting } from "../types";
-import { ANTIBIOGRAM, ORGANISM_BY_ID } from "../data";
+import { ANTIBIOGRAM, DRUG_BY_ABBR, ORGANISM_BY_ID } from "../data";
 
 /** 感受性率の3段階（原典 p.70 凡例） */
 function tier(pct: number): "good" | "warn" | "bad" {
@@ -30,7 +30,13 @@ export function AntibiogramNotice() {
   );
 }
 
-export function OrganismDetail({ organism }: { organism: Organism }) {
+export function OrganismDetail({
+  organism,
+  onOpenDrug,
+}: {
+  organism: Organism;
+  onOpenDrug: (drugId: string) => void;
+}) {
   const [setting, setSetting] = useState<AntibiogramSetting>("inpatient");
 
   const row = ANTIBIOGRAM.rows.find(
@@ -105,9 +111,22 @@ export function OrganismDetail({ organism }: { organism: Organism }) {
                 <tbody>
                   {columns.map((abx) => {
                     const pct = row.susceptibility[abx];
+                    const drug = DRUG_BY_ABBR.get(abx);
                     return (
                       <tr key={abx}>
-                        <td className="mono">{abx}</td>
+                        <td className="mono">
+                          {drug ? (
+                            <button
+                              className="link-btn abx-drug-link"
+                              onClick={() => onOpenDrug(drug.id)}
+                              aria-label={`${drug.genericName.ja}の薬剤画面を開く`}
+                            >
+                              {abx}
+                            </button>
+                          ) : (
+                            abx
+                          )}
+                        </td>
                         <td className="pct">
                           {pct == null ? (
                             <span className="tierpill tier-na">—</span>
