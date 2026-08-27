@@ -102,25 +102,20 @@ export function SurgicalProphylaxis({
       {/* ---- 1回投与量（体重帯で自動選択） ---- */}
       <section className="section">
         <h3>予防抗菌薬 1回投与量</h3>
-        {patient.weight == null && (
-          <p className="dose-note" style={{ marginBottom: 8 }}>
-            患者条件パネルで体重を入力すると、該当する体重帯を自動でハイライトします。
-          </p>
-        )}
+        <p className="dose-note" style={{ marginBottom: 10 }}>
+          {patient.weight == null
+            ? "画面上部の「患者条件」で体重を入力すると、該当する体重帯を自動で強調します。"
+            : `体重 ${patient.weight}kg の該当帯を強調しています。`}
+        </p>
         {PROPHYLAXIS.doses.map((d) => {
           const active = bandForWeight(d.bands, patient.weight);
           return (
-            <div className="dose-row" key={d.drug}>
-              <div className="dose-text">
-                <button
-                  className="link-btn"
-                  style={{ fontSize: 15, fontWeight: 700 }}
-                  onClick={() => onOpenDrug(d.drugId)}
-                >
-                  {d.drug}
-                </button>
-              </div>
-              <div className="renal-grid">
+            <div className="dose-card" key={d.drug}>
+              <button className="dose-card-name" onClick={() => onOpenDrug(d.drugId)}>
+                {d.drug}
+              </button>
+              {/* 体重帯と1回投与量を左右に並べる。用量を右側に揃えて拾いやすくする */}
+              <div className="wband-list">
                 {d.bands.map((b, i) => {
                   const isActive = active === b;
                   const conv = b.perKg ? convertPerKg(b.perKg, patient) : null;
@@ -128,15 +123,19 @@ export function SurgicalProphylaxis({
                     <div
                       key={i}
                       className={
-                        "renal-row " +
-                        (patient.weight == null ? "" : isActive ? "active" : "dim")
+                        "wband " + (patient.weight == null ? "" : isActive ? "active" : "dim")
                       }
                     >
-                      <div className="band">{bandLabel(b)}</div>
-                      <div>
+                      <span className="wband-weight">{bandLabel(b)}</span>
+                      <span className="wband-dose">
                         {b.text}
-                        {conv && <span className="mono">　→ {conv.text}{conv.clipped && "（上限）"}</span>}
-                      </div>
+                        {conv && (
+                          <span className="wband-conv mono">
+                            {conv.text}
+                            {conv.clipped && "（上限）"}
+                          </span>
+                        )}
+                      </span>
                     </div>
                   );
                 })}

@@ -56,11 +56,20 @@ function DoseRow({
         )}
       </div>
       {conv && !showPerKgOnly && (
-        <div className="dose-conv mono">
+        // 小児は体重から換算した1日投与量が主役になるため大きく出す
+        <div className={`dose-conv mono${mode === "pediatric" ? " strong" : ""}`}>
           → {conv.text}
           <span style={{ opacity: 0.75 }}>（{conv.basisLabel}）</span>
           {conv.clipped && <b>　※上限でクリップ</b>}
         </div>
+      )}
+      {conv && !showPerKgOnly && conv.uncappedNote && (
+        <div className="dose-note">
+          <b>{conv.uncappedNote}</b>（1日量からの自動計算には反映されていません）
+        </div>
+      )}
+      {showPerKgOnly && dose.perKg && (
+        <div className="dose-note">体重を入力すると1日投与量（mg）に換算します。</div>
       )}
       {dose.note && <div className="dose-note">{dose.note}</div>}
     </div>

@@ -1,32 +1,132 @@
 [
   {
     "id": "fluconazole",
-    "genericName": { "en": "Fluconazole", "ja": "フルコナゾール" },
-    "brandNames": ["フルコナゾール静注液200mg", "フルコナゾールカプセル100mg"],
+    "genericName": {
+      "en": "Fluconazole",
+      "ja": "フルコナゾール"
+    },
+    "brandNames": [
+      "フルコナゾール静注液200mg",
+      "フルコナゾールカプセル100mg"
+    ],
     "abbr": "FLCZ",
     "class": "トリアゾール系",
     "category": "antifungal",
-    "aliases": ["ジフルカン", "フルコナゾール", "FLCZ", "抗真菌薬"],
+    "aliases": [
+      "ジフルカン",
+      "フルコナゾール",
+      "FLCZ",
+      "抗真菌薬"
+    ],
     "adult": {
       "iv": [
-        { "indication": null, "text": "Loading 400mg、その後200mg 24時間毎" },
-        { "indication": "重症又は難治性真菌感染症", "text": "Loading 800mg、その後400mg 24時間毎" }
+        {
+          "indication": null,
+          "text": "Loading 400mg、その後200mg 24時間毎"
+        },
+        {
+          "indication": "重症又は難治性真菌感染症",
+          "text": "Loading 800mg、その後400mg 24時間毎"
+        }
       ],
-      "po": [{ "indication": null, "text": "1回400mg 1日1回" }]
+      "po": [
+        {
+          "indication": null,
+          "text": "1回400mg 1日1回"
+        }
+      ]
     },
     "pediatric": {
       "iv": [
-        { "indication": "カンジダ症", "text": "3mg/kg/day 分1", "perKg": { "amount": 3, "unit": "mg", "per": "perDay", "basis": "actual" } },
-        { "indication": "クリプトコッカス症", "text": "3-6mg/kg/day 分1", "perKg": { "amount": [3, 6], "unit": "mg", "per": "perDay", "basis": "actual" } },
-        { "indication": "重症又は難治性真菌感染症", "text": "12mg/kg/day 分1", "perKg": { "amount": 12, "unit": "mg", "per": "perDay", "basis": "actual" } },
-        { "indication": "造血幹細胞移植患者における深在性真菌症の予防", "text": "12mg/kg/day 分1、適宜減量（400mg/dayまで）", "perKg": { "amount": 12, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDay": 400 } },
-        { "indication": "生後14日までの新生児", "text": "小児と同量を72時間毎" },
-        { "indication": "生後15日以降の新生児", "text": "小児と同量を48時間毎" }
+        {
+          "indication": "カンジダ症",
+          "text": "3mg/kg/day 分1",
+          "perKg": {
+            "amount": 3,
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual"
+          }
+        },
+        {
+          "indication": "クリプトコッカス症",
+          "text": "3-6mg/kg/day 分1",
+          "perKg": {
+            "amount": [
+              3,
+              6
+            ],
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual"
+          }
+        },
+        {
+          "indication": "重症又は難治性真菌感染症",
+          "text": "12mg/kg/day 分1",
+          "perKg": {
+            "amount": 12,
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual"
+          }
+        },
+        {
+          "indication": "造血幹細胞移植患者における深在性真菌症の予防",
+          "text": "12mg/kg/day 分1、適宜減量（400mg/dayまで）",
+          "perKg": {
+            "amount": 12,
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual",
+            "maxPerDay": 400
+          }
+        },
+        {
+          "indication": "生後14日までの新生児",
+          "text": "小児と同量を72時間毎"
+        },
+        {
+          "indication": "生後15日以降の新生児",
+          "text": "小児と同量を48時間毎"
+        }
       ],
       "po": [
-        { "indication": "カンジダ症", "text": "3mg/kg/day 分1", "perKg": { "amount": 3, "unit": "mg", "per": "perDay", "basis": "actual" }, "note": "粉砕可" },
-        { "indication": "クリプトコッカス症", "text": "3-6mg/kg/day 分1", "perKg": { "amount": [3, 6], "unit": "mg", "per": "perDay", "basis": "actual" } },
-        { "indication": "重症又は難治性真菌感染症", "text": "12mg/kg/day（400mg/dayまで）", "perKg": { "amount": 12, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDay": 400 } }
+        {
+          "indication": "カンジダ症",
+          "text": "3mg/kg/day 分1",
+          "perKg": {
+            "amount": 3,
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual"
+          },
+          "note": "粉砕可"
+        },
+        {
+          "indication": "クリプトコッカス症",
+          "text": "3-6mg/kg/day 分1",
+          "perKg": {
+            "amount": [
+              3,
+              6
+            ],
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual"
+          }
+        },
+        {
+          "indication": "重症又は難治性真菌感染症",
+          "text": "12mg/kg/day（400mg/dayまで）",
+          "perKg": {
+            "amount": 12,
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual",
+            "maxPerDay": 400
+          }
+        }
       ]
     },
     "renal": {
@@ -44,33 +144,110 @@
         "ivPush": false,
         "drip": "1時間",
         "im": false,
-        "notes": ["トリアゾラム、エルゴタミン、ピモジド併用禁忌"],
-        "source": { "edition": 9, "pages": [68] }
+        "notes": [
+          "トリアゾラム、エルゴタミン、ピモジド併用禁忌"
+        ],
+        "source": {
+          "edition": 9,
+          "pages": [
+            68
+          ]
+        }
       }
     ],
-    "source": { "edition": 9, "pages": [12, 14, 17, 21, 22, 40, 43, 68] }
+    "source": {
+      "edition": 9,
+      "pages": [
+        12,
+        14,
+        17,
+        21,
+        22,
+        40,
+        43,
+        68
+      ]
+    }
   },
   {
     "id": "micafungin",
-    "genericName": { "en": "Micafungin", "ja": "ミカファンギン" },
-    "brandNames": ["ミカファンギン点滴静注用50mg"],
+    "genericName": {
+      "en": "Micafungin",
+      "ja": "ミカファンギン"
+    },
+    "brandNames": [
+      "ミカファンギン点滴静注用50mg"
+    ],
     "abbr": "MCFG",
     "class": "キャンディン系",
     "category": "antifungal",
     "renalAdjustmentNotRequired": true,
-    "aliases": ["ファンガード", "ミカファンギン", "MCFG", "抗真菌薬"],
+    "aliases": [
+      "ファンガード",
+      "ミカファンギン",
+      "MCFG",
+      "抗真菌薬"
+    ],
     "adult": {
       "iv": [
-        { "indication": "Candida", "text": "100mg 24時間毎" },
-        { "indication": "Aspergillus", "text": "150-300mg 24時間毎" }
+        {
+          "indication": "Candida",
+          "text": "100mg 24時間毎"
+        },
+        {
+          "indication": "Aspergillus",
+          "text": "150-300mg 24時間毎"
+        }
       ]
     },
     "pediatric": {
       "iv": [
-        { "indication": "アスペルギルス症", "text": "1-3mg/kg/day 分1（体重50kg以上の患者に対し300mg/dayまで）", "perKg": { "amount": [1, 3], "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDay": 300 } },
-        { "indication": "カンジダ症", "text": "1mg/kg/day 分1（体重50kg以上の患者に対し300mg/dayまで）", "perKg": { "amount": 1, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDay": 300 } },
-        { "indication": "重症又は難治性カンジダ症", "text": "6mg/kg/day 分1", "perKg": { "amount": 6, "unit": "mg", "per": "perDay", "basis": "actual" } },
-        { "indication": "造血幹細胞移植患者におけるアスペルギルス症及びカンジダ症の予防", "text": "1mg/kg/day 分1（体重50kg以上の患者に対し50mg/dayまで）", "perKg": { "amount": 1, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDay": 50 } }
+        {
+          "indication": "アスペルギルス症",
+          "text": "1-3mg/kg/day 分1（体重50kg以上の患者に対し300mg/dayまで）",
+          "perKg": {
+            "amount": [
+              1,
+              3
+            ],
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual",
+            "maxPerDay": 300
+          }
+        },
+        {
+          "indication": "カンジダ症",
+          "text": "1mg/kg/day 分1（体重50kg以上の患者に対し300mg/dayまで）",
+          "perKg": {
+            "amount": 1,
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual",
+            "maxPerDay": 300
+          }
+        },
+        {
+          "indication": "重症又は難治性カンジダ症",
+          "text": "6mg/kg/day 分1",
+          "perKg": {
+            "amount": 6,
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual"
+          }
+        },
+        {
+          "indication": "造血幹細胞移植患者におけるアスペルギルス症及びカンジダ症の予防",
+          "text": "1mg/kg/day 分1（体重50kg以上の患者に対し50mg/dayまで）",
+          "perKg": {
+            "amount": 1,
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual",
+            "maxPerDay": 50
+          }
+        }
       ]
     },
     "renal": {
@@ -88,38 +265,122 @@
         "ivPush": false,
         "drip": "0.5-1時間",
         "im": false,
-        "notes": ["75mg以下では30分以上、75mg以上では1時間以上かけて投与"],
-        "incompatibleWith": ["GCV", "ABPC", "AMK", "GM", "CPFX", "VCM", "MINO"],
-        "source": { "edition": 9, "pages": [68] }
+        "notes": [
+          "75mg以下では30分以上、75mg以上では1時間以上かけて投与"
+        ],
+        "incompatibleWith": [
+          "GCV",
+          "ABPC",
+          "AMK",
+          "GM",
+          "CPFX",
+          "VCM",
+          "MINO"
+        ],
+        "source": {
+          "edition": 9,
+          "pages": [
+            68
+          ]
+        }
       }
     ],
-    "source": { "edition": 9, "pages": [12, 17, 21, 22, 40, 68] }
+    "source": {
+      "edition": 9,
+      "pages": [
+        12,
+        17,
+        21,
+        22,
+        40,
+        68
+      ]
+    }
   },
   {
     "id": "voriconazole",
-    "genericName": { "en": "Voriconazole", "ja": "ボリコナゾール" },
-    "brandNames": ["ブイフェンド200mg静注用", "ブイフェンド錠50mg/200mg"],
+    "genericName": {
+      "en": "Voriconazole",
+      "ja": "ボリコナゾール"
+    },
+    "brandNames": [
+      "ブイフェンド200mg静注用",
+      "ブイフェンド錠50mg/200mg"
+    ],
     "abbr": "VRCZ",
     "class": "トリアゾール系",
     "category": "antifungal",
-    "aliases": ["ブイフェンド", "ボリコナゾール", "VRCZ", "抗真菌薬"],
+    "aliases": [
+      "ブイフェンド",
+      "ボリコナゾール",
+      "VRCZ",
+      "抗真菌薬"
+    ],
     "adult": {
       "iv": [
-        { "indication": null, "text": "Loading 6mg/kg 12時間毎 2回投与、その後3-4mg/kg 12時間毎", "perKg": { "amount": 6, "unit": "mg", "per": "perDose", "basis": "actual" }, "note": "2日目以降に血中濃度測定" }
+        {
+          "indication": null,
+          "text": "Loading 6mg/kg 12時間毎 2回投与、その後3-4mg/kg 12時間毎",
+          "perKg": {
+            "amount": 6,
+            "unit": "mg",
+            "per": "perDose",
+            "basis": "actual"
+          },
+          "note": "2日目以降に血中濃度測定"
+        }
       ],
       "po": [
-        { "indication": "体重40kg以上", "text": "初日1回300mg 1日2回、2日目以降は1回150-200mg 1日2回（食間）" },
-        { "indication": "体重40kg未満", "text": "初日1回150mg 1日2回、2日目以降は1回100mg 1日2回（食間）" }
+        {
+          "indication": "体重40kg以上",
+          "text": "初日1回300mg 1日2回、2日目以降は1回150-200mg 1日2回（食間）"
+        },
+        {
+          "indication": "体重40kg未満",
+          "text": "初日1回150mg 1日2回、2日目以降は1回100mg 1日2回（食間）"
+        }
       ]
     },
     "pediatric": {
       "iv": [
-        { "indication": "2歳以上12歳未満、及び12歳以上で体重50kg未満", "text": "初日1回9mg/kg 1日2回、2日目以降は1回8mg/kg 1日2回（効果不十分の場合は1mg/kgずつ増量、忍容性不十分の場合は1mg/kgずつ減量）", "perKg": { "amount": 9, "unit": "mg", "per": "perDose", "basis": "actual" } },
-        { "indication": "12歳以上で体重50kg以上", "text": "初日1回6mg/kg 1日2回、2日目以降は1回4mg/kg 1日2回", "perKg": { "amount": 6, "unit": "mg", "per": "perDose", "basis": "actual" } }
+        {
+          "indication": "2歳以上12歳未満、及び12歳以上で体重50kg未満",
+          "text": "初日1回9mg/kg 1日2回、2日目以降は1回8mg/kg 1日2回（効果不十分の場合は1mg/kgずつ増量、忍容性不十分の場合は1mg/kgずつ減量）",
+          "perKg": {
+            "amount": 9,
+            "unit": "mg",
+            "per": "perDose",
+            "basis": "actual"
+          }
+        },
+        {
+          "indication": "12歳以上で体重50kg以上",
+          "text": "初日1回6mg/kg 1日2回、2日目以降は1回4mg/kg 1日2回",
+          "perKg": {
+            "amount": 6,
+            "unit": "mg",
+            "per": "perDose",
+            "basis": "actual"
+          }
+        }
       ],
       "po": [
-        { "indication": "2歳以上12歳未満、及び12歳以上で体重50kg未満", "text": "1回9mg/kg 1日2回 食間投与（1回350mgまで）", "perKg": { "amount": 9, "unit": "mg", "per": "perDose", "basis": "actual", "maxPerDose": 350 }, "note": "粉砕可" },
-        { "indication": "12歳以上で体重50kg以上", "text": "1回200mg 1日2回 食間投与（効果不十分の場合は1回300mgまで増量可）" }
+        {
+          "indication": "2歳以上12歳未満、及び12歳以上で体重50kg未満",
+          "text": "1回9mg/kg 1日2回 食間投与（1回350mgまで）",
+          "perKg": {
+            "amount": 9,
+            "unit": "mg",
+            "per": "perDose",
+            "basis": "actual",
+            "maxPerDose": 350
+          },
+          "note": "粉砕可"
+        },
+        {
+          "indication": "12歳以上で体重50kg以上",
+          "text": "1回200mg 1日2回 食間投与（効果不十分の場合は1回300mgまで増量可）"
+        }
       ]
     },
     "renal": {
@@ -133,11 +394,29 @@
     "tdm": {
       "designer": "voriconazole",
       "targets": [
-        { "type": "peak", "value": "目標値なし", "unit": "", "condition": null },
-        { "type": "trough", "value": "1-4", "unit": "µg/mL", "condition": null },
-        { "type": "trough", "value": "2-4", "unit": "µg/mL", "condition": "注射剤（p.12・p.17の記載）" }
+        {
+          "type": "peak",
+          "value": "目標値なし",
+          "unit": "",
+          "condition": null
+        },
+        {
+          "type": "trough",
+          "value": "1-4",
+          "unit": "µg/mL",
+          "condition": null
+        },
+        {
+          "type": "trough",
+          "value": "2-4",
+          "unit": "µg/mL",
+          "condition": "注射剤（p.12・p.17の記載）"
+        }
       ],
-      "sampling": { "trough": "投与直前（透析患者の場合は透析前）", "peak": "必要なし" },
+      "sampling": {
+        "trough": "投与直前（透析患者の場合は透析前）",
+        "peak": "必要なし"
+      },
       "firstTdmDose": "投与開始2-5日目",
       "cautions": [
         "CCrが30mL/min以下では注射剤は投与禁忌",
@@ -146,7 +425,12 @@
         "血中濃度測定は院外（外注）— 月曜朝採血：火曜測定→水曜or木曜報告／木曜朝採血：金曜測定→土曜or翌週月曜報告",
         "外来でTDMを行う場合は薬剤部担当者へ連絡し、採血コメントに「外注採血あり」を入力する（VRCZの検査オーダーは行わない）"
       ],
-      "source": { "edition": 9, "pages": [36] }
+      "source": {
+        "edition": 9,
+        "pages": [
+          36
+        ]
+      }
     },
     "formulations": [
       {
@@ -161,27 +445,80 @@
           "重度腎障害の患者では内服を考慮",
           "効果、副作用の判定時にはTDMを推奨"
         ],
-        "source": { "edition": 9, "pages": [68] }
+        "source": {
+          "edition": 9,
+          "pages": [
+            68
+          ]
+        }
       }
     ],
-    "source": { "edition": 9, "pages": [12, 14, 17, 21, 22, 36, 40, 43, 68] }
+    "source": {
+      "edition": 9,
+      "pages": [
+        12,
+        14,
+        17,
+        21,
+        22,
+        36,
+        40,
+        43,
+        68
+      ]
+    }
   },
   {
     "id": "liposomal-amphotericin-b",
-    "genericName": { "en": "Liposomal Amphotericin B", "ja": "リポソーマルアムホテリシンB" },
-    "brandNames": ["アムビゾーム点滴静注用50mg"],
+    "genericName": {
+      "en": "Liposomal Amphotericin B",
+      "ja": "リポソーマルアムホテリシンB"
+    },
+    "brandNames": [
+      "アムビゾーム点滴静注用50mg"
+    ],
     "abbr": "L-AMB",
     "class": "ポリエン系",
     "category": "antifungal",
     "renalAdjustmentNotRequired": true,
-    "aliases": ["アムビゾーム", "アムホテリシン", "L-AMB", "抗真菌薬"],
+    "aliases": [
+      "アムビゾーム",
+      "アムホテリシン",
+      "L-AMB",
+      "抗真菌薬"
+    ],
     "adult": {
       "iv": [
-        { "indication": null, "text": "2.5mg/kg 24時間毎", "perKg": { "amount": 2.5, "unit": "mg", "per": "perDose", "basis": "actual" } },
-        { "indication": "クリプトコッカス髄膜炎", "text": "6mg/kg 24時間毎", "perKg": { "amount": 6, "unit": "mg", "per": "perDose", "basis": "actual" } }
+        {
+          "indication": null,
+          "text": "2.5mg/kg 24時間毎",
+          "perKg": {
+            "amount": 2.5,
+            "unit": "mg",
+            "per": "perDose",
+            "basis": "actual"
+          }
+        },
+        {
+          "indication": "クリプトコッカス髄膜炎",
+          "text": "6mg/kg 24時間毎",
+          "perKg": {
+            "amount": 6,
+            "unit": "mg",
+            "per": "perDose",
+            "basis": "actual"
+          }
+        }
       ]
     },
-    "pediatric": { "iv": [{ "indication": null, "text": "小児に対する投与量の設定なし" }] },
+    "pediatric": {
+      "iv": [
+        {
+          "indication": null,
+          "text": "小児に対する投与量の設定なし"
+        }
+      ]
+    },
     "renal": {
       "gt50": "3-5mg/kg 24時間毎",
       "ccr10_50": "原則として投与量・間隔の調整不要",
@@ -198,97 +535,341 @@
         "ivPush": false,
         "drip": "1-2時間",
         "im": false,
-        "notes": ["注水12mLに溶解後、添付のフィルターを取り付け濾過しながら5%ブドウ糖に希釈して使用"],
-        "source": { "edition": 9, "pages": [68] }
+        "notes": [
+          "注水12mLに溶解後、添付のフィルターを取り付け濾過しながら5%ブドウ糖に希釈して使用"
+        ],
+        "source": {
+          "edition": 9,
+          "pages": [
+            68
+          ]
+        }
       }
     ],
-    "source": { "edition": 9, "pages": [12, 18, 21, 22, 40, 68] }
+    "source": {
+      "edition": 9,
+      "pages": [
+        12,
+        18,
+        21,
+        22,
+        40,
+        68
+      ]
+    }
   },
   {
     "id": "itraconazole",
-    "genericName": { "en": "Itraconazole", "ja": "イトラコナゾール" },
-    "brandNames": ["イトラコナゾール錠50mg"],
+    "genericName": {
+      "en": "Itraconazole",
+      "ja": "イトラコナゾール"
+    },
+    "brandNames": [
+      "イトラコナゾール錠50mg"
+    ],
     "abbr": "ITCZ",
     "class": "トリアゾール系",
     "category": "antifungal",
-    "aliases": ["イトリゾール", "イトラコナゾール", "ITCZ", "抗真菌薬"],
-    "adult": { "po": [{ "indication": null, "text": "治療対象で大きく変わるので本マニュアルでは割愛" }] },
-    "pediatric": { "po": [{ "indication": null, "text": "小児に対する投与量の設定なし", "note": "粉砕可" }] },
-    "source": { "edition": 9, "pages": [14, 43] }
+    "aliases": [
+      "イトリゾール",
+      "イトラコナゾール",
+      "ITCZ",
+      "抗真菌薬"
+    ],
+    "adult": {
+      "po": [
+        {
+          "indication": null,
+          "text": "治療対象で大きく変わるので本マニュアルでは割愛"
+        }
+      ]
+    },
+    "pediatric": {
+      "po": [
+        {
+          "indication": null,
+          "text": "小児に対する投与量の設定なし",
+          "note": "粉砕可"
+        }
+      ]
+    },
+    "source": {
+      "edition": 9,
+      "pages": [
+        14,
+        43
+      ]
+    }
   },
   {
     "id": "flucytosine",
-    "genericName": { "en": "Flucytosine", "ja": "フルシトシン" },
-    "brandNames": ["アンコチル錠500mg"],
+    "genericName": {
+      "en": "Flucytosine",
+      "ja": "フルシトシン"
+    },
+    "brandNames": [
+      "アンコチル錠500mg"
+    ],
     "abbr": "5-FC",
     "class": "フルオロピリミジン系",
     "category": "antifungal",
-    "aliases": ["アンコチル", "フルシトシン", "5-FC", "抗真菌薬"],
+    "aliases": [
+      "アンコチル",
+      "フルシトシン",
+      "5-FC",
+      "抗真菌薬"
+    ],
     "adult": {
-      "po": [{ "indication": null, "text": "1回12.5-25mg/kg 1日4回", "perKg": { "amount": [12.5, 25], "unit": "mg", "per": "perDose", "basis": "actual" } }]
+      "po": [
+        {
+          "indication": null,
+          "text": "1回12.5-25mg/kg 1日4回",
+          "perKg": {
+            "amount": [
+              12.5,
+              25
+            ],
+            "unit": "mg",
+            "per": "perDose",
+            "basis": "actual"
+          }
+        }
+      ]
     },
-    "pediatric": { "po": [{ "indication": null, "text": "小児に対する投与量の設定なし", "note": "粉砕可" }] },
-    "source": { "edition": 9, "pages": [14, 43] }
+    "pediatric": {
+      "po": [
+        {
+          "indication": null,
+          "text": "小児に対する投与量の設定なし",
+          "note": "粉砕可"
+        }
+      ]
+    },
+    "source": {
+      "edition": 9,
+      "pages": [
+        14,
+        43
+      ]
+    }
   },
   {
     "id": "fosravuconazole",
-    "genericName": { "en": "Fosravuconazole", "ja": "ホスラブコナゾール" },
-    "brandNames": ["ネイリンカプセル100mg"],
+    "genericName": {
+      "en": "Fosravuconazole",
+      "ja": "ホスラブコナゾール"
+    },
+    "brandNames": [
+      "ネイリンカプセル100mg"
+    ],
     "abbr": null,
     "class": "トリアゾール系",
     "category": "antifungal",
-    "aliases": ["ネイリン", "ホスラブコナゾール", "爪白癬"],
-    "adult": { "po": [{ "indication": null, "text": "1回100mg 1日1回" }] },
-    "pediatric": { "po": [{ "indication": null, "text": "小児に対する投与量の設定なし", "note": "粉砕不可（データなし）" }] },
-    "source": { "edition": 9, "pages": [14, 43] }
+    "aliases": [
+      "ネイリン",
+      "ホスラブコナゾール",
+      "爪白癬"
+    ],
+    "adult": {
+      "po": [
+        {
+          "indication": null,
+          "text": "1回100mg 1日1回"
+        }
+      ]
+    },
+    "pediatric": {
+      "po": [
+        {
+          "indication": null,
+          "text": "小児に対する投与量の設定なし",
+          "note": "粉砕不可（データなし）"
+        }
+      ]
+    },
+    "source": {
+      "edition": 9,
+      "pages": [
+        14,
+        43
+      ]
+    }
   },
   {
     "id": "miconazole",
-    "genericName": { "en": "Miconazole", "ja": "ミコナゾール" },
-    "brandNames": ["フロリードゲル経口用2%"],
+    "genericName": {
+      "en": "Miconazole",
+      "ja": "ミコナゾール"
+    },
+    "brandNames": [
+      "フロリードゲル経口用2%"
+    ],
     "abbr": "MCZ",
     "class": "イミダゾール系",
     "category": "antifungal",
-    "aliases": ["フロリード", "ミコナゾール", "MCZ", "口腔カンジダ"],
-    "adult": { "po": [{ "indication": null, "text": "1回200-400mg 1日4回" }] },
-    "pediatric": { "po": [{ "indication": null, "text": "小児に対する投与量の設定なし" }] },
-    "source": { "edition": 9, "pages": [14, 43] }
+    "aliases": [
+      "フロリード",
+      "ミコナゾール",
+      "MCZ",
+      "口腔カンジダ"
+    ],
+    "adult": {
+      "po": [
+        {
+          "indication": null,
+          "text": "1回200-400mg 1日4回"
+        }
+      ]
+    },
+    "pediatric": {
+      "po": [
+        {
+          "indication": null,
+          "text": "小児に対する投与量の設定なし"
+        }
+      ]
+    },
+    "source": {
+      "edition": 9,
+      "pages": [
+        14,
+        43
+      ]
+    }
   },
   {
     "id": "amphotericin-b-syrup",
-    "genericName": { "en": "Amphotericin B (oral)", "ja": "アムホテリシンB（シロップ）" },
-    "brandNames": ["ファンギゾンシロップ100mg/mL"],
+    "genericName": {
+      "en": "Amphotericin B (oral)",
+      "ja": "アムホテリシンB（シロップ）"
+    },
+    "brandNames": [
+      "ファンギゾンシロップ100mg/mL"
+    ],
     "abbr": "AMPH-B",
     "class": "ポリエン系（経口）",
     "category": "antifungal",
-    "aliases": ["ファンギゾン", "アムホテリシン", "口腔カンジダ"],
-    "adult": { "po": [{ "indication": null, "text": "1回8mL 1日3回" }] },
-    "pediatric": { "po": [{ "indication": null, "text": "1回50-100mgを1日2-4回" }] },
-    "source": { "edition": 9, "pages": [14, 43] }
+    "aliases": [
+      "ファンギゾン",
+      "アムホテリシン",
+      "口腔カンジダ"
+    ],
+    "adult": {
+      "po": [
+        {
+          "indication": null,
+          "text": "1回8mL 1日3回"
+        }
+      ]
+    },
+    "pediatric": {
+      "po": [
+        {
+          "indication": null,
+          "text": "1回50-100mgを1日2-4回"
+        }
+      ]
+    },
+    "source": {
+      "edition": 9,
+      "pages": [
+        14,
+        43
+      ]
+    }
   },
   {
     "id": "acyclovir",
-    "genericName": { "en": "Acyclovir", "ja": "アシクロビル" },
-    "brandNames": ["アシクロビル点滴静注液250mg", "アシクロビル錠200mg"],
+    "genericName": {
+      "en": "Acyclovir",
+      "ja": "アシクロビル"
+    },
+    "brandNames": [
+      "アシクロビル点滴静注液250mg",
+      "アシクロビル錠200mg"
+    ],
     "abbr": "ACV",
     "class": "抗ヘルペスウイルス薬",
     "category": "antiviral",
-    "aliases": ["ゾビラックス", "アシクロビル", "ACV", "抗ウイルス薬", "ヘルペス"],
+    "aliases": [
+      "ゾビラックス",
+      "アシクロビル",
+      "ACV",
+      "抗ウイルス薬",
+      "ヘルペス"
+    ],
     "adult": {
-      "iv": [{ "indication": null, "text": "10mg/kg 8時間毎", "perKg": { "amount": 10, "unit": "mg", "per": "perDose", "basis": "actual" } }],
+      "iv": [
+        {
+          "indication": null,
+          "text": "10mg/kg 8時間毎",
+          "perKg": {
+            "amount": 10,
+            "unit": "mg",
+            "per": "perDose",
+            "basis": "actual"
+          }
+        }
+      ],
       "po": [
-        { "indication": "単純ヘルペス", "text": "1回200mg 1日5回" },
-        { "indication": "帯状疱疹（Zoster）", "text": "1回800mg 1日5回" }
+        {
+          "indication": "単純ヘルペス",
+          "text": "1回200mg 1日5回"
+        },
+        {
+          "indication": "帯状疱疹（Zoster）",
+          "text": "1回800mg 1日5回"
+        }
       ]
     },
     "pediatric": {
       "iv": [
-        { "indication": null, "text": "15mg/kg/day 分3。脳炎・髄膜炎においては必要に応じて投与期間の延長又は増量可（1回20mg/kgまで）", "perKg": { "amount": 15, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDose": 20 } },
-        { "indication": "新生児単純ヘルペス感染症", "text": "30mg/kg/day 分3（1回20mg/kgまで）", "perKg": { "amount": 30, "unit": "mg", "per": "perDay", "basis": "actual" } }
+        {
+          "indication": null,
+          "text": "15mg/kg/day 分3。脳炎・髄膜炎においては必要に応じて投与期間の延長又は増量可（1回20mg/kgまで）",
+          "perKg": {
+            "amount": 15,
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual",
+            "maxPerKgPerDose": 20
+          }
+        },
+        {
+          "indication": "新生児単純ヘルペス感染症",
+          "text": "30mg/kg/day 分3（1回20mg/kgまで）",
+          "perKg": {
+            "amount": 30,
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual"
+          }
+        }
       ],
       "po": [
-        { "indication": "単純ヘルペス", "text": "1日80mg/kg 分4（1回200mgまで）", "perKg": { "amount": 80, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDose": 200 }, "note": "粉砕可" },
-        { "indication": "帯状疱疹（Zoster）", "text": "1日80mg/kg 分4（1回800mgまで）", "perKg": { "amount": 80, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDose": 800 } }
+        {
+          "indication": "単純ヘルペス",
+          "text": "1日80mg/kg 分4（1回200mgまで）",
+          "perKg": {
+            "amount": 80,
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual",
+            "maxPerDose": 200
+          },
+          "note": "粉砕可"
+        },
+        {
+          "indication": "帯状疱疹（Zoster）",
+          "text": "1日80mg/kg 分4（1回800mgまで）",
+          "perKg": {
+            "amount": 80,
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual",
+            "maxPerDose": 800
+          }
+        }
       ]
     },
     "renal": {
@@ -311,33 +892,113 @@
         "ivPush": false,
         "drip": "1時間",
         "im": false,
-        "notes": ["1A当たり100mL以上の母液で希釈し使用"],
-        "incompatibleWith": ["CTM"],
-        "source": { "edition": 9, "pages": [67] }
+        "notes": [
+          "1A当たり100mL以上の母液で希釈し使用"
+        ],
+        "incompatibleWith": [
+          "CTM"
+        ],
+        "source": {
+          "edition": 9,
+          "pages": [
+            67
+          ]
+        }
       }
     ],
-    "source": { "edition": 9, "pages": [12, 14, 18, 20, 21, 22, 40, 44, 67] }
+    "source": {
+      "edition": 9,
+      "pages": [
+        12,
+        14,
+        18,
+        20,
+        21,
+        22,
+        40,
+        44,
+        67
+      ]
+    }
   },
   {
     "id": "valacyclovir",
-    "genericName": { "en": "Valacyclovir", "ja": "バラシクロビル" },
-    "brandNames": ["バラシクロビル錠500mg", "バルトレックス顆粒50%"],
+    "genericName": {
+      "en": "Valacyclovir",
+      "ja": "バラシクロビル"
+    },
+    "brandNames": [
+      "バラシクロビル錠500mg",
+      "バルトレックス顆粒50%"
+    ],
     "abbr": "VACV",
     "class": "抗ヘルペスウイルス薬",
     "category": "antiviral",
-    "aliases": ["バルトレックス", "バラシクロビル", "VACV", "ヘルペス"],
+    "aliases": [
+      "バルトレックス",
+      "バラシクロビル",
+      "VACV",
+      "ヘルペス"
+    ],
     "adult": {
       "po": [
-        { "indication": "単純ヘルペス", "text": "1回500mg 1日2回" },
-        { "indication": "帯状疱疹（Zoster）", "text": "1回1000mg 1日3回" }
+        {
+          "indication": "単純ヘルペス",
+          "text": "1回500mg 1日2回"
+        },
+        {
+          "indication": "帯状疱疹（Zoster）",
+          "text": "1回1000mg 1日3回"
+        }
       ]
     },
     "pediatric": {
       "po": [
-        { "indication": "単純ヘルペス（10kg未満）", "text": "1日75mg/kg 分3（1回500mgまで）", "perKg": { "amount": 75, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDose": 500 }, "note": "粉砕可（苦味あり）" },
-        { "indication": "単純ヘルペス（10kg以上）", "text": "1日50mg/kg 分2（1回500mgまで）", "perKg": { "amount": 50, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDose": 500 } },
-        { "indication": "帯状疱疹（Zoster）", "text": "1日75mg/kg 分3（1回1000mgまで）", "perKg": { "amount": 75, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDose": 1000 } },
-        { "indication": "水痘", "text": "1日75mg/kg 分3（1回1000mgまで）", "perKg": { "amount": 75, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDose": 1000 } }
+        {
+          "indication": "単純ヘルペス（10kg未満）",
+          "text": "1日75mg/kg 分3（1回500mgまで）",
+          "perKg": {
+            "amount": 75,
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual",
+            "maxPerDose": 500
+          },
+          "note": "粉砕可（苦味あり）"
+        },
+        {
+          "indication": "単純ヘルペス（10kg以上）",
+          "text": "1日50mg/kg 分2（1回500mgまで）",
+          "perKg": {
+            "amount": 50,
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual",
+            "maxPerDose": 500
+          }
+        },
+        {
+          "indication": "帯状疱疹（Zoster）",
+          "text": "1日75mg/kg 分3（1回1000mgまで）",
+          "perKg": {
+            "amount": 75,
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual",
+            "maxPerDose": 1000
+          }
+        },
+        {
+          "indication": "水痘",
+          "text": "1日75mg/kg 分3（1回1000mgまで）",
+          "perKg": {
+            "amount": 75,
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual",
+            "maxPerDose": 1000
+          }
+        }
       ]
     },
     "renalPo": {
@@ -345,37 +1006,102 @@
       "ccr10_50": "単純ヘルペス: 500mg 12時間毎／帯状疱疹: 1000mg 12-24時間毎",
       "lt10": "単純ヘルペス: 500mg 24時間毎／帯状疱疹: 500-1000mg 48時間毎"
     },
-    "source": { "edition": 9, "pages": [14, 20, 44] }
+    "source": {
+      "edition": 9,
+      "pages": [
+        14,
+        20,
+        44
+      ]
+    }
   },
   {
     "id": "amenamevir",
-    "genericName": { "en": "Amenamevir", "ja": "アメナメビル" },
-    "brandNames": ["アメナリーフ錠200mg"],
+    "genericName": {
+      "en": "Amenamevir",
+      "ja": "アメナメビル"
+    },
+    "brandNames": [
+      "アメナリーフ錠200mg"
+    ],
     "abbr": null,
     "class": "ヘリカーゼ・プライマーゼ阻害薬",
     "category": "antiviral",
-    "aliases": ["アメナリーフ", "アメナメビル", "帯状疱疹"],
+    "aliases": [
+      "アメナリーフ",
+      "アメナメビル",
+      "帯状疱疹"
+    ],
     "adult": {
       "po": [
-        { "indication": "帯状疱疹（Zoster）", "text": "1回400mg 1日1回" },
-        { "indication": "単純疱疹（PIT）", "text": "1回1200mg 単回投与" }
+        {
+          "indication": "帯状疱疹（Zoster）",
+          "text": "1回400mg 1日1回"
+        },
+        {
+          "indication": "単純疱疹（PIT）",
+          "text": "1回1200mg 単回投与"
+        }
       ]
     },
-    "pediatric": { "po": [{ "indication": null, "text": "小児に対する投与量の設定なし", "note": "粉砕可" }] },
-    "source": { "edition": 9, "pages": [14, 44] }
+    "pediatric": {
+      "po": [
+        {
+          "indication": null,
+          "text": "小児に対する投与量の設定なし",
+          "note": "粉砕可"
+        }
+      ]
+    },
+    "source": {
+      "edition": 9,
+      "pages": [
+        14,
+        44
+      ]
+    }
   },
   {
     "id": "ganciclovir",
-    "genericName": { "en": "Ganciclovir", "ja": "ガンシクロビル" },
-    "brandNames": ["ガンシクロビル点滴静注用500mg"],
+    "genericName": {
+      "en": "Ganciclovir",
+      "ja": "ガンシクロビル"
+    },
+    "brandNames": [
+      "ガンシクロビル点滴静注用500mg"
+    ],
     "abbr": "GCV",
     "class": "抗サイトメガロウイルス薬",
     "category": "antiviral",
-    "aliases": ["デノシン", "ガンシクロビル", "GCV", "CMV", "サイトメガロ"],
+    "aliases": [
+      "デノシン",
+      "ガンシクロビル",
+      "GCV",
+      "CMV",
+      "サイトメガロ"
+    ],
     "adult": {
-      "iv": [{ "indication": null, "text": "Loading 5mg/kg 12時間毎、その後5mg/kg 24時間毎", "perKg": { "amount": 5, "unit": "mg", "per": "perDose", "basis": "actual" } }]
+      "iv": [
+        {
+          "indication": null,
+          "text": "Loading 5mg/kg 12時間毎、その後5mg/kg 24時間毎",
+          "perKg": {
+            "amount": 5,
+            "unit": "mg",
+            "per": "perDose",
+            "basis": "actual"
+          }
+        }
+      ]
     },
-    "pediatric": { "iv": [{ "indication": null, "text": "専門家にコンサルテーション" }] },
+    "pediatric": {
+      "iv": [
+        {
+          "indication": null,
+          "text": "専門家にコンサルテーション"
+        }
+      ]
+    },
     "renal": {
       "gt50": "Loading 5mg/kg 12時間毎、その後5mg/kg 24時間毎",
       "ccr10_50": "Loading 1.25-2.5mg/kg 24時間毎、その後0.6-1.25mg/kg 24時間毎",
@@ -397,49 +1123,136 @@
           "GCV濃度は10mg/mLを超えない",
           "通常薬剤部で調製"
         ],
-        "source": { "edition": 9, "pages": [67] }
+        "source": {
+          "edition": 9,
+          "pages": [
+            67
+          ]
+        }
       }
     ],
-    "source": { "edition": 9, "pages": [12, 18, 21, 22, 40, 67] }
+    "source": {
+      "edition": 9,
+      "pages": [
+        12,
+        18,
+        21,
+        22,
+        40,
+        67
+      ]
+    }
   },
   {
     "id": "valganciclovir",
-    "genericName": { "en": "Valganciclovir", "ja": "バルガンシクロビル" },
-    "brandNames": ["バリキサ錠450mg"],
+    "genericName": {
+      "en": "Valganciclovir",
+      "ja": "バルガンシクロビル"
+    },
+    "brandNames": [
+      "バリキサ錠450mg"
+    ],
     "abbr": "VGCV",
     "class": "抗サイトメガロウイルス薬",
     "category": "antiviral",
-    "aliases": ["バリキサ", "バルガンシクロビル", "VGCV", "CMV"],
+    "aliases": [
+      "バリキサ",
+      "バルガンシクロビル",
+      "VGCV",
+      "CMV"
+    ],
     "adult": {
       "po": [
-        { "indication": "初期治療", "text": "1回900mg 1日2回" },
-        { "indication": "維持治療", "text": "1回900mg 1日1回" }
+        {
+          "indication": "初期治療",
+          "text": "1回900mg 1日2回"
+        },
+        {
+          "indication": "維持治療",
+          "text": "1回900mg 1日1回"
+        }
       ]
     },
     "pediatric": {
       "po": [
-        { "indication": "臓器移植後の発症抑制", "text": "1日7 × 体表面積(m²) × 推定eGFR(mL/min/1.73m²) 分1（1回900mgまで）" },
-        { "indication": "先天性サイトメガロウイルス感染症", "text": "1日32mg/kg 分2", "perKg": { "amount": 32, "unit": "mg", "per": "perDay", "basis": "actual" } }
+        {
+          "indication": "臓器移植後の発症抑制",
+          "text": "1日7 × 体表面積(m²) × 推定eGFR(mL/min/1.73m²) 分1（1回900mgまで）"
+        },
+        {
+          "indication": "先天性サイトメガロウイルス感染症",
+          "text": "1日32mg/kg 分2",
+          "perKg": {
+            "amount": 32,
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual"
+          }
+        }
       ]
     },
-    "source": { "edition": 9, "pages": [15, 44] }
+    "source": {
+      "edition": 9,
+      "pages": [
+        15,
+        44
+      ]
+    }
   },
   {
     "id": "foscarnet",
-    "genericName": { "en": "Foscarnet", "ja": "ホスカルネット" },
-    "brandNames": ["点滴静注用ホスカビル24mg/mL"],
+    "genericName": {
+      "en": "Foscarnet",
+      "ja": "ホスカルネット"
+    },
+    "brandNames": [
+      "点滴静注用ホスカビル24mg/mL"
+    ],
     "abbr": null,
     "class": "抗サイトメガロウイルス薬",
     "category": "antiviral",
     "consultSpecialist": true,
-    "aliases": ["ホスカビル", "ホスカルネット", "CMV", "HHV-6"],
+    "aliases": [
+      "ホスカビル",
+      "ホスカルネット",
+      "CMV",
+      "HHV-6"
+    ],
     "adult": {
       "iv": [
-        { "indication": "初期", "text": "60mg/kg 8時間毎", "perKg": { "amount": 60, "unit": "mg", "per": "perDose", "basis": "actual" } },
-        { "indication": "維持", "text": "90-120mg/kg 24時間毎", "perKg": { "amount": [90, 120], "unit": "mg", "per": "perDose", "basis": "actual" } }
+        {
+          "indication": "初期",
+          "text": "60mg/kg 8時間毎",
+          "perKg": {
+            "amount": 60,
+            "unit": "mg",
+            "per": "perDose",
+            "basis": "actual"
+          }
+        },
+        {
+          "indication": "維持",
+          "text": "90-120mg/kg 24時間毎",
+          "perKg": {
+            "amount": [
+              90,
+              120
+            ],
+            "unit": "mg",
+            "per": "perDose",
+            "basis": "actual"
+          }
+        }
       ]
     },
-    "pediatric": { "iv": [{ "indication": null, "text": "小児に対する投与量の設定なし" }] },
+    "pediatric": {
+      "iv": [
+        {
+          "indication": null,
+          "text": "小児に対する投与量の設定なし"
+        }
+      ]
+    },
     "renal": {
       "gt50": "初期: 60mg/kg 8時間毎／維持: 90-120mg/kg 24時間毎",
       "ccr10_50": "専門家にコンサルテーション",
@@ -455,23 +1268,70 @@
         "ivPush": false,
         "drip": "2時間",
         "im": false,
-        "notes": ["末梢静脈より投与する場合は5%ブドウ糖又は生食で2倍に希釈", "ペンタミジン併用禁忌"],
-        "source": { "edition": 9, "pages": [67] }
+        "notes": [
+          "末梢静脈より投与する場合は5%ブドウ糖又は生食で2倍に希釈",
+          "ペンタミジン併用禁忌"
+        ],
+        "source": {
+          "edition": 9,
+          "pages": [
+            67
+          ]
+        }
       }
     ],
-    "source": { "edition": 9, "pages": [12, 18, 21, 22, 40, 67] }
+    "source": {
+      "edition": 9,
+      "pages": [
+        12,
+        18,
+        21,
+        22,
+        40,
+        67
+      ]
+    }
   },
   {
     "id": "peramivir",
-    "genericName": { "en": "Peramivir", "ja": "ペラミビル" },
-    "brandNames": ["ラピアクタ点滴静注液バイアル150mg", "ラピアクタ点滴静注液バッグ300mg"],
+    "genericName": {
+      "en": "Peramivir",
+      "ja": "ペラミビル"
+    },
+    "brandNames": [
+      "ラピアクタ点滴静注液バイアル150mg",
+      "ラピアクタ点滴静注液バッグ300mg"
+    ],
     "abbr": null,
     "class": "ノイラミニダーゼ阻害薬",
     "category": "antiviral",
-    "aliases": ["ラピアクタ", "ペラミビル", "インフルエンザ"],
-    "adult": { "iv": [{ "indication": null, "text": "300-600mg 24時間毎" }] },
+    "aliases": [
+      "ラピアクタ",
+      "ペラミビル",
+      "インフルエンザ"
+    ],
+    "adult": {
+      "iv": [
+        {
+          "indication": null,
+          "text": "300-600mg 24時間毎"
+        }
+      ]
+    },
     "pediatric": {
-      "iv": [{ "indication": null, "text": "10mg/kg/day 分1（1回600mgまで）", "perKg": { "amount": 10, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDose": 600 } }]
+      "iv": [
+        {
+          "indication": null,
+          "text": "10mg/kg/day 分1（1回600mgまで）",
+          "perKg": {
+            "amount": 10,
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual",
+            "maxPerDose": 600
+          }
+        }
+      ]
     },
     "renal": {
       "gt50": "300-600mg 24時間毎",
@@ -488,8 +1348,15 @@
         "ivPush": true,
         "drip": "15分",
         "im": false,
-        "notes": ["15分以上かけて点滴静注"],
-        "source": { "edition": 9, "pages": [68] }
+        "notes": [
+          "15分以上かけて点滴静注"
+        ],
+        "source": {
+          "edition": 9,
+          "pages": [
+            68
+          ]
+        }
       },
       {
         "brandName": "ラピアクタ点滴静注液バッグ300mg",
@@ -498,23 +1365,66 @@
         "ivPush": false,
         "drip": "15分",
         "im": false,
-        "source": { "edition": 9, "pages": [68] }
+        "source": {
+          "edition": 9,
+          "pages": [
+            68
+          ]
+        }
       }
     ],
-    "source": { "edition": 9, "pages": [12, 18, 21, 22, 40, 68] }
+    "source": {
+      "edition": 9,
+      "pages": [
+        12,
+        18,
+        21,
+        22,
+        40,
+        68
+      ]
+    }
   },
   {
     "id": "remdesivir",
-    "genericName": { "en": "Remdesivir", "ja": "レムデシビル" },
-    "brandNames": ["ベクルリー点滴静注用100mg"],
+    "genericName": {
+      "en": "Remdesivir",
+      "ja": "レムデシビル"
+    },
+    "brandNames": [
+      "ベクルリー点滴静注用100mg"
+    ],
     "abbr": null,
     "class": "抗SARS-CoV-2薬",
     "category": "antiviral",
     "renalAdjustmentNotRequired": true,
-    "aliases": ["ベクルリー", "レムデシビル", "COVID", "新型コロナ"],
-    "adult": { "iv": [{ "indication": null, "text": "Loading 200mg、その後100mg 24時間毎" }] },
+    "aliases": [
+      "ベクルリー",
+      "レムデシビル",
+      "COVID",
+      "新型コロナ"
+    ],
+    "adult": {
+      "iv": [
+        {
+          "indication": null,
+          "text": "Loading 200mg、その後100mg 24時間毎"
+        }
+      ]
+    },
     "pediatric": {
-      "iv": [{ "indication": "体重3.5kg以上40kg未満", "text": "初日1回5mg/kg 1日1回、2日目以降2.5mg/kg 1日1回", "perKg": { "amount": 5, "unit": "mg", "per": "perDose", "basis": "actual" } }]
+      "iv": [
+        {
+          "indication": "体重3.5kg以上40kg未満",
+          "text": "初日1回5mg/kg 1日1回、2日目以降2.5mg/kg 1日1回",
+          "perKg": {
+            "amount": 5,
+            "unit": "mg",
+            "per": "perDose",
+            "basis": "actual"
+          }
+        }
+      ]
     },
     "renal": {
       "gt50": "Loading 200mg、その後100mg 24時間毎",
@@ -531,31 +1441,96 @@
         "ivPush": false,
         "drip": "0.5-2時間",
         "im": false,
-        "notes": ["溶解後は24時間以内に使用", "1V当たり注水19mLで溶解し生食で希釈し投与"],
-        "source": { "edition": 9, "pages": [68] }
+        "notes": [
+          "溶解後は24時間以内に使用",
+          "1V当たり注水19mLで溶解し生食で希釈し投与"
+        ],
+        "source": {
+          "edition": 9,
+          "pages": [
+            68
+          ]
+        }
       }
     ],
-    "source": { "edition": 9, "pages": [12, 18, 21, 22, 40, 68] }
+    "source": {
+      "edition": 9,
+      "pages": [
+        12,
+        18,
+        21,
+        22,
+        40,
+        68
+      ]
+    }
   },
   {
     "id": "oseltamivir",
-    "genericName": { "en": "Oseltamivir", "ja": "オセルタミビル" },
-    "brandNames": ["オセルタミビルカプセル75mg", "オセルタミビルDS3%"],
+    "genericName": {
+      "en": "Oseltamivir",
+      "ja": "オセルタミビル"
+    },
+    "brandNames": [
+      "オセルタミビルカプセル75mg",
+      "オセルタミビルDS3%"
+    ],
     "abbr": null,
     "class": "ノイラミニダーゼ阻害薬",
     "category": "antiviral",
-    "aliases": ["タミフル", "オセルタミビル", "インフルエンザ"],
+    "aliases": [
+      "タミフル",
+      "オセルタミビル",
+      "インフルエンザ"
+    ],
     "adult": {
       "po": [
-        { "indication": null, "text": "1回75mg 1日2回" },
-        { "indication": "予防", "text": "1回75mg、7-10日間" }
+        {
+          "indication": null,
+          "text": "1回75mg 1日2回"
+        },
+        {
+          "indication": "予防",
+          "text": "1回75mg、7-10日間"
+        }
       ]
     },
     "pediatric": {
       "po": [
-        { "indication": "新生児・乳児", "text": "1日6mg/kg 分2、5日間（1回75mgまで）", "perKg": { "amount": 6, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDose": 75 }, "note": "粉砕可（苦味あり）" },
-        { "indication": "幼少児", "text": "1日4mg/kg 分2、5日間（1回75mgまで）", "perKg": { "amount": 4, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDose": 75 } },
-        { "indication": "予防投与", "text": "1日2mg/kg 分1、7-10日間（1回75mgまで）", "perKg": { "amount": 2, "unit": "mg", "per": "perDay", "basis": "actual", "maxPerDose": 75 } }
+        {
+          "indication": "新生児・乳児",
+          "text": "1日6mg/kg 分2、5日間（1回75mgまで）",
+          "perKg": {
+            "amount": 6,
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual",
+            "maxPerDose": 75
+          },
+          "note": "粉砕可（苦味あり）"
+        },
+        {
+          "indication": "幼少児",
+          "text": "1日4mg/kg 分2、5日間（1回75mgまで）",
+          "perKg": {
+            "amount": 4,
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual",
+            "maxPerDose": 75
+          }
+        },
+        {
+          "indication": "予防投与",
+          "text": "1日2mg/kg 分1、7-10日間（1回75mgまで）",
+          "perKg": {
+            "amount": 2,
+            "unit": "mg",
+            "per": "perDay",
+            "basis": "actual",
+            "maxPerDose": 75
+          }
+        }
       ]
     },
     "renalPo": {
@@ -563,88 +1538,248 @@
       "ccr10_50": "治療 — CCr 10-30: 1回75mg 1日1回、5日間／予防 — CCr 15-30: 1回75mgを隔日投与、7-10日間",
       "hd": "初回75mg投与後、2回目のHD後に75mg追加投与"
     },
-    "source": { "edition": 9, "pages": [14, 19, 44] }
+    "source": {
+      "edition": 9,
+      "pages": [
+        14,
+        19,
+        44
+      ]
+    }
   },
   {
     "id": "laninamivir",
-    "genericName": { "en": "Laninamivir", "ja": "ラニナミビル" },
-    "brandNames": ["イナビル吸入粉末剤20mg"],
+    "genericName": {
+      "en": "Laninamivir",
+      "ja": "ラニナミビル"
+    },
+    "brandNames": [
+      "イナビル吸入粉末剤20mg"
+    ],
     "abbr": null,
     "class": "ノイラミニダーゼ阻害薬",
     "category": "antiviral",
-    "aliases": ["イナビル", "ラニナミビル", "インフルエンザ"],
+    "aliases": [
+      "イナビル",
+      "ラニナミビル",
+      "インフルエンザ"
+    ],
     "adult": {
       "inhalation": [
-        { "indication": null, "text": "1回2キット単回" },
-        { "indication": "予防", "text": "1回2キット単回、又は1回1キット 2日間" }
+        {
+          "indication": null,
+          "text": "1回2キット単回"
+        },
+        {
+          "indication": "予防",
+          "text": "1回2キット単回、又は1回1キット 2日間"
+        }
       ]
     },
     "pediatric": {
       "inhalation": [
-        { "indication": "10歳未満", "text": "1回1キット単回" },
-        { "indication": "10歳未満・予防", "text": "1回1キット単回" },
-        { "indication": "10歳以上", "text": "1回2キット単回" },
-        { "indication": "10歳以上・予防", "text": "1回2キット単回、又は1回1キット 1日1回 2日間" }
+        {
+          "indication": "10歳未満",
+          "text": "1回1キット単回"
+        },
+        {
+          "indication": "10歳未満・予防",
+          "text": "1回1キット単回"
+        },
+        {
+          "indication": "10歳以上",
+          "text": "1回2キット単回"
+        },
+        {
+          "indication": "10歳以上・予防",
+          "text": "1回2キット単回、又は1回1キット 1日1回 2日間"
+        }
       ]
     },
-    "source": { "edition": 9, "pages": [14, 44] }
+    "source": {
+      "edition": 9,
+      "pages": [
+        14,
+        44
+      ]
+    }
   },
   {
     "id": "molnupiravir",
-    "genericName": { "en": "Molnupiravir", "ja": "モルヌピラビル" },
-    "brandNames": ["ラゲブリオ錠400mg"],
+    "genericName": {
+      "en": "Molnupiravir",
+      "ja": "モルヌピラビル"
+    },
+    "brandNames": [
+      "ラゲブリオ錠400mg"
+    ],
     "abbr": null,
     "class": "抗SARS-CoV-2薬",
     "category": "antiviral",
-    "aliases": ["ラゲブリオ", "モルヌピラビル", "COVID", "新型コロナ"],
-    "adult": { "po": [{ "indication": null, "text": "1回800mg 1日2回" }] },
-    "pediatric": { "po": [{ "indication": null, "text": "小児に対する投与量の設定なし", "note": "粉砕不可" }] },
-    "source": { "edition": 9, "pages": [14, 44] }
+    "aliases": [
+      "ラゲブリオ",
+      "モルヌピラビル",
+      "COVID",
+      "新型コロナ"
+    ],
+    "adult": {
+      "po": [
+        {
+          "indication": null,
+          "text": "1回800mg 1日2回"
+        }
+      ]
+    },
+    "pediatric": {
+      "po": [
+        {
+          "indication": null,
+          "text": "小児に対する投与量の設定なし",
+          "note": "粉砕不可"
+        }
+      ]
+    },
+    "source": {
+      "edition": 9,
+      "pages": [
+        14,
+        44
+      ]
+    }
   },
   {
     "id": "nirmatrelvir-ritonavir",
-    "genericName": { "en": "Nirmatrelvir/Ritonavir", "ja": "ニルマトレルビル・リトナビル" },
-    "brandNames": ["パキロビッドパック600", "パキロビッドパック300"],
+    "genericName": {
+      "en": "Nirmatrelvir/Ritonavir",
+      "ja": "ニルマトレルビル・リトナビル"
+    },
+    "brandNames": [
+      "パキロビッドパック600",
+      "パキロビッドパック300"
+    ],
     "abbr": null,
     "class": "抗SARS-CoV-2薬",
     "category": "antiviral",
-    "aliases": ["パキロビッド", "ニルマトレルビル", "COVID", "新型コロナ"],
-    "adult": { "po": [{ "indication": null, "text": "1回 Nirmatrelvir 300mg / Ritonavir 100mg 1日2回" }] },
+    "aliases": [
+      "パキロビッド",
+      "ニルマトレルビル",
+      "COVID",
+      "新型コロナ"
+    ],
+    "adult": {
+      "po": [
+        {
+          "indication": null,
+          "text": "1回 Nirmatrelvir 300mg / Ritonavir 100mg 1日2回"
+        }
+      ]
+    },
     "pediatric": {
-      "po": [{ "indication": "12歳以上かつ40kg以上", "text": "1回 Nirmatrelvir 300mg / Ritonavir 100mg 1日2回" }]
+      "po": [
+        {
+          "indication": "12歳以上かつ40kg以上",
+          "text": "1回 Nirmatrelvir 300mg / Ritonavir 100mg 1日2回"
+        }
+      ]
     },
     "renalPo": {
       "ccr10_50": "CCr 30-60: 1回 Nirmatrelvir 150mg / Ritonavir 100mg 1日2回"
     },
-    "source": { "edition": 9, "pages": [14, 19, 44] }
+    "source": {
+      "edition": 9,
+      "pages": [
+        14,
+        19,
+        44
+      ]
+    }
   },
   {
     "id": "pyrantel-pamoate",
-    "genericName": { "en": "Pyrantel Pamoate", "ja": "ピランテルパモ酸塩" },
-    "brandNames": ["コンバントリン錠100mg"],
+    "genericName": {
+      "en": "Pyrantel Pamoate",
+      "ja": "ピランテルパモ酸塩"
+    },
+    "brandNames": [
+      "コンバントリン錠100mg"
+    ],
     "abbr": null,
     "class": "駆虫薬",
     "category": "anthelmintic",
-    "aliases": ["コンバントリン", "ピランテル", "蟯虫", "回虫"],
+    "aliases": [
+      "コンバントリン",
+      "ピランテル",
+      "蟯虫",
+      "回虫"
+    ],
     "adult": {
-      "po": [{ "indication": null, "text": "10mg/kg 1回投与", "perKg": { "amount": 10, "unit": "mg", "per": "perDose", "basis": "actual" } }]
+      "po": [
+        {
+          "indication": null,
+          "text": "10mg/kg 1回投与",
+          "perKg": {
+            "amount": 10,
+            "unit": "mg",
+            "per": "perDose",
+            "basis": "actual"
+          }
+        }
+      ]
     },
-    "source": { "edition": 9, "pages": [15] }
+    "source": {
+      "edition": 9,
+      "pages": [
+        15
+      ]
+    }
   },
   {
     "id": "ivermectin",
-    "genericName": { "en": "Ivermectin", "ja": "イベルメクチン" },
-    "brandNames": ["ストロメクトール錠3mg"],
+    "genericName": {
+      "en": "Ivermectin",
+      "ja": "イベルメクチン"
+    },
+    "brandNames": [
+      "ストロメクトール錠3mg"
+    ],
     "abbr": null,
     "class": "駆虫薬",
     "category": "anthelmintic",
-    "aliases": ["ストロメクトール", "イベルメクチン", "疥癬", "糞線虫"],
+    "aliases": [
+      "ストロメクトール",
+      "イベルメクチン",
+      "疥癬",
+      "糞線虫"
+    ],
     "adult": {
       "po": [
-        { "indication": null, "text": "200µg/kg 2週間間隔で2回投与", "perKg": { "amount": 200, "unit": "µg", "per": "perDose", "basis": "actual" } },
-        { "indication": "疥癬", "text": "200µg/kg 1回投与", "perKg": { "amount": 200, "unit": "µg", "per": "perDose", "basis": "actual" } }
+        {
+          "indication": null,
+          "text": "200µg/kg 2週間間隔で2回投与",
+          "perKg": {
+            "amount": 200,
+            "unit": "µg",
+            "per": "perDose",
+            "basis": "actual"
+          }
+        },
+        {
+          "indication": "疥癬",
+          "text": "200µg/kg 1回投与",
+          "perKg": {
+            "amount": 200,
+            "unit": "µg",
+            "per": "perDose",
+            "basis": "actual"
+          }
+        }
       ]
     },
-    "source": { "edition": 9, "pages": [15] }
+    "source": {
+      "edition": 9,
+      "pages": [
+        15
+      ]
+    }
   }
 ]

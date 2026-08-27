@@ -63,6 +63,30 @@ export function PatientPanel({ mode, patient, onChange }: Props) {
     );
   };
 
+  /**
+   * 小児は体重のみを入力させる。
+   * 原典の腎機能低下時の投与量表・CCr区分・TDMの表はいずれも成人を対象としており、
+   * 小児では年齢・Cr・eGFR・腎代替療法を入れても使い道がないため、欄自体を出さない。
+   */
+  if (mode === "pediatric") {
+    return (
+      <div className="card">
+        <div className="patient-fields">{field("weight", "体重（kg）")}</div>
+        <p className="dose-note" style={{ marginTop: 10 }}>
+          {patient.weight == null
+            ? "体重を入力すると、mg/kg の用量を1日投与量（mg）に換算して表示します。"
+            : `体重 ${patient.weight}kg で1日投与量を換算しています。`}
+        </p>
+        <button className="link-btn" onClick={() => onChange(emptyPatient())}>
+          クリア
+        </button>
+        <p className="source-line" style={{ marginTop: 8 }}>
+          入力値は端末内にのみ保持され、外部に送信されません（要件 NFR-006）
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="card">
       <div className="patient-fields">
@@ -124,13 +148,6 @@ export function PatientPanel({ mode, patient, onChange }: Props) {
         <div className="banner warn" style={{ marginTop: 12, marginBottom: 0 }}>
           実体重が理想体重から20%以上乖離しています。アミノグリコシドの投与設計では
           <b>補正体重（AdjBW {round(adj)}kg）</b>を用いること（原典 p.34）。
-        </div>
-      )}
-
-      {mode === "pediatric" && patient.weight == null && (
-        <div className="banner info" style={{ marginTop: 12, marginBottom: 0 }}>
-          小児モードでは体重が未入力のあいだ mg/kg 表記のみを表示します。体重を入力すると
-          絶対量（mg）に換算して併記します。
         </div>
       )}
 

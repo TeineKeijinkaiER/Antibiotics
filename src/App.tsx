@@ -69,6 +69,8 @@ const MODE_LABEL: Record<PatientMode, string> = { adult: "成人", pediatric: "�
 export default function App() {
   const [patient, setPatient] = useState<PatientState>(emptyPatient);
   const [view, setView] = useState<View>({ type: "opening" });
+  /** 「戻る」で辿る履歴。読み出しは goBack の更新関数内で行う */
+  const [, setStack] = useState<View[]>([]);
   const [mode, setMode] = useState<PatientMode | null>(null);
   const [organismQuery, setOrganismQuery] = useState("");
   const [showPatient, setShowPatient] = useState(false);
@@ -93,10 +95,21 @@ export default function App() {
   }
 
   const go = (v: View) => {
+    setStack((s) => (view.type === "opening" ? [] : [...s, view]));
     setView(v);
     setNotice(null);
     if (v.type === "drug") setHistory(pushHistory({ kind: "drug", id: v.id }));
     if (v.type === "organism") setHistory(pushHistory({ kind: "organism", id: v.id }));
+    window.scrollTo({ top: 0 });
+  };
+
+  /** 1つ前の画面へ。履歴が尽きたらオープニングへ戻る */
+  const goBack = () => {
+    setNotice(null);
+    setStack((s) => {
+      setView(s.length > 0 ? s[s.length - 1] : { type: "opening" });
+      return s.slice(0, -1);
+    });
     window.scrollTo({ top: 0 });
   };
 
@@ -130,7 +143,10 @@ export default function App() {
 
   const goHome = () => {
     setOrganismQuery("");
-    go({ type: "opening" });
+    setStack([]);
+    setView({ type: "opening" });
+    setNotice(null);
+    window.scrollTo({ top: 0 });
   };
 
   const openPage = (key: string) => go({ type: "page", key: key as PageKey });
@@ -148,6 +164,18 @@ export default function App() {
   };
   const lane = laneOf();
   const showModeBadge = mode != null && lane != null;
+
+  /**
+   * 患者条件フォームを出す画面。
+   * 用量が患者条件で変わる画面に限る。菌種別は菌側の情報、
+   * 「その他」の各項目も患者条件に依存しない（周術期だけは体重で1回量が決まる）。
+   */
+  const needsPatient =
+    view.type === "picker" ||
+    view.type === "drugs" ||
+    view.type === "drug" ||
+    view.type === "designer" ||
+    (view.type === "page" && view.key === "prophylaxis");
 
   const currentItem: ItemRef | null =
     view.type === "drug"
@@ -206,9 +234,11 @@ export default function App() {
             {MODE_LABEL[mode === "adult" ? "pediatric" : "adult"]}に切替
           </button>
         )}
-        <button className="link-btn" onClick={() => setShowPatient((v) => !v)}>
-          患者条件{showPatient ? "を閉じる" : ""}
-        </button>
+        {needsPatient && (
+          <button className="link-btn" onClick={() => setShowPatient((v) => !v)}>
+            患者条件{showPatient ? "を閉じる" : ""}
+          </button>
+        )}
         <button className="link-btn" onClick={() => go({ type: "about" })}>
           アプリの説明
         </button>
@@ -226,15 +256,23 @@ export default function App() {
         )}
         {notice && <div className="banner info">{notice}</div>}
 
-        {showPatient && (
+        {showPatient && needsPatient && (
           <div style={{ marginBottom: 18 }}>
-            <PatientPanel mode={mode ?? "adult"} patient={patient} onChange={setPatient} />
+            <PatientPanel
+              // 周術期は体重帯で1回量が決まるため、集団によらず成人と同じ入力欄を出す
+              mode={view.type === "page" ? "adult" : (mode ?? "adult")}
+              patient={patient}
+              onChange={setPatient}
+            />
           </div>
         )}
 
         <div className="crumbs">
-          <button className="back" onClick={goHome}>
-            ← トップ
+          <button className="navkey" onClick={goBack}>
+            ← 戻る
+          </button>
+          <button className="navkey" onClick={goHome}>
+            ⌂ ホーム
           </button>
           {currentItem && (
             <button
@@ -286,9 +324,6 @@ export default function App() {
             <div className="detail-head">
               <h2>{view.bucket ?? view.drugClass}</h2>
             </div>
-            <button className="back" onClick={() => go({ type: "picker", lane: view.lane })}>
-              ← 分類の選択に戻る
-            </button>
             <DrugList
               lane={view.lane}
               mode={mode}
