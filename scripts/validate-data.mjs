@@ -321,6 +321,42 @@ for (const drug of drugs) {
   }
 }
 
+/* ---------- 「1回◯mgまで」の分割回数の見落とし検査 ----------
+ *
+ * 原典の「30mg/kg/day 分3（1回600mgまで）」は、1日量に対する上限ではなく
+ * 「1回あたり」の上限で、分割回数(divisionsPerDay)がないと自動計算に反映できない
+ * （反映されない場合は画面に注記が出るだけで、値としては効かない）。
+ * text に「分N」と「1回…まで」の両方があるのに divisionsPerDay が未設定なら検出する。
+ */
+
+const DIVISIONS_PATTERN = /分(\d+)/;
+const PER_DOSE_LIMIT_PATTERN = /1回[^、。）]*まで/;
+
+for (const drug of drugs) {
+  for (const mode of ["adult", "pediatric"]) {
+    for (const [route, doses] of Object.entries(drug[mode] ?? {})) {
+      for (const dose of doses) {
+        const pk = dose.perKg;
+        if (!pk || pk.per !== "perDay") continue;
+        const divMatch = dose.text.match(DIVISIONS_PATTERN);
+        const hasPerDoseLimit = PER_DOSE_LIMIT_PATTERN.test(dose.text);
+        if (divMatch && hasPerDoseLimit && pk.divisionsPerDay == null) {
+          warn(
+            `Drug(${drug.id}).${mode}.${route}: 「分${divMatch[1]}」と「1回…まで」が原典表記にあるのに ` +
+              `divisionsPerDay が未設定です。1回あたりの上限が自動計算に反映されず、注記のみになります（"${dose.text}"）`,
+          );
+        }
+        if (pk.divisionsPerDay != null && divMatch && Number(divMatch[1]) !== pk.divisionsPerDay) {
+          fail(
+            `Drug(${drug.id}).${mode}.${route}: divisionsPerDay=${pk.divisionsPerDay} が ` +
+              `原典表記の「分${divMatch[1]}」と一致しません（"${dose.text}"）`,
+          );
+        }
+      }
+    }
+  }
+}
+
 /* ---------- 大項目レーンの網羅性（UI再編 版2.1・要件 FR-011-1） ----------
  *
  * ホームの大項目は「内服薬（po）／注射薬（iv・im・inhalation）」で薬剤を分ける。

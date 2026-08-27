@@ -47,6 +47,12 @@ export type PerKgDose = {
   maxPerKgPerDose?: number;
   /** 1日量の上限（体重あたり mg/kg/day）。換算前の mg/kg をクリップする */
   maxPerKgPerDay?: number;
+  /**
+   * 1日量を分割する回数（原典の「分3」等）。
+   * per: "perDay" の用量に対する maxPerDose は、この回数で割った「1回あたり」に適用する
+   * （1日総量にそのまま適用すると、1回分の上限を1日総量の上限と取り違えることになる）。
+   */
+  divisionsPerDay?: number;
 };
 
 /** 1つの用法用量。原典の表記をそのまま `text` に保持する */

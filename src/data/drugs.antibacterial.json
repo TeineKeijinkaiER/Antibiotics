@@ -493,7 +493,8 @@
             "unit": "mg",
             "per": "perDay",
             "basis": "actual",
-            "maxPerDose": 600
+            "maxPerDose": 600,
+            "divisionsPerDay": 3
           }
         },
         {
@@ -510,7 +511,8 @@
             "unit": "mg",
             "per": "perDay",
             "basis": "actual",
-            "maxPerDose": 600
+            "maxPerDose": 600,
+            "divisionsPerDay": 3
           }
         },
         {
@@ -1484,7 +1486,8 @@
             "unit": "mg",
             "per": "perDay",
             "basis": "actual",
-            "maxPerDose": 400
+            "maxPerDose": 400,
+            "divisionsPerDay": 3
           }
         },
         {
@@ -1495,7 +1498,8 @@
             "unit": "mg",
             "per": "perDay",
             "basis": "actual",
-            "maxPerDose": 400
+            "maxPerDose": 400,
+            "divisionsPerDay": 2
           }
         },
         {
@@ -1506,7 +1510,8 @@
             "unit": "mg",
             "per": "perDay",
             "basis": "actual",
-            "maxPerDose": 400
+            "maxPerDose": 400,
+            "divisionsPerDay": 3
           }
         }
       ],
@@ -1753,7 +1758,8 @@
             "per": "perDay",
             "basis": "actual",
             "maxPerDose": 180,
-            "maxPerDay": 360
+            "maxPerDay": 360,
+            "divisionsPerDay": 2
           }
         }
       ]

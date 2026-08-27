@@ -90,7 +90,9 @@ export function convertPerKg(
   text: string;
   clipped: boolean;
   basisLabel: string;
-  /** 自動適用できない上限（1日量に対する「1回◯mgまで」等）。表示して判断を委ねる */
+  /** 1日量を分割回数(divisionsPerDay)で割った1回あたりの表記。原典に分割回数の記載がある場合のみ */
+  perDose?: { text: string; clipped: boolean };
+  /** 自動適用できない上限（分割回数が不明な「1回◯mgまで」等）。表示して判断を委ねる */
   uncappedNote?: string;
 } | null {
   const w = weightForBasis(p, dose.basis);
@@ -101,9 +103,12 @@ export function convertPerKg(
 
   // 体重あたりの上限は換算前の mg/kg に、絶対量の上限は換算後の mg に効かせる。
   // 両者を取り違えると桁違いの用量になるため、キーで厳密に分ける。
+  // 1日量に対する maxPerDose は「1回あたり」の上限であり、1日総量には適用しない
+  // （分割してから divisionsPerDay の分岐でクリップする）。
   const perKgLimit =
     dose.per === "perDose" ? dose.maxPerKgPerDose : dose.maxPerKgPerDay;
-  const absLimit = dose.per === "perDose" ? dose.maxPerDose : dose.maxPerDay;
+  const dayAbsLimit = dose.per === "perDay" ? dose.maxPerDay : undefined;
+  const doseAbsLimit = dose.per === "perDose" ? dose.maxPerDose : undefined;
 
   const values = amounts.map((a) => {
     let perKg = a;
@@ -112,20 +117,58 @@ export function convertPerKg(
       clipped = true;
     }
     let v = perKg * w.value;
-    if (absLimit != null && v > absLimit) {
-      v = absLimit;
+    if (dayAbsLimit != null && v > dayAbsLimit) {
+      v = dayAbsLimit;
+      clipped = true;
+    }
+    if (doseAbsLimit != null && v > doseAbsLimit) {
+      v = doseAbsLimit;
       clipped = true;
     }
     return roundDose(v);
   });
 
-  // 1日量に「1回◯mgまで」が付く場合、分割回数が原典の文章にしかないため自動では適用できない。
-  // 黙って無視すると上限が失われるので、注記として必ず見せる。
+  // 原典に「分◯」の記載があれば、1日量を割って1回あたりを求め、
+  // 1回あたりの上限（maxPerDose / maxPerKgPerDose）をそちらに適用する。
+  let perDose: { text: string; clipped: boolean } | undefined;
   let uncappedNote: string | undefined;
-  if (dose.per === "perDay" && dose.maxPerDose != null) {
+
+  if (dose.per === "perDay" && dose.divisionsPerDay) {
+    let perDoseClipped = false;
+    const perDoseValues = values.map((v) => {
+      let d = v / dose.divisionsPerDay!;
+      // 体重あたりの1回上限（例:「1回20mg/kgまで」）。換算前の mg/kg に戻して比較する
+      if (dose.maxPerKgPerDose != null) {
+        const perKgPerDose = d / w.value;
+        if (perKgPerDose > dose.maxPerKgPerDose) {
+          d = dose.maxPerKgPerDose * w.value;
+          perDoseClipped = true;
+        }
+      }
+      if (dose.maxPerDose != null && d > dose.maxPerDose) {
+        d = dose.maxPerDose;
+        perDoseClipped = true;
+      }
+      return roundDose(d);
+    });
+    const perDoseJoined =
+      perDoseValues.length > 1 ? `${perDoseValues[0]}-${perDoseValues[1]}` : `${perDoseValues[0]}`;
+    perDose = {
+      text: `1回 ${perDoseJoined}${dose.unit} を1日${dose.divisionsPerDay}回`,
+      clipped: perDoseClipped,
+    };
+    if (perDoseClipped) {
+      clipped = true;
+      // 1回量が上限で頭打ちになる場合、実際に投与できる1日総量もそれに応じて下がる。
+      // 見出しの「1日◯mg」がその上限より大きい値のままだと、実現不可能な総量を示すことになる。
+      for (let i = 0; i < values.length; i++) {
+        values[i] = roundDose(perDoseValues[i] * dose.divisionsPerDay!);
+      }
+    }
+  } else if (dose.per === "perDay" && dose.maxPerDose != null) {
+    // 分割回数が不明なため自動では適用できない。黙って無視すると上限が失われるので注記する。
     uncappedNote = `1回あたり ${dose.maxPerDose}${dose.unit} を上限とすること`;
-  }
-  if (dose.per === "perDay" && dose.maxPerKgPerDose != null) {
+  } else if (dose.per === "perDay" && dose.maxPerKgPerDose != null) {
     uncappedNote = `1回あたり ${dose.maxPerKgPerDose}${dose.unit}/kg を上限とすること`;
   }
 
@@ -135,6 +178,7 @@ export function convertPerKg(
     text: `${perLabel} ${joined}${dose.unit}`,
     clipped,
     basisLabel: `${w.label} ${roundDose(w.value)}kg`,
+    perDose,
     uncappedNote,
   };
 }

@@ -63,6 +63,12 @@ function DoseRow({
           {conv.clipped && <b>　※上限でクリップ</b>}
         </div>
       )}
+      {conv && !showPerKgOnly && conv.perDose && (
+        <div className="dose-conv mono" style={{ marginTop: 3 }}>
+          　{conv.perDose.text}
+          {conv.perDose.clipped && <b>　※1回量の上限でクリップ</b>}
+        </div>
+      )}
       {conv && !showPerKgOnly && conv.uncappedNote && (
         <div className="dose-note">
           <b>{conv.uncappedNote}</b>（1日量からの自動計算には反映されていません）

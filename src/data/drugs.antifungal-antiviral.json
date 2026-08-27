@@ -832,7 +832,8 @@
             "unit": "mg",
             "per": "perDay",
             "basis": "actual",
-            "maxPerKgPerDose": 20
+            "maxPerKgPerDose": 20,
+            "divisionsPerDay": 3
           }
         },
         {
@@ -842,7 +843,9 @@
             "amount": 30,
             "unit": "mg",
             "per": "perDay",
-            "basis": "actual"
+            "basis": "actual",
+            "maxPerKgPerDose": 20,
+            "divisionsPerDay": 3
           }
         }
       ],
@@ -855,7 +858,8 @@
             "unit": "mg",
             "per": "perDay",
             "basis": "actual",
-            "maxPerDose": 200
+            "maxPerDose": 200,
+            "divisionsPerDay": 4
           },
           "note": "粉砕可"
         },
@@ -867,7 +871,8 @@
             "unit": "mg",
             "per": "perDay",
             "basis": "actual",
-            "maxPerDose": 800
+            "maxPerDose": 800,
+            "divisionsPerDay": 4
           }
         }
       ]
@@ -962,7 +967,8 @@
             "unit": "mg",
             "per": "perDay",
             "basis": "actual",
-            "maxPerDose": 500
+            "maxPerDose": 500,
+            "divisionsPerDay": 3
           },
           "note": "粉砕可（苦味あり）"
         },
@@ -974,7 +980,8 @@
             "unit": "mg",
             "per": "perDay",
             "basis": "actual",
-            "maxPerDose": 500
+            "maxPerDose": 500,
+            "divisionsPerDay": 2
           }
         },
         {
@@ -985,7 +992,8 @@
             "unit": "mg",
             "per": "perDay",
             "basis": "actual",
-            "maxPerDose": 1000
+            "maxPerDose": 1000,
+            "divisionsPerDay": 3
           }
         },
         {
@@ -996,7 +1004,8 @@
             "unit": "mg",
             "per": "perDay",
             "basis": "actual",
-            "maxPerDose": 1000
+            "maxPerDose": 1000,
+            "divisionsPerDay": 3
           }
         }
       ]
@@ -1328,7 +1337,8 @@
             "unit": "mg",
             "per": "perDay",
             "basis": "actual",
-            "maxPerDose": 600
+            "maxPerDose": 600,
+            "divisionsPerDay": 1
           }
         }
       ]
@@ -1505,7 +1515,8 @@
             "unit": "mg",
             "per": "perDay",
             "basis": "actual",
-            "maxPerDose": 75
+            "maxPerDose": 75,
+            "divisionsPerDay": 2
           },
           "note": "粉砕可（苦味あり）"
         },
@@ -1517,7 +1528,8 @@
             "unit": "mg",
             "per": "perDay",
             "basis": "actual",
-            "maxPerDose": 75
+            "maxPerDose": 75,
+            "divisionsPerDay": 2
           }
         },
         {
@@ -1528,7 +1540,8 @@
             "unit": "mg",
             "per": "perDay",
             "basis": "actual",
-            "maxPerDose": 75
+            "maxPerDose": 75,
+            "divisionsPerDay": 1
           }
         }
       ]

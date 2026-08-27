@@ -202,6 +202,37 @@ const pedText = await page.locator("main").innerText();
 check(/1日 400-800mg/.test(pedText), "小児: 体重20kgで1日400-800mgと換算される");
 check(!/上限でクリップ/.test(pedText), "小児: 体重あたりの上限を絶対量として誤クリップしない");
 
+/* ---- 「1回◯mgまで」の分割回数の適用（divisionsPerDay） ---- */
+console.log("\n「1回◯mgまで」の自動計算（分割回数）");
+
+// リネゾリド 30mg/kg/day 分3（1回600mgまで）
+// 25kg: 750mg/day ÷3 = 250mg/回。上限未満なのでクリップなし
+await openDrug("注射薬", "小児", "リネゾリド");
+await page.locator('header button:has-text("患者条件")').click();
+await page.fill("#f-weight", "25");
+await page.waitForTimeout(300);
+await page.locator('header button:has-text("患者条件")').click();
+await page.waitForTimeout(150);
+let doseText = await page.locator("main").innerText();
+check(/1日 750mg/.test(doseText), "リネゾリド25kg: 1日750mgと換算される");
+check(/1回 250mg を1日3回/.test(doseText), "リネゾリド25kg: 1回250mg×3回の内訳が出る");
+check(!/上限でクリップ/.test(doseText), "リネゾリド25kg: 上限未満なのでクリップされない");
+
+// 70kg: 2100mg/day ÷3 = 700mg/回 → 600mgでクリップ。見出しの1日量も 600×3=1800mg に整合させる
+await openDrug("注射薬", "小児", "リネゾリド");
+await page.locator('header button:has-text("患者条件")').click();
+await page.fill("#f-weight", "70");
+await page.waitForTimeout(300);
+await page.locator('header button:has-text("患者条件")').click();
+await page.waitForTimeout(150);
+doseText = await page.locator("main").innerText();
+check(/1回 600mg を1日3回/.test(doseText), "リネゾリド70kg: 1回量が600mgの上限でクリップされる");
+check(
+  /1日 1800mg/.test(doseText),
+  "リネゾリド70kg: 見出しの1日量も、クリップ後の1回量×回数(1800mg)に整合する",
+);
+check(/1回量の上限でクリップ/.test(doseText), "リネゾリド70kg: 1回量の上限でクリップした旨の注記がある");
+
 /* ---- その他（AWaRe分類対象外）のジャンル分け ---- */
 console.log("\nその他（AWaRe分類対象外）のジャンル分け");
 await home();
