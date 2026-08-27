@@ -159,8 +159,18 @@ export function DrugDetail({
         )}
       </section>
 
-      {/* ---- 腎機能 ---- */}
-      {(drug.renal || drug.renalPo || drug.renalNote) && (
+      {/* ---- 腎機能（原典の腎機能低下時の表は成人向けのため、小児では表示しない） ---- */}
+      {mode === "pediatric" && (drug.renal || drug.renalPo) && (
+        <section className="section">
+          <h3>腎機能低下時・透析・CHDF</h3>
+          <p className="empty" style={{ padding: "12px 0" }}>
+            原典の腎機能低下時の投与量表は成人を対象としています。
+            小児の腎機能低下例については薬剤部・小児科に相談してください。
+          </p>
+        </section>
+      )}
+
+      {mode === "adult" && (drug.renal || drug.renalPo || drug.renalNote) && (
         <section className="section">
           <h3>腎機能低下時・透析・CHDF</h3>
           {drug.renalAdjustmentNotRequired && (
@@ -317,6 +327,10 @@ export function DrugDetail({
       {drug.formulations && drug.formulations.length > 0 && (
         <section className="section">
           <h3>製剤情報</h3>
+          <button className="tile" style={{ marginBottom: 12 }} onClick={() => onOpenPage("formulary")}>
+            <b>当院採用注射抗菌薬一覧 →</b>
+            <span>他剤も含めた規格・薬価・投与時間・配合変化の一覧</span>
+          </button>
           {drug.formulations.map((f, i) => (
             <div className="dose-row" key={i}>
               <div className="dose-text">

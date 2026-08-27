@@ -16,6 +16,7 @@
     "typecheck": "tsc -b --noEmit",
     "check:layout": "node scripts/check-layout.mjs",
     "check:tdm": "node scripts/check-tdm.mjs",
+    "check:navigation": "node scripts/check-navigation.mjs",
     "check:disclaimer": "node scripts/check-disclaimer.mjs"
   },
   "dependencies": {

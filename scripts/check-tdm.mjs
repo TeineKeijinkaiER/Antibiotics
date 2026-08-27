@@ -40,7 +40,7 @@ const page = await context.newPage();
 
 const openPatientPanel = async () => {
   if ((await page.locator("#f-age").count()) === 0) {
-    await page.locator('button:has-text("患者条件")').first().click();
+    await page.locator('header button:has-text("患者条件")').first().click();
     await page.waitForTimeout(150);
   }
 };
@@ -54,21 +54,35 @@ const setPatient = async (fields) => {
   await page.waitForTimeout(250);
 };
 
-const openDesigner = async (title) => {
-  await page.locator(`button:has-text("${title}")`).first().click();
+/**
+ * TDM画面はホームからではなく、薬剤詳細の「TDM対象」バッジから開く。
+ * 注射薬 → 成人 → 薬剤名を入力 → カード → TDM対象
+ */
+const openDesigner = async (drugName) => {
+  await page.locator('button:has-text("注射薬")').first().click();
+  await page.waitForTimeout(200);
+  if ((await page.locator('button:has-text("成人")').count()) > 0) {
+    await page.locator('button:has-text("成人")').first().click();
+    await page.waitForTimeout(200);
+  }
+  await page.fill('input[aria-label="薬剤名を入力"]', drugName);
   await page.waitForTimeout(300);
+  await page.locator(".result").first().click();
+  await page.waitForTimeout(300);
+  await page.locator('button:has-text("TDM対象")').first().click();
+  await page.waitForTimeout(350);
 };
 
 /* ---- 1・2. 未入力でも全区分を出し、どれも強調しない ---- */
 console.log("患者条件が未入力のとき");
 await page.goto(BASE, { waitUntil: "networkidle" });
-await openDesigner("バンコマイシン 投与設計");
+await openDesigner("バンコマイシン");
 check((await page.locator(".renal-row").count()) === 6, "VCM: 全6区分（eGFR5段階＋HD）を表示する");
 check((await page.locator(".renal-row.active").count()) === 0, "VCM: どの区分も強調しない");
 check((await page.locator(".banner.danger").count()) === 0, "VCM: 上限警告を出さない");
 
 await page.goto(BASE, { waitUntil: "networkidle" });
-await openDesigner("アミノグリコシド 投与設計");
+await openDesigner("ゲンタマイシン");
 check((await page.locator(".renal-row").count()) === 2, "AG: 全2区分を表示する");
 check(
   (await page.locator(".renal-row.active").count()) === 0,
@@ -78,11 +92,10 @@ check(
 /* ---- 3. 条件が確定したら該当区分だけを強調する ---- */
 console.log("\n患者条件を入力したとき");
 await page.goto(BASE, { waitUntil: "networkidle" });
+await openDesigner("バンコマイシン");
 await setPatient({ age: 70, sex: "male", weight: 60, height: 165, scr: "1.0", egfr: 95 });
 const derived = await page.locator(".derived").innerText();
 check(/58\.3/.test(derived), "Cockcroft-Gault: (140-70)×60/(72×1.0) = 58.3 mL/min");
-
-await openDesigner("バンコマイシン 投与設計");
 const active = await page.locator(".renal-row.active").innerText();
 check(/eGFR 90–120/.test(active), "VCM: eGFR 95 → 「eGFR 90–120」を強調");
 check((await page.locator(".renal-row.dim").count()) === 5, "VCM: 他の5区分を淡色化");
@@ -90,8 +103,8 @@ check(/900mg/.test(active) && /1800mg/.test(active), "VCM: 15mg/kg×60kg = 1回9
 
 /* ---- 4. 上限警告は該当区分にのみ出す ---- */
 await page.goto(BASE, { waitUntil: "networkidle" });
+await openDesigner("バンコマイシン");
 await setPatient({ age: 70, sex: "male", height: 165, scr: "1.0", egfr: 95, weight: 150 });
-await openDesigner("バンコマイシン 投与設計");
 check(
   (await page.locator(".renal-row.active .banner.danger").count()) === 1,
   "VCM: 1日総量4500mg で4g超過の警告を該当区分に出す",
@@ -102,8 +115,8 @@ check(
 );
 
 await page.goto(BASE, { waitUntil: "networkidle" });
+await openDesigner("ゲンタマイシン");
 await setPatient({ age: 80, sex: "female", weight: 45, scr: "1.8" });
-await openDesigner("アミノグリコシド 投与設計");
 check(
   /≦ 50/.test(await page.locator(".renal-row.active").innerText()),
   "AG: CCr 17.7 → 「CCr ≦ 50 mL/min」を強調",
@@ -112,7 +125,7 @@ check(
 /* ---- 5. 採血日時 ---- */
 console.log("\n採血日時の算出");
 await page.goto(BASE, { waitUntil: "networkidle" });
-await openDesigner("バンコマイシン 投与設計");
+await openDesigner("バンコマイシン");
 check(
   (await page.locator(".card .dose-conv").count()) === 0,
   "入力が欠けているうちは採血日時を出さない（推定で埋めない）",

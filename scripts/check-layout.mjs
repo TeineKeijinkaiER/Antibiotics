@@ -25,21 +25,29 @@ const WIDTHS = [375, 768, 1280];
 const SCREENS = [
   // 免責画面は初回のみ表示されるため、確認済みフラグを立てずに開く
   { name: "00-disclaimer", steps: [], skipAcknowledge: true },
-  { name: "01-home", steps: [] },
+  { name: "01-opening", steps: [] },
   { name: "02-oral-modepick", steps: ["内服薬"] },
-  { name: "03-oral-adult", steps: ["内服薬", "成人"] },
-  { name: "04-oral-aware-access", steps: ["内服薬", "成人", "Access"] },
-  { name: "05-injectable-adult", steps: ["注射薬", "成人"] },
-  { name: "06-organisms", steps: ["菌名"] },
-  { name: "07-prophylaxis", steps: ["周術期"] },
-  { name: "08-drug-vcm", steps: ["注射薬", "成人", "バンコマイシン"] },
-  { name: "09-tdm-vcm", steps: ["注射薬", "成人", "バンコマイシン", "TDM対象"] },
-  { name: "10-tdm-aminoglycoside", steps: ["アミノグリコシド 投与設計"] },
-  { name: "11-formulary", steps: ["当院採用注射抗菌薬一覧"] },
-  { name: "12-anaphylaxis", steps: ["アナフィラキシー対応"] },
-  { name: "13-pediatric-weight", steps: ["小児の体重・薬用量"] },
-  { name: "14-stewardship", steps: ["適正使用指針・AWaRe"] },
-  { name: "15-about", steps: ["アプリの説明"] },
+  { name: "03-oral-aware", steps: ["内服薬", "成人"] },
+  { name: "04-oral-access-list", steps: ["内服薬", "成人", "Access"] },
+  { name: "05-injectable-class", steps: ["注射薬", "成人"] },
+  { name: "06-organisms", steps: ["菌種別"] },
+  { name: "07-other", steps: ["その他"] },
+  { name: "08-prophylaxis", steps: ["その他", "周術期"] },
+  { name: "09-postexposure", steps: ["その他", "暴露後予防投与"] },
+  { name: "10-pediatric-weight", steps: ["その他", "小児体重服用量簡易表"] },
+  { name: "11-amr", steps: ["その他", "AMR対策"] },
+  { name: "12-drug-vcm", steps: ["注射薬", "成人", { fill: "バンコマイシン" }, { result: 0 }] },
+  {
+    name: "13-tdm-vcm",
+    steps: ["注射薬", "成人", { fill: "バンコマイシン" }, { result: 0 }, "TDM対象"],
+  },
+  {
+    name: "14-drug-pediatric",
+    steps: ["内服薬", "小児", { fill: "アモキシシリン" }, { result: 0 }],
+  },
+  { name: "15-formulary", steps: ["注射薬", "成人", "当院採用注射抗菌薬一覧"] },
+  { name: "16-stewardship", steps: ["内服薬", "成人", "適正使用指針・AWaRe分類の全文"] },
+  { name: "17-about", steps: ["アプリの説明"] },
 ];
 
 /** 免責事項の確認済みフラグ。立てておかないと初回の確認画面で止まる */
@@ -83,14 +91,26 @@ const audit = () => {
   return problems;
 };
 
-async function clickByText(page, text) {
-  const target = page
-    .locator(`button:has-text("${text}"), a:has-text("${text}")`)
-    .filter({ has: undefined })
-    .first();
+/**
+ * 手順を1つ進める。
+ * 文字列ならその表示テキストのボタンを押す。
+ * { fill } なら薬剤名の入力欄に入力し、{ result: n } なら n 番目の検索結果を開く。
+ */
+async function step(page, s) {
+  if (typeof s === "object" && "fill" in s) {
+    await page.fill('input[aria-label="薬剤名を入力"]', s.fill);
+    await page.waitForTimeout(300);
+    return;
+  }
+  if (typeof s === "object" && "result" in s) {
+    await page.locator(".result").nth(s.result).click();
+    await page.waitForTimeout(250);
+    return;
+  }
+  const target = page.locator(`button:has-text("${s}"), a:has-text("${s}")`).first();
   await target.waitFor({ state: "visible", timeout: 5000 });
   await target.click();
-  await page.waitForTimeout(150);
+  await page.waitForTimeout(200);
 }
 
 // この環境には Chromium が同梱されている（PLAYWRIGHT_BROWSERS_PATH）。
@@ -123,7 +143,7 @@ for (const width of WIDTHS) {
     );
     await page.reload({ waitUntil: "networkidle" });
     try {
-      for (const step of screen.steps) await clickByText(page, step);
+      for (const s of screen.steps) await step(page, s);
     } catch (err) {
       console.log(`  SKIP ${width}px ${screen.name} — 到達できず: ${err.message.split("\n")[0]}`);
       continue;

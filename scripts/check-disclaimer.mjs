@@ -30,7 +30,7 @@ console.log("初回起動時の確認");
 await page.goto(BASE, { waitUntil: "networkidle" });
 check((await page.locator(".gate").count()) === 1, "免責確認画面が表示される");
 check(
-  (await page.locator(".lane-tile").count()) === 0,
+  (await page.locator(".top-btn").count()) === 0,
   "確認するまで本体（大項目）に到達できない",
 );
 
@@ -45,7 +45,7 @@ check(/外部に送信されません/.test(gateText), "患者条件を外部送
 
 await page.locator('button:has-text("確認しました")').click();
 await page.waitForTimeout(250);
-check((await page.locator(".lane-tile").count()) === 4, "確認後は大項目4ボタンが表示される");
+check((await page.locator(".top-btn").count()) === 4, "確認後は大項目4ボタンが表示される");
 
 await page.reload({ waitUntil: "networkidle" });
 check((await page.locator(".gate").count()) === 0, "再訪時は再表示されない（端末に記録される）");

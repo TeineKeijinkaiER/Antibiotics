@@ -1,18 +1,25 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import type { PatientMode, PatientState } from "./types";
 import { DRUG_BY_ID, ORGANISM_BY_ID, MANUAL_EDITION } from "./data";
 import { searchOrganisms } from "./lib/search";
-import { LANE_LABEL, type DrugLane } from "./lib/lanes";
+import { LANE_LABEL, type AwareBucket, type DrugLane } from "./lib/lanes";
 import { PatientPanel, emptyPatient } from "./components/PatientPanel";
 import { DrugDetail } from "./components/DrugDetail";
-import { DrugLaneView, ModePicker } from "./components/DrugLane";
+import { DrugList, LanePicker, ModePicker } from "./components/DrugLane";
+import {
+  Opening,
+  OtherMenu,
+  APP_TITLE,
+  APP_EDITION,
+  type OtherKey,
+  type TopCategory,
+} from "./components/Opening";
 import { OrganismDetail } from "./components/OrganismDetail";
 import { OffLabelSearch } from "./components/OffLabelSearch";
-import { Designer, DESIGNERS } from "./components/Designer";
+import { Designer } from "./components/Designer";
 import { SurgicalProphylaxis } from "./components/SurgicalProphylaxis";
 import { Formulary } from "./components/Formulary";
 import {
-  Anaphylaxis,
   PostExposureProphylaxis,
   PediatricWeight,
   PcgContinuousInfusion,
@@ -25,85 +32,53 @@ import {
   getHistory,
   toggleFavorite,
   pushHistory,
-  clearHistory,
   hasAcknowledgedDisclaimer,
   acknowledgeDisclaimer,
   type ItemRef,
 } from "./lib/storage";
 import { subscribeSwStatus, getSwStatus, applyUpdate, type SwStatus } from "./lib/sw";
 
-/* ---------------- 画面の種類 ---------------- */
-
-type View =
-  | { type: "home" }
-  | { type: "lane"; lane: DrugLane }
-  | { type: "organisms" }
-  | { type: "drug"; id: string }
-  | { type: "organism"; id: string }
-  | { type: "offlabel" }
-  | { type: "designer"; key: string; fromDrugId?: string }
-  | { type: "about" }
-  | { type: "page"; key: PageKey };
-
 type PageKey =
   | "prophylaxis"
   | "formulary"
-  | "anaphylaxis"
   | "postexposure"
   | "pediatric-weight"
   | "pcg"
   | "stewardship"
-  | "amr";
+  | "amr"
+  | "offlabel";
 
-/** 大項目4ボタン（UI再編 版2.0 §1.1）。原典の章立てに対応する */
-const LANES: {
-  key: "oral" | "injectable" | "organism" | "prophylaxis";
-  title: string;
-  sub: string;
-}[] = [
-  { key: "oral", title: "内服薬", sub: "成人・小児を選び、薬名またはAWaRe分類から探す" },
-  { key: "injectable", title: "注射薬", sub: "成人・小児を選び、薬名または系統から探す" },
-  { key: "organism", title: "菌名", sub: "菌名からアンチバイオグラム（感受性率）を引く" },
-  { key: "prophylaxis", title: "周術期", sub: "術式の領域から予防抗菌薬・1回量・投与期間" },
-];
-
-/** ホーム下部の従属セクション */
-const PAGES: { key: PageKey | "offlabel"; title: string; sub: string }[] = [
-  { key: "offlabel", title: "適応外使用", sub: "薬剤名・疾患名の双方から検索" },
-  { key: "pcg", title: "ペニシリンG持続静注", sub: "1日総量と経路から調製手順" },
-  { key: "anaphylaxis", title: "アナフィラキシー対応", sub: "重症度別の救急処置" },
-  { key: "postexposure", title: "曝露後予防投与", sub: "HBV・HIV・水痘・インフルエンザほか" },
-  { key: "formulary", title: "当院採用注射抗菌薬一覧", sub: "規格・薬価・投与時間・配合変化" },
-  { key: "pediatric-weight", title: "小児の体重・薬用量", sub: "年齢別体重、Augsberger式ほか" },
-  { key: "stewardship", title: "適正使用指針・AWaRe", sub: "申請ルールとAWaRe分類" },
-  { key: "amr", title: "AMR対策", sub: "抗微生物薬適正使用の手引き・参考文献" },
-];
+type View =
+  | { type: "opening" }
+  | { type: "other" }
+  /** 内服薬・注射薬を選んだ直後の 成人／小児 */
+  | { type: "mode"; lane: DrugLane }
+  /** 薬剤名の入力欄と分類ボタン */
+  | { type: "picker"; lane: DrugLane }
+  /** 分類を選んだ後の薬剤一覧 */
+  | { type: "drugs"; lane: DrugLane; bucket?: AwareBucket; drugClass?: string }
+  | { type: "organisms" }
+  | { type: "drug"; id: string }
+  | { type: "organism"; id: string }
+  | { type: "designer"; key: string; fromDrugId?: string }
+  | { type: "about" }
+  | { type: "page"; key: PageKey };
 
 const MODE_LABEL: Record<PatientMode, string> = { adult: "成人", pediatric: "小児" };
 
-/** その薬剤画面が属するレーン（詳細画面で表示する集団を決める） */
-type LaneContext = { lane: DrugLane; mode: PatientMode } | null;
-
 export default function App() {
   const [patient, setPatient] = useState<PatientState>(emptyPatient);
-  const [view, setView] = useState<View>({ type: "home" });
-  const [laneCtx, setLaneCtx] = useState<LaneContext>(null);
-  /** 直前に選んだ集団。レーンに入り直したときの初期値として引き継ぐ */
-  const [lastMode, setLastMode] = useState<PatientMode | null>(null);
+  const [view, setView] = useState<View>({ type: "opening" });
+  const [mode, setMode] = useState<PatientMode | null>(null);
   const [organismQuery, setOrganismQuery] = useState("");
   const [showPatient, setShowPatient] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
   const [favorites, setFavorites] = useState<ItemRef[]>(getFavorites);
-  const [history, setHistory] = useState<ItemRef[]>(getHistory);
+  const [, setHistory] = useState<ItemRef[]>(getHistory);
   const [swStatus, setSwStatus] = useState<SwStatus>(getSwStatus);
   const [agreed, setAgreed] = useState(hasAcknowledgedDisclaimer);
 
   useEffect(() => subscribeSwStatus(setSwStatus), []);
-
-  const organismResults = useMemo(
-    () => (organismQuery ? searchOrganisms(organismQuery) : []),
-    [organismQuery],
-  );
 
   // 免責事項を読ませないまま使わせない（初回のみ）
   if (!agreed) {
@@ -125,49 +100,54 @@ export default function App() {
     window.scrollTo({ top: 0 });
   };
 
-  /** 大項目を開く。薬剤レーンは集団が未選択なら選択画面を出す */
-  const openLane = (key: (typeof LANES)[number]["key"]) => {
+  const openTop = (key: TopCategory) => {
     if (key === "organism") {
-      setLaneCtx(null);
+      setOrganismQuery("");
       go({ type: "organisms" });
-      return;
+    } else if (key === "other") {
+      go({ type: "other" });
+    } else {
+      // 集団が選択済みなら分類選択へ直行する
+      go(mode ? { type: "picker", lane: key } : { type: "mode", lane: key });
     }
-    if (key === "prophylaxis") {
-      setLaneCtx(null);
-      go({ type: "page", key: "prophylaxis" });
-      return;
-    }
-    const lane = key as DrugLane;
-    setLaneCtx(lastMode ? { lane, mode: lastMode } : null);
-    go({ type: "lane", lane });
   };
 
-  const pickMode = (lane: DrugLane, mode: PatientMode) => {
-    setLaneCtx({ lane, mode });
-    setLastMode(mode);
-    window.scrollTo({ top: 0 });
+  const openOther = (key: OtherKey) => go({ type: "page", key: key as PageKey });
+
+  const pickMode = (lane: DrugLane, m: PatientMode) => {
+    setMode(m);
+    go({ type: "picker", lane });
   };
 
-  /** レーン内でのみ集団を切り替える。菌名・周術期には波及させない */
+  /** 薬剤レーン内でのみ集団を切り替える */
   const switchMode = () => {
-    if (!laneCtx) return;
-    const next: PatientMode = laneCtx.mode === "adult" ? "pediatric" : "adult";
-    setLaneCtx({ ...laneCtx, mode: next });
-    setLastMode(next);
-    setNotice(
-      `${LANE_LABEL[laneCtx.lane]}の${MODE_LABEL[next]}用量に切り替わりました。表示中の用量は${MODE_LABEL[next]}のものです。`,
-    );
+    if (!mode) return;
+    const next: PatientMode = mode === "adult" ? "pediatric" : "adult";
+    setMode(next);
+    setNotice(`${MODE_LABEL[next]}の用量に切り替わりました。`);
     window.scrollTo({ top: 0 });
   };
 
   const goHome = () => {
-    setLaneCtx(null);
     setOrganismQuery("");
-    go({ type: "home" });
+    go({ type: "opening" });
   };
 
-  const openPage = (key: string) =>
-    key === "offlabel" ? go({ type: "offlabel" }) : go({ type: "page", key: key as PageKey });
+  const openPage = (key: string) => go({ type: "page", key: key as PageKey });
+
+  /** その画面が薬剤レーンの中か（集団バッジを出すか） */
+  const laneOf = (): DrugLane | null => {
+    if (view.type === "picker" || view.type === "drugs") return view.lane;
+    if (view.type === "drug") {
+      const d = DRUG_BY_ID.get(view.id);
+      if (!d) return null;
+      return d.adult?.po || d.pediatric?.po ? "oral" : "injectable";
+    }
+    if (view.type === "designer") return "injectable";
+    return null;
+  };
+  const lane = laneOf();
+  const showModeBadge = mode != null && lane != null;
 
   const currentItem: ItemRef | null =
     view.type === "drug"
@@ -175,63 +155,55 @@ export default function App() {
       : view.type === "organism"
         ? { kind: "organism", id: view.id }
         : null;
-
   const isFav = (item: ItemRef) => favorites.some((f) => f.kind === item.kind && f.id === item.id);
 
-  const labelOf = (item: ItemRef) =>
-    item.kind === "drug"
-      ? DRUG_BY_ID.get(item.id)?.genericName.ja
-      : ORGANISM_BY_ID.get(item.id)?.japaneseName;
-
-  /**
-   * お気に入り・履歴から薬剤を開くとき、集団が未選択なら成人を初期値にする。
-   * どの集団の用量を見ているかはヘッダーに常時表示されるため、取り違えは起きない。
-   */
-  const openSavedItem = (i: ItemRef) => {
-    if (i.kind === "organism") {
-      setLaneCtx(null);
-      go({ type: "organism", id: i.id });
-      return;
-    }
-    const drug = DRUG_BY_ID.get(i.id);
-    const mode = laneCtx?.mode ?? lastMode ?? "adult";
-    const lane: DrugLane =
-      laneCtx?.lane ??
-      (drug?.adult?.po || drug?.pediatric?.po ? "oral" : "injectable");
-    setLaneCtx({ lane, mode });
-    setLastMode(mode);
-    go({ type: "drug", id: i.id });
-  };
-
-  const itemList = (items: ItemRef[]) =>
-    items
-      .filter((i) => labelOf(i) != null)
-      .map((i) => (
-        <button key={`${i.kind}-${i.id}`} className="tab" onClick={() => openSavedItem(i)}>
-          {labelOf(i)}
-        </button>
-      ));
-
-  /** 薬剤詳細・投与設計は、どの集団を見ているかをヘッダーに出す */
-  const showModeBadge =
-    laneCtx != null &&
-    (view.type === "lane" || view.type === "drug" || view.type === "designer");
+  /* ---------------- オープニングは単独画面 ---------------- */
+  if (view.type === "opening") {
+    return (
+      <>
+        <header className="topbar minimal">
+          <span className="spacer" />
+          <button className="link-btn" onClick={() => go({ type: "about" })}>
+            アプリの説明
+          </button>
+        </header>
+        {swStatus === "update-available" && (
+          <div className="wrap" style={{ paddingBottom: 0 }}>
+            <div className="banner warn">
+              <b>新しいデータ版が利用できます。</b>
+              <button className="link-btn" onClick={() => void applyUpdate()}>
+                今すぐ更新する
+              </button>
+            </div>
+          </div>
+        )}
+        <Opening onPick={openTop} />
+        <footer className="foot opening-foot">
+          {MANUAL_EDITION.facility}の院内利用を想定したアプリです。
+          最終的な投与判断は主治医が行います。
+          <button className="link-btn" onClick={() => go({ type: "about" })}>
+            免責事項 →
+          </button>
+        </footer>
+      </>
+    );
+  }
 
   return (
     <>
-      <header className={`topbar${showModeBadge ? ` mode-${laneCtx!.mode}` : ""}`}>
+      <header className={`topbar${showModeBadge ? ` mode-${mode}` : ""}`}>
         <button className="brand link-btn" style={{ textDecoration: "none" }} onClick={goHome}>
-          抗菌薬投与ナビ
+          {APP_TITLE}
         </button>
         {showModeBadge && (
-          <span className={`mode-badge ${laneCtx!.mode}`}>
-            {LANE_LABEL[laneCtx!.lane]}／{MODE_LABEL[laneCtx!.mode]}
+          <span className={`mode-badge ${mode}`}>
+            {LANE_LABEL[lane!]}／{MODE_LABEL[mode!]}
           </span>
         )}
         <span className="spacer" />
         {showModeBadge && (
           <button className="link-btn" onClick={switchMode}>
-            {MODE_LABEL[laneCtx!.mode === "adult" ? "pediatric" : "adult"]}に切替
+            {MODE_LABEL[mode === "adult" ? "pediatric" : "adult"]}に切替
           </button>
         )}
         <button className="link-btn" onClick={() => setShowPatient((v) => !v)}>
@@ -256,131 +228,94 @@ export default function App() {
 
         {showPatient && (
           <div style={{ marginBottom: 18 }}>
-            <PatientPanel
-              mode={laneCtx?.mode ?? "adult"}
-              patient={patient}
-              onChange={setPatient}
-            />
+            <PatientPanel mode={mode ?? "adult"} patient={patient} onChange={setPatient} />
           </div>
         )}
 
-        {view.type !== "home" && (
-          <div className="crumbs">
-            <button className="back" onClick={goHome}>
-              ← ホーム
+        <div className="crumbs">
+          <button className="back" onClick={goHome}>
+            ← トップ
+          </button>
+          {currentItem && (
+            <button
+              className="tab"
+              aria-pressed={isFav(currentItem)}
+              onClick={() => setFavorites(toggleFavorite(currentItem))}
+            >
+              {isFav(currentItem) ? "★ お気に入り登録済み" : "☆ お気に入りに追加"}
             </button>
-            {currentItem && (
-              <button
-                className="tab"
-                aria-pressed={isFav(currentItem)}
-                onClick={() => setFavorites(toggleFavorite(currentItem))}
-              >
-                {isFav(currentItem) ? "★ お気に入り登録済み" : "☆ お気に入りに追加"}
-              </button>
-            )}
-          </div>
-        )}
+          )}
+        </div>
 
-        {/* ---------------- ホーム ---------------- */}
-        {view.type === "home" && (
+        {/* ---------------- その他 ---------------- */}
+        {view.type === "other" && (
           <>
-            <section className="section" style={{ marginTop: 4 }}>
-              <h3>何を調べますか？</h3>
-              <div className="lane-grid">
-                {LANES.map((l) => (
-                  <button key={l.key} className="lane-tile" onClick={() => openLane(l.key)}>
-                    <b>{l.title}</b>
-                    <span>{l.sub}</span>
-                  </button>
-                ))}
-              </div>
-            </section>
-
-            {favorites.length > 0 && (
-              <section className="section">
-                <h3>お気に入り</h3>
-                <div className="tabs">{itemList(favorites)}</div>
-              </section>
-            )}
-
-            {history.length > 0 && (
-              <section className="section">
-                <h3>最近見たもの</h3>
-                <div className="tabs">{itemList(history)}</div>
-                <button
-                  className="link-btn"
-                  onClick={() => {
-                    clearHistory();
-                    setHistory([]);
-                  }}
-                >
-                  履歴を消す
-                </button>
-              </section>
-            )}
-
-            <section className="section">
-              <h3>その他の機能</h3>
-              <div className="tile-grid">
-                <button className="tile" onClick={() => go({ type: "about" })}>
-                  <b>アプリの説明</b>
-                  <span>使い方・注意事項・更新・免責事項</span>
-                </button>
-                {Object.entries(DESIGNERS).map(([key, d]) => (
-                  <button key={key} className="tile" onClick={() => go({ type: "designer", key })}>
-                    <b>{d.title}</b>
-                    <span>初回投与量と採血タイミングを確認できます</span>
-                  </button>
-                ))}
-                {PAGES.map((p) => (
-                  <button key={p.key} className="tile" onClick={() => openPage(p.key)}>
-                    <b>{p.title}</b>
-                    <span>{p.sub}</span>
-                  </button>
-                ))}
-              </div>
-            </section>
+            <div className="detail-head">
+              <h2>その他</h2>
+            </div>
+            <OtherMenu onPick={openOther} />
           </>
         )}
 
-        {/* ---------------- 薬剤レーン ---------------- */}
-        {view.type === "lane" &&
-          (laneCtx == null || laneCtx.lane !== view.lane ? (
-            <>
-              <div className="detail-head">
-                <h2>{LANE_LABEL[view.lane]}</h2>
-              </div>
-              <ModePicker lane={view.lane} onPick={(m) => pickMode(view.lane, m)} />
-            </>
-          ) : (
-            <DrugLaneView
-              lane={laneCtx.lane}
-              mode={laneCtx.mode}
-              patient={patient}
-              onOpenDrug={(id) => go({ type: "drug", id })}
-              onOpenPage={openPage}
-            />
-          ))}
+        {/* ---------------- 成人／小児 ---------------- */}
+        {view.type === "mode" && (
+          <>
+            <div className="detail-head">
+              <h2>{LANE_LABEL[view.lane]}</h2>
+            </div>
+            <ModePicker onPick={(m) => pickMode(view.lane, m)} />
+          </>
+        )}
 
-        {/* ---------------- 菌名レーン（集団の選択なし） ---------------- */}
+        {/* ---------------- 薬剤名入力＋分類 ---------------- */}
+        {view.type === "picker" && mode && (
+          <LanePicker
+            lane={view.lane}
+            mode={mode}
+            patient={patient}
+            onOpenDrug={(id) => go({ type: "drug", id })}
+            onPickBucket={(bucket) => go({ type: "drugs", lane: view.lane, bucket })}
+            onPickClass={(drugClass) => go({ type: "drugs", lane: view.lane, drugClass })}
+            onOpenPage={openPage}
+          />
+        )}
+
+        {/* ---------------- 薬剤一覧 ---------------- */}
+        {view.type === "drugs" && mode && (
+          <>
+            <div className="detail-head">
+              <h2>{view.bucket ?? view.drugClass}</h2>
+            </div>
+            <button className="back" onClick={() => go({ type: "picker", lane: view.lane })}>
+              ← 分類の選択に戻る
+            </button>
+            <DrugList
+              lane={view.lane}
+              mode={mode}
+              patient={patient}
+              bucket={view.bucket}
+              drugClass={view.drugClass}
+              onOpenDrug={(id) => go({ type: "drug", id })}
+            />
+          </>
+        )}
+
+        {/* ---------------- 菌種別 ---------------- */}
         {view.type === "organisms" && (
           <>
             <div className="detail-head">
-              <h2>菌名から探す</h2>
-              <p className="en">
-                菌の感受性率は患者の年齢によらないため、成人・小児の選択はありません。
-              </p>
+              <h2>菌種別</h2>
             </div>
             <div className="searchbox">
               <input
                 value={organismQuery}
                 onChange={(e) => setOrganismQuery(e.target.value)}
-                placeholder="学名・日本語名・略号で検索（例：緑膿菌、E.coli、MRSA、腸球菌）"
-                aria-label="菌名を検索"
+                placeholder="菌名を入力（学名・日本語名・略号）"
+                aria-label="菌名を入力"
               />
             </div>
             <div className="list">
-              {organismResults.map((o) => (
+              {searchOrganisms(organismQuery).map((o) => (
                 <button
                   key={o.id}
                   className="result"
@@ -390,16 +325,15 @@ export default function App() {
                     <span className="result-name">{o.japaneseName}</span>
                     <span className="result-sub">{o.scientificName}</span>
                   </div>
-                  <div className="result-dose">{o.group}</div>
                 </button>
               ))}
-              {organismQuery && organismResults.length === 0 && (
+              {organismQuery && searchOrganisms(organismQuery).length === 0 && (
                 <p className="empty">「{organismQuery}」に一致する菌はありません。</p>
               )}
               {!organismQuery && (
                 <p className="empty">
-                  学名（Escherichia coli）、日本語名（大腸菌）、略号（MRSA・GBS）、通称（緑膿菌）
-                  のいずれでも検索できます。
+                  学名（Escherichia coli）、日本語名（大腸菌）、略号（MRSA・GBS）、
+                  通称（緑膿菌）のいずれでも検索できます。
                 </p>
               )}
             </div>
@@ -414,10 +348,10 @@ export default function App() {
             return (
               <DrugDetail
                 drug={drug}
-                mode={laneCtx?.mode ?? "adult"}
+                mode={mode ?? "adult"}
                 patient={patient}
                 onOpenDesigner={(key) => go({ type: "designer", key, fromDrugId: drug.id })}
-                onOpenPage={(key) => go({ type: "page", key: key as PageKey })}
+                onOpenPage={openPage}
                 onSwitchMode={switchMode}
               />
             );
@@ -430,14 +364,12 @@ export default function App() {
             return <OrganismDetail organism={organism} />;
           })()}
 
-        {view.type === "offlabel" && <OffLabelSearch onOpenDrug={(id) => go({ type: "drug", id })} />}
-
         {view.type === "designer" && (
           <>
-            {laneCtx?.mode === "pediatric" && (
+            {mode === "pediatric" && (
               <div className="banner warn">
                 <b>この投与設計の表は成人を対象としています。</b>
-                小児への適用は原典の対象範囲外です。小児のTDMは薬剤部（TDM担当者）に相談してください。
+                小児のTDMは薬剤部（TDM担当者）に相談してください。
               </div>
             )}
             <Designer
@@ -460,7 +392,9 @@ export default function App() {
         {view.type === "page" && view.key === "formulary" && (
           <Formulary onOpenDrug={(id) => go({ type: "drug", id })} />
         )}
-        {view.type === "page" && view.key === "anaphylaxis" && <Anaphylaxis />}
+        {view.type === "page" && view.key === "offlabel" && (
+          <OffLabelSearch onOpenDrug={(id) => go({ type: "drug", id })} />
+        )}
         {view.type === "page" && view.key === "postexposure" && <PostExposureProphylaxis />}
         {view.type === "page" && view.key === "pediatric-weight" && <PediatricWeight />}
         {view.type === "page" && view.key === "pcg" && <PcgContinuousInfusion />}
@@ -468,7 +402,7 @@ export default function App() {
         {view.type === "page" && view.key === "amr" && <Amr />}
 
         <footer className="foot">
-          データ版：{MANUAL_EDITION.title} {MANUAL_EDITION.label}（{MANUAL_EDITION.issuedOn} ／{" "}
+          データ版：{APP_TITLE} {APP_EDITION}（{MANUAL_EDITION.issuedOn} ／{" "}
           {MANUAL_EDITION.facility} {MANUAL_EDITION.author}）
           <br />
           {swStatus === "ready" && (
@@ -480,9 +414,8 @@ export default function App() {
           <b>{MANUAL_EDITION.facility}の院内利用を想定したアプリです。</b>
           適応外使用・採用薬・使用申請のルール・アンチバイオグラムは当院の取り決めまたは当院のデータであり、
           他施設ではそのまま当てはまりません。
-          本アプリが示す投与量は当院でコンセンサスの得られた標準的な投与量であり、最終的な投与判断は主治医が行います。
-          使用時は添付文書を改めて精読し、必要に応じて感染症科・ICT／ASTへコンサルテーションしてください。
-          入力した患者条件は端末内にのみ保持され、外部に送信されません。
+          示される投与量は当院でコンセンサスの得られた標準的な投与量であり、最終的な投与判断は主治医が行います。
+          使用時は添付文書を改めて精読してください。入力した患者条件は端末内にのみ保持され、外部に送信されません。
           <br />
           <button className="link-btn" onClick={() => go({ type: "about" })}>
             アプリの説明・免責事項の全文 →

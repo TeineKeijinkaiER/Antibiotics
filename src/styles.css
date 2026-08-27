@@ -439,22 +439,97 @@ footer.foot {
 .tile b { font-size: 14.5px; }
 .tile span { font-size: 12px; color: var(--ink-3); }
 
-/* ---------- 大項目レーン ---------- */
-.lane-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
-.lane-tile {
-  background: var(--surface);
-  border: 1px solid var(--rule);
-  border-left: 4px solid var(--accent);
+/* ---------- オープニング ---------- */
+.topbar.minimal { border-top: none; }
+
+.opening {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 8px 16px 40px;
+}
+.opening-head { text-align: center; margin-bottom: 18px; }
+.opening-head h1 {
+  font-size: clamp(21px, 5.4vw, 31px);
+  margin: 0;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+}
+.opening-edition {
+  margin: 4px 0 0;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  color: var(--ink-3);
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  text-transform: uppercase;
+}
+.opening-art {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
   border-radius: var(--radius);
-  padding: 20px 18px;
-  text-align: left;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow);
+  background: var(--surface-2);
+}
+.opening-foot { max-width: 860px; margin: 0 auto; padding: 18px 16px 40px; text-align: center; }
+
+/* ---------- 大きなボタン（大項目・成人小児・AWaRe・系統） ---------- */
+.top-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.top-grid.two { grid-template-columns: 1fr 1fr; }
+.top-btn {
+  background: var(--surface);
+  border: 2px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 30px 18px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: var(--shadow);
   display: grid;
   gap: 4px;
-  box-shadow: var(--shadow);
+  place-items: center;
+  min-height: 96px;
 }
-.lane-tile:hover { border-color: var(--accent); }
-.lane-tile b { font-size: 19px; letter-spacing: 0.01em; }
-.lane-tile span { font-size: 12.5px; color: var(--ink-3); line-height: 1.7; }
+.top-btn:hover { border-color: var(--accent); color: var(--accent); }
+.top-btn:disabled { opacity: 0.35; cursor: default; }
+.top-btn:disabled:hover { border-color: var(--rule); color: inherit; }
+.top-btn.compact { padding: 20px 14px; font-size: 16px; min-height: 74px; }
+.top-btn-count {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.top-btn.adult { color: var(--adult); border-color: var(--adult); }
+.top-btn.paed { color: var(--paed); border-color: var(--paed); }
+.top-btn.aware-access { color: var(--tier-good); border-color: var(--tier-good); }
+.top-btn.aware-watch { color: var(--warn); border-color: var(--warn); }
+.top-btn.aware-reserve { color: var(--danger); border-color: var(--danger); }
+
+/* AWaRe の説明 */
+.aware-lead { font-size: 13.5px; color: var(--ink-2); line-height: 1.85; margin-bottom: 16px; }
+.aware-lead p { margin: 0 0 8px; }
+.aware-lead-strong {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid currentColor;
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-size: 14.5px;
+}
+
+/* 従属的な導線 */
+.sub-actions { margin-top: 16px; display: grid; gap: 6px; justify-items: start; }
+.sub-btn {
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 7px 16px;
+  font-size: 13px;
+  color: var(--ink-2);
+}
+.sub-btn:hover { border-color: var(--accent); color: var(--accent); }
 
 .lane-intro { font-size: 13px; color: var(--ink-2); margin: 0 0 12px; line-height: 1.8; }
 .crumbs { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
