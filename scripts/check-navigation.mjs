@@ -78,7 +78,7 @@ for (const label of [
   "暴露後予防投与",
   "小児体重服用量簡易表",
   "AMR対策",
-  "適正使用の手引き（表集）",
+  "適正使用の手引き",
 ]) {
   check(others.some((t) => t.trim() === label), `その他に「${label}」がある`);
 }
@@ -378,20 +378,23 @@ check(/2〜3日経過観察/.test(infText), "小児の急性中耳炎を表示�
 check(/75%以上/.test(infText) === false, "中耳炎の数値も疾患メモに畳む");
 
 /* ---- 手引きの表集（その他） ---- */
-console.log("\n適正使用の手引き（表集）");
+console.log("\n適正使用の手引き");
 await home();
 await click("その他");
 check(
   (await page.locator(".top-btn").allInnerTexts()).some((t) =>
     t.includes("適正使用の手引き"),
   ),
-  "「その他」に手引きの表集がある",
+  "「その他」に適正使用の手引きがある",
 );
-await click("適正使用の手引き（表集）");
+await click("適正使用の手引き");
+const stewardshipItems = await page.locator(".top-btn").allInnerTexts();
+check(!stewardshipItems.some((t) => t.includes("急性下痢症")), "小項目に急性下痢症を重複表示しない");
+check(!stewardshipItems.some((t) => t.includes("院内感染症の代表的な原因微生物")), "小項目に院内感染症の原因微生物を重複表示しない");
 for (const label of ["血液培養の解釈", "治療期間の早見表", "経口薬への切り替え"]) {
   check(
     (await page.locator(".top-btn").allInnerTexts()).some((t) => t.includes(label)),
-    `表集に「${label}」がある`,
+    `適正使用の手引きに「${label}」がある`,
   );
 }
 await click("治療期間の早見表");

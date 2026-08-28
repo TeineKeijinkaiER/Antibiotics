@@ -54,18 +54,18 @@ const SCREENS = [
     steps: ["感染症別", "小児", "気道・耳鼻科", "急性中耳炎"],
   },
   { name: "07-other", steps: ["その他"] },
-  { name: "07b-stewardship-topics", steps: ["その他", "適正使用の手引き（表集）"] },
+  { name: "07b-stewardship-topics", steps: ["その他", "適正使用の手引き"] },
   {
     name: "07c-topic-duration",
-    steps: ["その他", "適正使用の手引き（表集）", "治療期間の早見表"],
+    steps: ["その他", "適正使用の手引き", "治療期間の早見表"],
   },
   {
     name: "07d-topic-blood-culture",
-    steps: ["その他", "適正使用の手引き（表集）", "血液培養の解釈"],
+    steps: ["その他", "適正使用の手引き", "血液培養の解釈"],
   },
   {
     name: "07e-topic-iv-to-po",
-    steps: ["その他", "適正使用の手引き（表集）", "経口薬への切り替え"],
+    steps: ["その他", "適正使用の手引き", "経口薬への切り替え"],
   },
   { name: "08-prophylaxis", steps: ["その他", "周術期"] },
   { name: "09-postexposure", steps: ["その他", "暴露後予防投与"] },

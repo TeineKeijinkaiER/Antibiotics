@@ -120,7 +120,7 @@ export function InfectionPicker({
           <div className="sub-actions">
             <p className="dose-note">
               手引きの重要な表（治療期間の早見表・血液培養の解釈・経口薬への切り替えなど）は、
-              ホームの「その他」→「適正使用の手引き（表集）」にまとめています。
+              ホームの「その他」→「適正使用の手引き」から確認できます。
             </p>
           </div>
         </>
@@ -390,7 +390,7 @@ export function InfectionDetail({
 
       <div className="sub-actions">
         <button className="sub-btn" onClick={onOpenTopics}>
-          適正使用の手引き（表集）→
+          適正使用の手引き →
         </button>
       </div>
 
@@ -402,18 +402,14 @@ export function InfectionDetail({
   );
 }
 
-/* ---------------- 「その他」に置く表集 ---------------- */
+/* ---------------- 「その他」に置く適正使用の手引き ---------------- */
 
 export function StewardshipTopics({ onOpenTopic }: { onOpenTopic: (id: string) => void }) {
   return (
     <>
       <div className="detail-head">
-        <h2>適正使用の手引き（表集）</h2>
+        <h2>適正使用の手引き</h2>
       </div>
-      <p className="lane-intro">
-        厚生労働省『{STEWARDSHIP_GUIDE.title} {STEWARDSHIP_GUIDE.edition}』のうち、
-        個々の感染症ページに載りきらない横断的な表をまとめています。
-      </p>
       <div className="top-grid">
         {STEWARDSHIP_TOPICS.map((t) => (
           <button key={t.id} className="top-btn compact" onClick={() => onOpenTopic(t.id)}>

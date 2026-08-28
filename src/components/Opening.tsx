@@ -74,7 +74,7 @@ export const OTHER_ITEMS: { key: OtherKey; label: string }[] = [
   { key: "pediatric-weight", label: "小児体重服用量簡易表" },
   { key: "amr", label: "AMR対策" },
   // 感染症別の各ページに載りきらない、適正使用の手引きの重要な表をまとめる（FR-017 補足）
-  { key: "stewardship-topics", label: "適正使用の手引き（表集）" },
+  { key: "stewardship-topics", label: "適正使用の手引き" },
 ];
 
 export function OtherMenu({ onPick }: { onPick: (key: OtherKey) => void }) {

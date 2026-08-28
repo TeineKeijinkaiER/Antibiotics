@@ -64,7 +64,11 @@ export const DISEASE_BY_ID = new Map(DISEASES.map((d) => [d.id, d]));
 
 export const INFECTIONS = (infectionsJson as unknown as InfectionEntry[]).filter((i) => !i.retired);
 export const INFECTION_BY_ID = new Map(INFECTIONS.map((i) => [i.id, i]));
-export const STEWARDSHIP_TOPICS = stewardshipTopicsJson as unknown as StewardshipTopic[];
+/** 疾患ページへ統合済みの項目は「適正使用の手引き」の小項目には重複表示しない。 */
+const HIDDEN_STEWARDSHIP_TOPIC_IDS = new Set(["inpatient-organisms", "acute-diarrhea-food"]);
+export const STEWARDSHIP_TOPICS = (stewardshipTopicsJson as unknown as StewardshipTopic[]).filter(
+  (topic) => !HIDDEN_STEWARDSHIP_TOPIC_IDS.has(topic.id),
+);
 export const STEWARDSHIP_TOPIC_BY_ID = new Map(STEWARDSHIP_TOPICS.map((t) => [t.id, t]));
 
 /** 感染症別レーンの出典。全画面のフッタに出す（FR-017-7） */

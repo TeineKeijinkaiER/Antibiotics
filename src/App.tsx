@@ -81,7 +81,7 @@ type View =
   /** 部位カテゴリ内の感染症一覧 */
   | { type: "infection-list"; category: InfectionCategory }
   | { type: "infection"; id: string }
-  /** 手引きの表集（その他から開く） */
+  /** 適正使用の手引き（その他から開く） */
   | { type: "topic"; id: string }
   | { type: "drug"; id: string }
   | { type: "organism"; id: string }
