@@ -56,6 +56,11 @@ const SCREENS = [
     steps: ["感染症別", "成人", "院内発症", "院内発症感染症"],
   },
   {
+    // 外来編は本章を乳幼児編に置いているため小児で開く
+    name: "06i-infection-cellulitis",
+    steps: ["感染症別", "小児", "皮膚軟部組織", "蜂窩織炎"],
+  },
+  {
     name: "06h-infection-sinusitis-paed",
     steps: ["感染症別", "小児", "気道・耳鼻科", "急性鼻副鼻腔炎"],
   },

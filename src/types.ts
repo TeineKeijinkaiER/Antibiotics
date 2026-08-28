@@ -379,11 +379,16 @@ export type ReferenceData = {
  * 原典（厚労省『抗微生物薬適正使用の手引き 第四版』）の章立てではなく、
  * 診療中に引きやすい部位で切る（FR-017-3: 原典の構造を画面に持ち込まない）。
  */
-export type InfectionCategory = "airway" | "gastrointestinal" | "nosocomial";
+export type InfectionCategory =
+  | "airway"
+  | "gastrointestinal"
+  | "skin_soft_tissue"
+  | "nosocomial";
 
 export const INFECTION_CATEGORY_LABEL: Record<InfectionCategory, string> = {
   airway: "気道・耳鼻科",
   gastrointestinal: "消化器",
+  skin_soft_tissue: "皮膚軟部組織",
   nosocomial: "院内発症",
 };
 

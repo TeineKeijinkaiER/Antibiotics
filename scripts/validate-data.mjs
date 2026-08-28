@@ -412,7 +412,12 @@ for (const [lane, n] of Object.entries(laneCounts)) {
   const drugIds = new Set(drugs.map((d) => d.id));
   const organismIds = new Set(organisms.map((o) => o.id));
   const seen = new Set();
-  const CATEGORIES = new Set(["airway", "gastrointestinal", "nosocomial"]);
+  const CATEGORIES = new Set([
+    "airway",
+    "gastrointestinal",
+    "skin_soft_tissue",
+    "nosocomial",
+  ]);
   const STANCES = new Set(["withhold", "conditional", "test_first", "not_specified"]);
   const BOOKS = new Set(["outpatient", "inpatient", "both"]);
 

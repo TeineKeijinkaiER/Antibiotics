@@ -26,7 +26,12 @@ import { normalize } from "../lib/normalize";
  */
 
 /** カテゴリの表示順。診療で引く頻度の高いものから並べる */
-const CATEGORY_ORDER: InfectionCategory[] = ["airway", "gastrointestinal", "nosocomial"];
+const CATEGORY_ORDER: InfectionCategory[] = [
+  "airway",
+  "gastrointestinal",
+  "skin_soft_tissue",
+  "nosocomial",
+];
 
 function inMode(entry: InfectionEntry, mode: PatientMode): boolean {
   return entry.populations.includes(mode);
@@ -365,12 +370,15 @@ export function InfectionDetail({
         </section>
       ))}
 
+      {/* 適応外使用は薬事上の注記であり、処方を決める段では読まないため畳んでおく */}
       {entry.offLabelNote && shownDrugs.length > 0 && (
         <section className="section">
-          <div className="callout warn">
-            <h3>適応外使用</h3>
-            <p>{entry.offLabelNote}</p>
-          </div>
+          <details className="fold">
+            <summary>適応外使用について</summary>
+            <div className="callout warn">
+              <p>{entry.offLabelNote}</p>
+            </div>
+          </details>
         </section>
       )}
 
