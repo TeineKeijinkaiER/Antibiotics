@@ -144,7 +144,7 @@ check(
 /* ---- 患者条件フォームを出す画面 ---- */
 console.log("\n患者条件フォームの出し分け");
 const hasPatientButton = async () =>
-  (await page.locator('header button:has-text("患者条件")').count()) > 0;
+  (await page.locator('.contextbar button:has-text("患者条件")').count()) > 0;
 
 await home();
 await click("菌種別");
@@ -190,7 +190,7 @@ console.log("\n小児の患者条件と1日投与量");
 await home();
 await click("内服薬");
 await click("小児");
-await page.locator('header button:has-text("患者条件")').click();
+await page.locator('.contextbar button:has-text("患者条件")').click();
 await page.waitForTimeout(250);
 check((await page.locator("#f-weight").count()) === 1, "小児: 体重の入力欄がある");
 for (const f of ["age", "sex", "height", "scr", "egfr", "rrt"]) {
@@ -216,10 +216,10 @@ console.log("\n「1回◯mgまで」の自動計算（分割回数）");
 // リネゾリド 30mg/kg/day 分3（1回600mgまで）
 // 25kg: 750mg/day ÷3 = 250mg/回。上限未満なのでクリップなし
 await openDrug("注射薬", "小児", "リネゾリド");
-await page.locator('header button:has-text("患者条件")').click();
+await page.locator('.contextbar button:has-text("患者条件")').click();
 await page.fill("#f-weight", "25");
 await page.waitForTimeout(300);
-await page.locator('header button:has-text("患者条件")').click();
+await page.locator('.contextbar button:has-text("患者条件")').click();
 await page.waitForTimeout(150);
 let doseText = await page.locator("main").innerText();
 check(/1日 750mg/.test(doseText), "リネゾリド25kg: 1日750mgと換算される");
@@ -228,10 +228,10 @@ check(!/上限でクリップ/.test(doseText), "リネゾリド25kg: 上限未�
 
 // 70kg: 2100mg/day ÷3 = 700mg/回 → 600mgでクリップ。見出しの1日量も 600×3=1800mg に整合させる
 await openDrug("注射薬", "小児", "リネゾリド");
-await page.locator('header button:has-text("患者条件")').click();
+await page.locator('.contextbar button:has-text("患者条件")').click();
 await page.fill("#f-weight", "70");
 await page.waitForTimeout(300);
-await page.locator('header button:has-text("患者条件")').click();
+await page.locator('.contextbar button:has-text("患者条件")').click();
 await page.waitForTimeout(150);
 doseText = await page.locator("main").innerText();
 check(/1回 600mg を1日3回/.test(doseText), "リネゾリド70kg: 1回量が600mgの上限でクリップされる");
@@ -279,7 +279,7 @@ await click("TDM対象");
 check((await page.locator("#tdm-first").count()) === 1, "成人ではTDM投与設計画面が開く");
 
 // ヘッダーから集団を切り替えた場合も、その場でTDM画面を止める
-await page.locator('header button:has-text("小児に切替")').click();
+await page.locator('.contextbar button:has-text("小児に切替")').click();
 await page.waitForTimeout(300);
 check(
   /TDM投与設計は成人を対象/.test(await page.locator("main").innerText()),
@@ -300,23 +300,38 @@ await click("感染症別");
 await click("成人");
 
 // FR-100-5: 感染症名で引いたら、その感染症のことが1画面に集まっている
-await page.fill('input[aria-label="感染症名を入力"]', "肺炎");
+await page.fill('input[aria-label="感染症名を入力"]', "院内");
 await page.waitForTimeout(300);
 check((await page.locator(".result").count()) > 0, "感染症名で検索できる");
 await page.locator(".result").first().click();
 await page.waitForTimeout(350);
 let infText = await page.locator("main").innerText();
-check(/緑膿菌/.test(infText), "肺炎に想定起炎菌（入院編 表2）が出る");
-check(/3〜5日間/.test(infText), "肺炎に治療期間（入院編 表5）が出る");
+check(/緑膿菌/.test(infText), "院内発症感染症に表2の原因微生物が出る");
 check(
-  /第一選択薬（経験的治療）の記載はありません/.test(infText),
+  /第一選択薬の記載はありません/.test(infText),
   "原典に推奨薬がない場合はその旨を明示する（欄を空にしない）",
 );
 
-// FR-017-5: 菌名から菌種別画面へ
+// 院内発症の表を市中発症に当てはめさせない（表2は院内発症のみを対象とする）
+check(
+  /市中発症の感染症とは想定する原因微生物が異なる/.test(infText),
+  "院内発症の表であることを明示する",
+);
+// 治療期間（表5）は市中の病態も含むため、この画面には混ぜない
+check(!/3〜5日間/.test(infText), "院内発症のページに市中を含む治療期間の表を混ぜない");
+
+// FR-017-5: 菌名から菌種別画面（＝アンチバイオグラム）へ
+const firstOrganism = (await page.locator(".chip-link").first().innerText()).replace(/\s*→$/, "");
 await page.locator(".chip-link").first().click();
 await page.waitForTimeout(350);
-check(/緑膿菌/.test(await page.locator("h2").first().innerText()), "菌名から菌種別画面へ遷移する");
+check(
+  (await page.locator("h2").first().innerText()).includes(firstOrganism),
+  "菌名から菌種別画面へ遷移する",
+);
+check(
+  (await page.locator("table.abx").count()) > 0,
+  "遷移先で当院のアンチバイオグラムを確認できる",
+);
 await click("← 戻る");
 
 // FR-017-5: 薬剤名から薬剤詳細へ
@@ -340,7 +355,7 @@ check(/1回 500mg 1日3回 経口（成人）/.test(infText), "成人では成�
 check(!/分3〜4/.test(infText), "成人の画面に小児の用量を出さない");
 check(!/小児の遷延性/.test(infText), "成人の画面に小児向けの判定表を出さない");
 
-await page.locator('header button:has-text("小児に切替")').click();
+await page.locator('.contextbar button:has-text("小児に切替")').click();
 await page.waitForTimeout(350);
 infText = await page.locator("main").innerText();
 check(/分3〜4/.test(infText), "小児に切り替えると小児の用量を出す");

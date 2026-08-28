@@ -26,13 +26,7 @@ import { normalize } from "../lib/normalize";
  */
 
 /** カテゴリの表示順。診療で引く頻度の高いものから並べる */
-const CATEGORY_ORDER: InfectionCategory[] = [
-  "airway",
-  "pneumonia",
-  "urinary",
-  "skin_soft_tissue",
-  "bloodstream",
-];
+const CATEGORY_ORDER: InfectionCategory[] = ["airway", "gastrointestinal", "nosocomial"];
 
 function inMode(entry: InfectionEntry, mode: PatientMode): boolean {
   return entry.populations.includes(mode);
@@ -457,9 +451,8 @@ export function StewardshipTopicDetail({ id }: { id: string }) {
 /** 原典で表になっていた記載は構造を保ったまま出す（FR-017-4） */
 function DataTable({ table }: { table: InfectionTable }) {
   const singleColumn = table.headers.length === 1;
-  return (
-    <section className="section">
-      <h3>{table.caption}</h3>
+  const body = (
+    <>
       {singleColumn ? (
         <ul className="bullets">
           {table.rows.map((r) => (
@@ -489,6 +482,23 @@ function DataTable({ table }: { table: InfectionTable }) {
         </div>
       )}
       {table.note && <p className="dose-note">{table.note}</p>}
+    </>
+  );
+
+  // 参照用の表は畳んでおき、判断に直接使う表は開いたまま出す（FR-100-2）
+  return (
+    <section className="section">
+      {table.collapsed ? (
+        <details className="fold">
+          <summary>{table.caption}</summary>
+          {body}
+        </details>
+      ) : (
+        <>
+          <h3>{table.caption}</h3>
+          {body}
+        </>
+      )}
     </section>
   );
 }

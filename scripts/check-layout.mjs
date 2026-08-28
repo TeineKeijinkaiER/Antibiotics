@@ -48,12 +48,12 @@ const SCREENS = [
     steps: ["感染症別", "成人", "気道・耳鼻科", "急性咽頭炎"],
   },
   {
-    name: "06f-infection-pneumonia",
-    steps: ["感染症別", "成人", "呼吸器（肺炎）", "肺炎（VAP を含む）"],
+    name: "06f-infection-diarrhea",
+    steps: ["感染症別", "成人", "消化器", "急性下痢症"],
   },
   {
-    name: "06g-infection-bacteremia",
-    steps: ["感染症別", "成人", "血流・全身", "菌血症"],
+    name: "06g-infection-nosocomial",
+    steps: ["感染症別", "成人", "院内発症", "院内発症感染症"],
   },
   {
     name: "06h-infection-sinusitis-paed",

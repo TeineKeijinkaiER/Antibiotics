@@ -40,7 +40,7 @@ const page = await context.newPage();
 
 const openPatientPanel = async () => {
   if ((await page.locator("#f-age").count()) === 0) {
-    await page.locator('header button:has-text("患者条件")').first().click();
+    await page.locator('.contextbar button:has-text("患者条件")').first().click();
     await page.waitForTimeout(150);
   }
 };

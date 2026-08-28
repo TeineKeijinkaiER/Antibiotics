@@ -379,19 +379,12 @@ export type ReferenceData = {
  * 原典（厚労省『抗微生物薬適正使用の手引き 第四版』）の章立てではなく、
  * 診療中に引きやすい部位で切る（FR-017-3: 原典の構造を画面に持ち込まない）。
  */
-export type InfectionCategory =
-  | "airway"
-  | "pneumonia"
-  | "urinary"
-  | "skin_soft_tissue"
-  | "bloodstream";
+export type InfectionCategory = "airway" | "gastrointestinal" | "nosocomial";
 
 export const INFECTION_CATEGORY_LABEL: Record<InfectionCategory, string> = {
   airway: "気道・耳鼻科",
-  pneumonia: "呼吸器（肺炎）",
-  urinary: "尿路",
-  skin_soft_tissue: "皮膚軟部組織",
-  bloodstream: "血流・全身",
+  gastrointestinal: "消化器",
+  nosocomial: "院内発症",
 };
 
 /** 抗菌薬投与についての立場。画面で最も目立たせる（FR-017-6） */
@@ -428,6 +421,12 @@ export type InfectionTable = {
   note?: string;
   /** その集団でのみ表示する。省略時は両方に出す */
   population?: PatientMode;
+  /**
+   * 初期表示で畳む。
+   * その場の判断に直接使う表（重症度分類など）は畳まない。
+   * あとから確認する参照用の表（潜伏期間の一覧など）にのみ付ける（FR-100-2）。
+   */
+  collapsed?: boolean;
 };
 
 /** 判断に効く数値。本文中にあっても必ず拾う（FR-100-4） */
