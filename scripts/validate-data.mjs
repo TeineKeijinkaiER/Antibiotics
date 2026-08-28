@@ -27,6 +27,8 @@ const offlabel = load("offlabel.json");
 const antibiogram = load("antibiogram.json");
 const prophylaxis = load("prophylaxis.json");
 const reference = load("reference.json");
+const infections = load("infections.json");
+const stewardshipTopics = load("stewardship-topics.json");
 
 const errors = [];
 const warnings = [];
@@ -404,6 +406,92 @@ for (const [lane, n] of Object.entries(laneCounts)) {
   if (n === 0) fail(`レーン「${lane}」に該当する薬剤が1件もありません`);
 }
 
+/* ---------- 感染症別（FR-017） ---------- */
+
+{
+  const drugIds = new Set(drugs.map((d) => d.id));
+  const organismIds = new Set(organisms.map((o) => o.id));
+  const seen = new Set();
+  const CATEGORIES = new Set([
+    "airway",
+    "pneumonia",
+    "urinary",
+    "skin_soft_tissue",
+    "bloodstream",
+  ]);
+  const STANCES = new Set(["withhold", "conditional", "test_first", "not_specified"]);
+  const BOOKS = new Set(["outpatient", "inpatient", "both"]);
+
+  for (const inf of infections) {
+    const where = `Infection[${inf.id}]`;
+    if (seen.has(inf.id)) fail(`${where}: id が重複しています`);
+    seen.add(inf.id);
+
+    if (!CATEGORIES.has(inf.category)) fail(`${where}: category が不正です（${inf.category}）`);
+    if (!STANCES.has(inf.stance)) fail(`${where}: stance が不正です（${inf.stance}）`);
+    if (!inf.summary) fail(`${where}: summary がありません`);
+    if (!Array.isArray(inf.populations) || inf.populations.length === 0)
+      fail(`${where}: populations が空です`);
+    for (const p of inf.populations ?? []) {
+      if (p !== "adult" && p !== "pediatric") fail(`${where}: populations が不正です（${p}）`);
+    }
+
+    // 原典ページは全レコード必須（NFR-008 と同じ方針）
+    if (!inf.source || !Array.isArray(inf.source.pages) || inf.source.pages.length === 0)
+      fail(`${where}: source.pages がありません`);
+    if (!BOOKS.has(inf.source?.book)) fail(`${where}: source.book が不正です（${inf.source?.book}）`);
+
+    // 薬剤・菌へのリンク切れはビルドを落とす（FR-017-5）
+    for (const d of inf.drugs ?? []) {
+      if (!d.label) fail(`${where}: 推奨薬に label がありません`);
+      if (d.drugId != null && !drugIds.has(d.drugId))
+        fail(`${where}: 薬剤ID「${d.drugId}」は存在しません`);
+    }
+    for (const oid of inf.likelyOrganismIds ?? []) {
+      if (!organismIds.has(oid)) fail(`${where}: 菌ID「${oid}」は存在しません`);
+    }
+
+    // 表は列数が揃っていること（崩れた表を出さない）
+    for (const t of inf.tables ?? []) {
+      if (!t.caption) fail(`${where}: 表に caption がありません`);
+      for (const [i, row] of (t.rows ?? []).entries()) {
+        if (row.length !== t.headers.length)
+          fail(`${where}: 表「${t.caption}」${i + 1}行目の列数が見出しと一致しません`);
+      }
+    }
+
+    // 抗菌薬を出す立場なら、推奨薬か「記載なし」の説明のどちらかが要る
+    if (
+      (inf.stance === "conditional" || inf.stance === "test_first") &&
+      (inf.drugs ?? []).length === 0 &&
+      !inf.noRegimenNote
+    )
+      fail(`${where}: 抗菌薬を投与しうる立場ですが、推奨薬も noRegimenNote もありません`);
+
+    if (inf.stance === "not_specified" && !inf.noRegimenNote)
+      warn(`${where}: 手引きに推奨薬の記載がない旨（noRegimenNote）を書くことを推奨します`);
+  }
+
+  const topicIds = new Set();
+  for (const t of stewardshipTopics) {
+    const where = `StewardshipTopic[${t.id}]`;
+    if (topicIds.has(t.id)) fail(`${where}: id が重複しています`);
+    topicIds.add(t.id);
+    if (!t.title) fail(`${where}: title がありません`);
+    if (!t.source || !Array.isArray(t.source.pages) || t.source.pages.length === 0)
+      fail(`${where}: source.pages がありません`);
+    if (!BOOKS.has(t.source?.book)) fail(`${where}: source.book が不正です（${t.source?.book}）`);
+    if ((t.tables ?? []).length === 0 && (t.sections ?? []).length === 0)
+      fail(`${where}: 表も節もありません`);
+    for (const tb of t.tables ?? []) {
+      for (const [i, row] of (tb.rows ?? []).entries()) {
+        if (row.length !== tb.headers.length)
+          fail(`${where}: 表「${tb.caption}」${i + 1}行目の列数が見出しと一致しません`);
+      }
+    }
+  }
+}
+
 /* ---------- 出力 ---------- */
 
 const counts = {
@@ -414,6 +502,8 @@ const counts = {
   アンチバイオグラム行: (antibiogram.rows ?? []).length,
   周術期エントリ: (prophylaxis.entries ?? []).length,
   曝露後予防: (reference.postExposureProphylaxis?.entries ?? []).length,
+  感染症: infections.length,
+  手引きの表集: stewardshipTopics.length,
 };
 
 console.log("データ件数:", JSON.stringify(counts, null, 0));

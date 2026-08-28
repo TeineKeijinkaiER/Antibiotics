@@ -372,6 +372,116 @@ export type ReferenceData = {
   };
 };
 
+/* ---------------- 感染症別（FR-017） ---------------- */
+
+/**
+ * 感染症の部位カテゴリ。
+ * 原典（厚労省『抗微生物薬適正使用の手引き 第四版』）の章立てではなく、
+ * 診療中に引きやすい部位で切る（FR-017-3: 原典の構造を画面に持ち込まない）。
+ */
+export type InfectionCategory =
+  | "airway"
+  | "pneumonia"
+  | "urinary"
+  | "skin_soft_tissue"
+  | "bloodstream";
+
+export const INFECTION_CATEGORY_LABEL: Record<InfectionCategory, string> = {
+  airway: "気道・耳鼻科",
+  pneumonia: "呼吸器（肺炎）",
+  urinary: "尿路",
+  skin_soft_tissue: "皮膚軟部組織",
+  bloodstream: "血流・全身",
+};
+
+/** 抗菌薬投与についての立場。画面で最も目立たせる（FR-017-6） */
+export type AntibioticStance =
+  | "withhold"
+  | "conditional"
+  | "test_first"
+  | "not_specified";
+
+/**
+ * 推奨薬。
+ * 当院採用薬に該当すれば drugId を持たせ、薬剤詳細へ遷移させる（FR-017-5）。
+ * 原典が挙げても当院に採用のない薬（セフカペン等）は drugId: null とし、
+ * 名称のみ表示してリンクを張らない。
+ */
+export type RecommendedDrug = {
+  drugId: string | null;
+  label: string;
+  dosage?: string;
+  duration?: string;
+  note?: string;
+  /**
+   * その集団でのみ表示する。
+   * 省略時は両方に出す。成人と小児の用量を同一画面に並べないため（FR-000-7）。
+   */
+  population?: PatientMode;
+};
+
+/** 原典で表になっていた記載。構造を保ったまま残す（FR-017-4） */
+export type InfectionTable = {
+  caption: string;
+  headers: string[];
+  rows: string[][];
+  note?: string;
+  /** その集団でのみ表示する。省略時は両方に出す */
+  population?: PatientMode;
+};
+
+/** 判断に効く数値。本文中にあっても必ず拾う（FR-100-4） */
+export type KeyFigure = {
+  /** "2.62倍" "46 / 64%" のような表示値 */
+  value: string;
+  text: string;
+};
+
+export type InfectionEntry = {
+  id: string;
+  name: string;
+  /** 検索用の別名（"CAP" "はいえん" 等） */
+  aliases: string[];
+  category: InfectionCategory;
+  /** 1行の定義。長い説明は置かない（FR-100-1） */
+  summary: string;
+  /** 対象集団。両方に載る疾患は2つとも持つ */
+  populations: PatientMode[];
+  stance: AntibioticStance;
+  /** 画面最上部に出す結論。stance が not_specified のときは省略できる */
+  verdict?: string;
+  verdictNote?: string;
+  /** 推奨薬。投与しない疾患では空 */
+  drugs?: RecommendedDrug[];
+  /** 想定起炎菌。既存の Organism.id を使う。id を持たない菌は organismLabels に書く */
+  likelyOrganismIds?: string[];
+  organismLabels?: string[];
+  organismNote?: string;
+  /** 治療期間。原典の表をそのまま持つ */
+  duration?: { condition: string; short: string; long?: string }[];
+  /** 見出し付きの短い節。本文を要約したもの */
+  sections?: { heading: string; body?: string; items?: string[]; cite?: string }[];
+  /** 見落としてはならない所見。赤枠で出す */
+  redFlags?: { heading: string; items: string[]; note?: string };
+  figures?: KeyFigure[];
+  tables?: InfectionTable[];
+  /** 適応外使用に関する原典の注記 */
+  offLabelNote?: string;
+  /** 原典に経験的治療の記載がない場合に、その旨を明示する */
+  noRegimenNote?: string;
+  source: Source & { book: "outpatient" | "inpatient" | "both" };
+};
+
+/** 「その他」に置く、疾患ページに載りきらない重要な表（FR-017 補足） */
+export type StewardshipTopic = {
+  id: string;
+  title: string;
+  intro?: string;
+  tables?: InfectionTable[];
+  sections?: { heading: string; body?: string; items?: string[] }[];
+  source: Source & { book: "outpatient" | "inpatient" };
+};
+
 export type PatientMode = "adult" | "pediatric";
 
 export type Sex = "male" | "female";
