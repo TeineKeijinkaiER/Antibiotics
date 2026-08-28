@@ -1,5 +1,6 @@
 import { MANUAL_EDITION } from "../data";
 import type { SwStatus } from "../lib/sw";
+import { APP_TITLE, APP_EDITION } from "./Opening";
 
 const FACILITY = MANUAL_EDITION.facility;
 
@@ -30,7 +31,10 @@ export function DisclaimerGate({ onAgree }: { onAgree: () => void }) {
   return (
     <div className="gate">
       <div className="gate-inner">
-        <h1>抗菌薬投与ナビ</h1>
+        <h1>{APP_TITLE}</h1>
+        <p className="opening-edition" style={{ marginBottom: 10 }}>
+          {APP_EDITION}
+        </p>
         <p className="sub">
           {FACILITY}『{MANUAL_EDITION.title}』{MANUAL_EDITION.label}（{MANUAL_EDITION.issuedOn}）
         </p>
