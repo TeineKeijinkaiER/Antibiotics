@@ -26,14 +26,16 @@ await click("感染症別");
 check((await page.locator(".top-btn").count()) === 2, "成人・小児の選択を必ず挟む");
 await click("成人");
 const menu = await page.locator("main").innerText();
-check(/急性下痢症/.test(menu) && /院内発症感染症/.test(menu), "採用する2疾患だけが表示される");
-check(!/蜂窩織炎/.test(menu) && !/菌血症/.test(menu), "混在させない疾患を独立項目にしない");
+for (const category of ["気道・耳鼻科", "消化器", "皮膚軟部組織", "院内発症感染症"]) {
+  check(menu.includes(category), `カテゴリ「${category}」が表示される`);
+}
 
 console.log("\n成人の急性下痢症");
+await click("消化器");
 await click("急性下痢症");
 let text = await page.locator("main").innerText();
-check(/主な原因食品と潜伏期間/.test(text), "潜伏期間表がある");
-check((await page.locator(".infection-table tbody tr").count()) === 11, "潜伏期間表は11行");
+check(/主な病原体の潜伏期間/.test(text), "潜伏期間表がある");
+check((await page.locator("table.doc tbody tr").count()) === 11, "潜伏期間表は11行");
 check(/抗菌薬を検討する状況/.test(text), "抗菌薬の適応を本文で説明する");
 check(/疾患メモ/.test(text), "見出しを疾患メモとする");
 check(!/判断の根拠となる数値/.test(text), "旧見出しを表示しない");
@@ -44,21 +46,23 @@ console.log("\n小児の急性下痢症");
 await page.goto(BASE, { waitUntil: "networkidle" });
 await click("感染症別");
 await click("小児");
+await click("消化器");
 await click("急性下痢症");
 text = await page.locator("main").innerText();
 check(/脱水/.test(text) && /生後3か月未満/.test(text), "小児固有の評価・抗菌薬条件がある");
-check(!/主な原因食品と潜伏期間/.test(text), "成人用の潜伏期間表を小児画面に混在させない");
+check(!/50歳以上/.test(text), "成人固有の抗菌薬条件を小児画面に混在させない");
 
 console.log("\n院内発症感染症");
 await page.goto(BASE, { waitUntil: "networkidle" });
 await click("感染症別");
 await click("成人");
 await click("院内発症感染症");
+await click("院内発症感染症");
 text = await page.locator("main").innerText();
-check(/市中感染の原因微生物を示す表ではありません/.test(text), "院内発症に限定する注意がある");
-check(/ここでは抗菌薬の投与期間を提示しない/.test(text), "市中・院内混在の投与期間を載せない");
-check((await page.locator(".organism-link").count()) > 0, "微生物からアンチバイオグラムへの導線がある");
-await page.locator(".organism-link").first().click();
+check(/市中感染へ外挿しない/.test(text), "院内発症に限定する注意がある");
+check(!/短期治療期間/.test(text), "市中・院内混在の投与期間を載せない");
+check((await page.locator(".chip-link").count()) > 0, "微生物からアンチバイオグラムへの導線がある");
+await page.locator(".chip-link").first().click();
 await page.waitForTimeout(200);
 check(/感性率|データは原典にありません/.test(await page.locator("main").innerText()), "菌詳細へ遷移する");
 

@@ -16,6 +16,14 @@ import {
   type TopCategory,
 } from "./components/Opening";
 import { OrganismDetail } from "./components/OrganismDetail";
+import {
+  InfectionPicker,
+  InfectionList,
+  InfectionDetail,
+  StewardshipTopics,
+  StewardshipTopicDetail,
+} from "./components/InfectionLane";
+import { INFECTION_CATEGORY_LABEL, type InfectionCategory } from "./types";
 import { OffLabelSearch } from "./components/OffLabelSearch";
 import { Designer } from "./components/Designer";
 import { SurgicalProphylaxis } from "./components/SurgicalProphylaxis";
@@ -28,7 +36,6 @@ import {
   Amr,
 } from "./components/Reference";
 import { About, DisclaimerGate } from "./components/About";
-import { InfectionGuide, InfectionMenu, type InfectionGuideId } from "./components/InfectionGuide";
 import {
   getFavorites,
   getHistory,
@@ -48,17 +55,14 @@ type PageKey =
   | "pcg"
   | "stewardship"
   | "amr"
-  | "offlabel";
+  | "offlabel"
+  | "stewardship-topics";
 
 type View =
   | { type: "opening" }
   | { type: "other" }
-  /** 内服薬・注射薬を選んだ直後の 成人／小児 */
-  | { type: "mode"; lane: DrugLane }
-  /** 感染症別を選んだ直後の 成人／小児 */
-  | { type: "infection-mode" }
-  | { type: "infections" }
-  | { type: "infection"; id: InfectionGuideId }
+  /** 内服薬・注射薬・感染症別を選んだ直後の 成人／小児 */
+  | { type: "mode"; lane: DrugLane | "infection" }
   /** 薬剤名の入力欄と分類ボタン */
   | { type: "picker"; lane: DrugLane }
   /** AWaRe分類対象外のジャンル選択（内服薬レーンの「その他」） */
@@ -72,6 +76,13 @@ type View =
       otherCategory?: DrugCategory;
     }
   | { type: "organisms" }
+  /** 感染症別：検索欄＋部位カテゴリ */
+  | { type: "infections" }
+  /** 部位カテゴリ内の感染症一覧 */
+  | { type: "infection-list"; category: InfectionCategory }
+  | { type: "infection"; id: string }
+  /** 手引きの表集（その他から開く） */
+  | { type: "topic"; id: string }
   | { type: "drug"; id: string }
   | { type: "organism"; id: string }
   | { type: "designer"; key: string; fromDrugId?: string }
@@ -79,6 +90,10 @@ type View =
   | { type: "page"; key: PageKey };
 
 const MODE_LABEL: Record<PatientMode, string> = { adult: "成人", pediatric: "小児" };
+
+/** 感染症別レーンの中か。集団バッジと切替の出し分けに使う */
+const isInfectionView = (v: View) =>
+  v.type === "infections" || v.type === "infection-list" || v.type === "infection";
 
 export default function App() {
   const [patient, setPatient] = useState<PatientState>(emptyPatient);
@@ -133,32 +148,30 @@ export default function App() {
       go({ type: "organisms" });
     } else if (key === "other") {
       go({ type: "other" });
-    } else if (key === "infection") {
-      go({ type: "infection-mode" });
     } else {
-      // 誤参照を防ぐため、過去の選択状態にかかわらず毎回集団を選ぶ
+      // 内服薬・注射薬・感染症別は、いずれも必ず成人／小児の選択を挟む。
+      // 前回の選択のまま別のレーンに入って誤参照することを防ぐ（FR-000-4）。
       go({ type: "mode", lane: key });
     }
   };
 
   const openOther = (key: OtherKey) => go({ type: "page", key: key as PageKey });
 
-  const pickMode = (lane: DrugLane, m: PatientMode) => {
+  const pickMode = (lane: DrugLane | "infection", m: PatientMode) => {
     setMode(m);
-    go({ type: "picker", lane });
+    go(lane === "infection" ? { type: "infections" } : { type: "picker", lane });
   };
 
-  const pickInfectionMode = (m: PatientMode) => {
-    setMode(m);
-    go({ type: "infections" });
-  };
-
-  /** 薬剤レーン内でのみ集団を切り替える */
+  /** 薬剤レーン・感染症別レーン内でのみ集団を切り替える */
   const switchMode = () => {
     if (!mode) return;
     const next: PatientMode = mode === "adult" ? "pediatric" : "adult";
     setMode(next);
-    setNotice(`${MODE_LABEL[next]}の用量に切り替わりました。`);
+    setNotice(
+      isInfectionView(view)
+        ? `${MODE_LABEL[next]}の記載に切り替わりました。`
+        : `${MODE_LABEL[next]}の用量に切り替わりました。`,
+    );
     window.scrollTo({ top: 0 });
   };
 
@@ -185,21 +198,19 @@ export default function App() {
     return null;
   };
   const lane = laneOf();
-  const inInfectionLane = view.type === "infections" || view.type === "infection";
-  const showModeBadge = mode != null && (lane != null || inInfectionLane);
-  const contextLabel = lane ? LANE_LABEL[lane] : inInfectionLane ? "感染症別" : null;
+  /** 感染症別も成人／小児で記載が変わるため、同じバッジと切替を出す */
+  const showModeBadge = mode != null && (lane != null || isInfectionView(view));
+  const laneLabel = lane != null ? LANE_LABEL[lane] : "感染症別";
 
-  const patientSummary = () => {
-    if (!mode) return "";
-    if (mode === "pediatric") return patient.weight == null ? "未入力" : `体重 ${patient.weight}kg`;
-    const values = [
-      patient.age == null ? null : `${patient.age}歳`,
-      patient.weight == null ? null : `${patient.weight}kg`,
-      patient.scr == null ? null : `Cr ${patient.scr}`,
-      patient.egfr == null ? null : `eGFR ${patient.egfr}`,
-    ].filter(Boolean);
-    return values.length === 0 ? "未入力" : values.join("・");
-  };
+  /** 患者条件が1つでも入力されているか。ボタンの見た目を変えて気づきやすくする */
+  const hasPatientInput =
+    patient.age != null ||
+    patient.sex != null ||
+    patient.weight != null ||
+    patient.height != null ||
+    patient.scr != null ||
+    patient.egfr != null ||
+    patient.rrt !== "none";
 
   /**
    * 患者条件フォームを出す画面。
@@ -260,16 +271,42 @@ export default function App() {
         <button className="brand link-btn" style={{ textDecoration: "none" }} onClick={goHome}>
           {APP_TITLE}
         </button>
-        {showModeBadge && (
-          <span className={`mode-badge ${mode}`}>
-            {contextLabel}／{MODE_LABEL[mode!]}
-          </span>
-        )}
         <span className="spacer" />
         <button className="link-btn" onClick={() => go({ type: "about" })}>
           アプリの説明
         </button>
       </header>
+
+      {/*
+        成人／小児の切替と患者条件は、以前ヘッダー内の小さな文字リンクだったため
+        気づかれにくかった。誤参照に直結する操作なので、独立した帯に大きく置く。
+      */}
+      {(showModeBadge || needsPatient) && (
+        <div className={`contextbar${showModeBadge ? ` mode-${mode}` : ""}`}>
+          {showModeBadge && (
+            <>
+              <span className={`ctx-current ${mode}`}>
+                <span className="ctx-lane">{laneLabel}</span>
+                <b>{MODE_LABEL[mode!]}</b>
+              </span>
+              <button className={`ctx-btn switch ${mode}`} onClick={switchMode}>
+                {MODE_LABEL[mode === "adult" ? "pediatric" : "adult"]}に切替
+              </button>
+            </>
+          )}
+          {needsPatient && (
+            <button
+              className={`ctx-btn patient${showPatient ? " open" : ""}${
+                hasPatientInput ? " filled" : ""
+              }`}
+              aria-expanded={showPatient}
+              onClick={() => setShowPatient((v) => !v)}
+            >
+              {showPatient ? "患者条件を閉じる" : hasPatientInput ? "患者条件（入力済み）" : "患者条件を入力"}
+            </button>
+          )}
+        </div>
+      )}
 
       <main className="wrap">
         {swStatus === "update-available" && (
@@ -282,32 +319,6 @@ export default function App() {
           </div>
         )}
         {notice && <div className="banner info">{notice}</div>}
-
-        {showModeBadge && (
-          <div className={`context-actions ${mode}`}>
-            <div className="context-current">
-              <span>表示中</span>
-              <b>{MODE_LABEL[mode!]}</b>
-            </div>
-            <button className="context-action mode-action" onClick={switchMode}>
-              {MODE_LABEL[mode === "adult" ? "pediatric" : "adult"]}に切り替える
-            </button>
-            {needsPatient && (
-              <button className="context-action patient-action" onClick={() => setShowPatient((v) => !v)}>
-                <span>{showPatient ? "患者条件を閉じる" : "患者条件を入力・変更"}</span>
-                <small>{patientSummary()}</small>
-              </button>
-            )}
-          </div>
-        )}
-        {needsPatient && !showModeBadge && (
-          <div className="context-actions patient-only">
-            <button className="context-action patient-action" onClick={() => setShowPatient((v) => !v)}>
-              <span>{showPatient ? "患者条件を閉じる" : "患者条件を入力・変更"}</span>
-              <small>{patientSummary()}</small>
-            </button>
-          </div>
-        )}
 
         {showPatient && needsPatient && (
           <div style={{ marginBottom: 18 }}>
@@ -352,35 +363,50 @@ export default function App() {
         {view.type === "mode" && (
           <>
             <div className="detail-head">
-              <h2>{LANE_LABEL[view.lane]}</h2>
+              <h2>{view.lane === "infection" ? "感染症別" : LANE_LABEL[view.lane]}</h2>
             </div>
             <ModePicker onPick={(m) => pickMode(view.lane, m)} />
           </>
         )}
 
-        {view.type === "infection-mode" && (
+        {/* ---------------- 感染症別（FR-017） ---------------- */}
+        {view.type === "infections" && mode && (
           <>
-            <div className="detail-head"><h2>感染症別</h2></div>
-            <ModePicker onPick={pickInfectionMode} />
+            <div className="detail-head">
+              <h2>感染症別</h2>
+            </div>
+            <InfectionPicker
+              mode={mode}
+              onPickCategory={(category) => go({ type: "infection-list", category })}
+              onOpenInfection={(id) => go({ type: "infection", id })}
+            />
           </>
         )}
 
-        {view.type === "infections" && mode && (
-          <InfectionMenu mode={mode} onPick={(id) => go({ type: "infection", id })} />
+        {view.type === "infection-list" && mode && (
+          <>
+            <div className="detail-head">
+              <h2>{INFECTION_CATEGORY_LABEL[view.category]}</h2>
+            </div>
+            <InfectionList
+              category={view.category}
+              mode={mode}
+              onOpen={(id) => go({ type: "infection", id })}
+            />
+          </>
         )}
 
-        {view.type === "infection" && mode && (
-          <InfectionGuide
+        {view.type === "infection" && (
+          <InfectionDetail
             id={view.id}
-            mode={mode}
+            mode={mode ?? "adult"}
+            onOpenDrug={(id) => go({ type: "drug", id })}
             onOpenOrganism={(id) => go({ type: "organism", id })}
-            onOpenOrganismList={() => {
-              setOrganismQuery("");
-              go({ type: "organisms" });
-            }}
+            onOpenTopics={() => go({ type: "page", key: "stewardship-topics" })}
           />
         )}
 
+        {view.type === "topic" && <StewardshipTopicDetail id={view.id} />}
         {/* ---------------- 薬剤名入力＋分類 ---------------- */}
         {view.type === "picker" && mode && (
           <LanePicker
@@ -544,6 +570,9 @@ export default function App() {
         {view.type === "page" && view.key === "pcg" && <PcgContinuousInfusion />}
         {view.type === "page" && view.key === "stewardship" && <Stewardship />}
         {view.type === "page" && view.key === "amr" && <Amr />}
+        {view.type === "page" && view.key === "stewardship-topics" && (
+          <StewardshipTopics onOpenTopic={(id) => go({ type: "topic", id })} />
+        )}
 
         <footer className="foot">
           データ版：{APP_TITLE} {APP_EDITION}（{MANUAL_EDITION.issuedOn} ／{" "}

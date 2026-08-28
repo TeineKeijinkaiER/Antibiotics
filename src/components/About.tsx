@@ -1,7 +1,6 @@
-import { MANUAL_EDITION } from "../data";
+import { MANUAL_EDITION, STEWARDSHIP_GUIDE } from "../data";
 import type { SwStatus } from "../lib/sw";
 import { APP_TITLE, APP_EDITION } from "./Opening";
-import { APPROPRIATE_USE_GUIDE } from "../data/infections";
 
 const FACILITY = MANUAL_EDITION.facility;
 
@@ -167,10 +166,16 @@ export function About({
           紙・PDFのマニュアルを置き換えるものではなく、その閲覧を速くするためのものです。
           全ての画面に原典のページ番号を併記しているので、原典に戻って確認できます。
         </p>
-        <p className="lane-intro" style={{ marginBottom: 0 }}>
-          感染症別の一部には、<b>{APPROPRIATE_USE_GUIDE.publisher}『{APPROPRIATE_USE_GUIDE.title}』</b>
-          （{APPROPRIATE_USE_GUIDE.outpatient}・{APPROPRIATE_USE_GUIDE.inpatient}）から要約した情報を採用しています。
-          院内マニュアル由来の投与量・院内ルール・アンチバイオグラムとは出典を分けて表示します。
+        <p className="lane-intro" style={{ marginBottom: 0, marginTop: 12 }}>
+          あわせて「感染症別」の項目では、
+          <b>
+            厚生労働省『{STEWARDSHIP_GUIDE.title} {STEWARDSHIP_GUIDE.edition}』
+            （医科・外来編／医科・入院編）
+          </b>
+          の内容を一部採用しています。こちらも要約であり、該当する画面には
+          「適正使用の手引き」からの引用である旨と、手引きのページ番号を明示しています。
+          抗菌薬の用量・当院の採用状況・使用申請のルールは、
+          当院マニュアルに基づく薬剤ページを正とします。
         </p>
       </section>
 
@@ -178,11 +183,7 @@ export function About({
         <h3>情報源</h3>
         <ul className="notes" style={{ fontSize: 13.5 }}>
           <li>{FACILITY}『{MANUAL_EDITION.title}』{MANUAL_EDITION.label}</li>
-          <li>
-            {APPROPRIATE_USE_GUIDE.publisher}『{APPROPRIATE_USE_GUIDE.title}』
-            （{APPROPRIATE_USE_GUIDE.outpatient}・{APPROPRIATE_USE_GUIDE.inpatient}）
-            <br /><a href={APPROPRIATE_USE_GUIDE.url} target="_blank" rel="noreferrer">厚生労働省の公開ページ</a>
-          </li>
+          <li>厚生労働省『{STEWARDSHIP_GUIDE.title} {STEWARDSHIP_GUIDE.edition}』（医科・外来編／医科・入院編）</li>
         </ul>
       </section>
 
@@ -315,6 +316,13 @@ export function About({
           <dt>発行</dt>
           <dd>
             {MANUAL_EDITION.issuedOn}　{FACILITY} {MANUAL_EDITION.author}
+          </dd>
+          <dt>感染症別の出典</dt>
+          <dd>
+            {STEWARDSHIP_GUIDE.title} {STEWARDSHIP_GUIDE.edition}
+            （医科・外来編／医科・入院編）
+            <br />
+            {STEWARDSHIP_GUIDE.publisher}
           </dd>
           <dt>内容の照会</dt>
           <dd>{MANUAL_EDITION.author}／薬剤部</dd>

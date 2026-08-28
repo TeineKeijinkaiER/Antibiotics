@@ -42,7 +42,7 @@ const page = await context.newPage();
 
 const openPatientPanel = async () => {
   if ((await page.locator("#f-age").count()) === 0) {
-    await page.locator(".patient-action").first().click();
+    await page.locator(".ctx-btn.patient").first().click();
     await page.waitForTimeout(150);
   }
 };

@@ -61,13 +61,20 @@ export function Opening({ onPick }: { onPick: (key: TopCategory) => void }) {
 
 /* ---------------- 「その他」の中身 ---------------- */
 
-export type OtherKey = "prophylaxis" | "postexposure" | "pediatric-weight" | "amr";
+export type OtherKey =
+  | "prophylaxis"
+  | "postexposure"
+  | "pediatric-weight"
+  | "amr"
+  | "stewardship-topics";
 
 export const OTHER_ITEMS: { key: OtherKey; label: string }[] = [
   { key: "prophylaxis", label: "周術期" },
   { key: "postexposure", label: "暴露後予防投与" },
   { key: "pediatric-weight", label: "小児体重服用量簡易表" },
   { key: "amr", label: "AMR対策" },
+  // 感染症別の各ページに載りきらない、適正使用の手引きの重要な表をまとめる（FR-017 補足）
+  { key: "stewardship-topics", label: "適正使用の手引き（表集）" },
 ];
 
 export function OtherMenu({ onPick }: { onPick: (key: OtherKey) => void }) {
