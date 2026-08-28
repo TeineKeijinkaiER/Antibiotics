@@ -39,11 +39,19 @@ function inMode(entry: InfectionEntry, mode: PatientMode): boolean {
 function searchInfections(query: string, mode: PatientMode): InfectionEntry[] {
   const q = normalize(query);
   if (!q) return [];
-  return INFECTIONS.filter((e) => {
-    if (!inMode(e, mode)) return false;
-    const hay = [e.name, ...e.aliases, e.summary].map(normalize);
-    return hay.some((h) => h.includes(q));
-  });
+  const score = (e: InfectionEntry) => {
+    const name = normalize(e.name);
+    const aliases = e.aliases.map(normalize);
+    if (name === q) return 0;
+    if (aliases.includes(q)) return 1;
+    if (name.includes(q)) return 2;
+    if (aliases.some((a) => a.includes(q))) return 3;
+    if (normalize(e.summary).includes(q)) return 4;
+    return Number.POSITIVE_INFINITY;
+  };
+  return INFECTIONS.filter((e) => inMode(e, mode) && Number.isFinite(score(e))).sort(
+    (a, b) => score(a) - score(b),
+  );
 }
 
 /* ---------------- 入口（検索欄＋カテゴリ） ---------------- */

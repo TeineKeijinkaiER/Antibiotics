@@ -348,7 +348,7 @@ await home();
 await click("感染症別");
 await click("成人");
 await click("気道・耳鼻科");
-await click("感冒");
+await page.locator('.result-name', { hasText: /^感冒$/ }).click();
 infText = await page.locator("main").innerText();
 check(/抗菌薬投与を行わないことを推奨/.test(infText), "「投与しない」推奨を結論として出す");
 check(!/嘔吐・下痢・皮疹/.test(infText), "根拠の数値は初期表示では畳まれている");
