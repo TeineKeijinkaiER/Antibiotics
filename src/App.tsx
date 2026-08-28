@@ -28,6 +28,7 @@ import {
   Amr,
 } from "./components/Reference";
 import { About, DisclaimerGate } from "./components/About";
+import { InfectionGuide, InfectionMenu, type InfectionGuideId } from "./components/InfectionGuide";
 import {
   getFavorites,
   getHistory,
@@ -54,6 +55,10 @@ type View =
   | { type: "other" }
   /** 内服薬・注射薬を選んだ直後の 成人／小児 */
   | { type: "mode"; lane: DrugLane }
+  /** 感染症別を選んだ直後の 成人／小児 */
+  | { type: "infection-mode" }
+  | { type: "infections" }
+  | { type: "infection"; id: InfectionGuideId }
   /** 薬剤名の入力欄と分類ボタン */
   | { type: "picker"; lane: DrugLane }
   /** AWaRe分類対象外のジャンル選択（内服薬レーンの「その他」） */
@@ -128,9 +133,11 @@ export default function App() {
       go({ type: "organisms" });
     } else if (key === "other") {
       go({ type: "other" });
+    } else if (key === "infection") {
+      go({ type: "infection-mode" });
     } else {
-      // 集団が選択済みなら分類選択へ直行する
-      go(mode ? { type: "picker", lane: key } : { type: "mode", lane: key });
+      // 誤参照を防ぐため、過去の選択状態にかかわらず毎回集団を選ぶ
+      go({ type: "mode", lane: key });
     }
   };
 
@@ -139,6 +146,11 @@ export default function App() {
   const pickMode = (lane: DrugLane, m: PatientMode) => {
     setMode(m);
     go({ type: "picker", lane });
+  };
+
+  const pickInfectionMode = (m: PatientMode) => {
+    setMode(m);
+    go({ type: "infections" });
   };
 
   /** 薬剤レーン内でのみ集団を切り替える */
@@ -173,7 +185,21 @@ export default function App() {
     return null;
   };
   const lane = laneOf();
-  const showModeBadge = mode != null && lane != null;
+  const inInfectionLane = view.type === "infections" || view.type === "infection";
+  const showModeBadge = mode != null && (lane != null || inInfectionLane);
+  const contextLabel = lane ? LANE_LABEL[lane] : inInfectionLane ? "感染症別" : null;
+
+  const patientSummary = () => {
+    if (!mode) return "";
+    if (mode === "pediatric") return patient.weight == null ? "未入力" : `体重 ${patient.weight}kg`;
+    const values = [
+      patient.age == null ? null : `${patient.age}歳`,
+      patient.weight == null ? null : `${patient.weight}kg`,
+      patient.scr == null ? null : `Cr ${patient.scr}`,
+      patient.egfr == null ? null : `eGFR ${patient.egfr}`,
+    ].filter(Boolean);
+    return values.length === 0 ? "未入力" : values.join("・");
+  };
 
   /**
    * 患者条件フォームを出す画面。
@@ -236,20 +262,10 @@ export default function App() {
         </button>
         {showModeBadge && (
           <span className={`mode-badge ${mode}`}>
-            {LANE_LABEL[lane!]}／{MODE_LABEL[mode!]}
+            {contextLabel}／{MODE_LABEL[mode!]}
           </span>
         )}
         <span className="spacer" />
-        {showModeBadge && (
-          <button className="link-btn" onClick={switchMode}>
-            {MODE_LABEL[mode === "adult" ? "pediatric" : "adult"]}に切替
-          </button>
-        )}
-        {needsPatient && (
-          <button className="link-btn" onClick={() => setShowPatient((v) => !v)}>
-            患者条件{showPatient ? "を閉じる" : ""}
-          </button>
-        )}
         <button className="link-btn" onClick={() => go({ type: "about" })}>
           アプリの説明
         </button>
@@ -266,6 +282,32 @@ export default function App() {
           </div>
         )}
         {notice && <div className="banner info">{notice}</div>}
+
+        {showModeBadge && (
+          <div className={`context-actions ${mode}`}>
+            <div className="context-current">
+              <span>表示中</span>
+              <b>{MODE_LABEL[mode!]}</b>
+            </div>
+            <button className="context-action mode-action" onClick={switchMode}>
+              {MODE_LABEL[mode === "adult" ? "pediatric" : "adult"]}に切り替える
+            </button>
+            {needsPatient && (
+              <button className="context-action patient-action" onClick={() => setShowPatient((v) => !v)}>
+                <span>{showPatient ? "患者条件を閉じる" : "患者条件を入力・変更"}</span>
+                <small>{patientSummary()}</small>
+              </button>
+            )}
+          </div>
+        )}
+        {needsPatient && !showModeBadge && (
+          <div className="context-actions patient-only">
+            <button className="context-action patient-action" onClick={() => setShowPatient((v) => !v)}>
+              <span>{showPatient ? "患者条件を閉じる" : "患者条件を入力・変更"}</span>
+              <small>{patientSummary()}</small>
+            </button>
+          </div>
+        )}
 
         {showPatient && needsPatient && (
           <div style={{ marginBottom: 18 }}>
@@ -314,6 +356,29 @@ export default function App() {
             </div>
             <ModePicker onPick={(m) => pickMode(view.lane, m)} />
           </>
+        )}
+
+        {view.type === "infection-mode" && (
+          <>
+            <div className="detail-head"><h2>感染症別</h2></div>
+            <ModePicker onPick={pickInfectionMode} />
+          </>
+        )}
+
+        {view.type === "infections" && mode && (
+          <InfectionMenu mode={mode} onPick={(id) => go({ type: "infection", id })} />
+        )}
+
+        {view.type === "infection" && mode && (
+          <InfectionGuide
+            id={view.id}
+            mode={mode}
+            onOpenOrganism={(id) => go({ type: "organism", id })}
+            onOpenOrganismList={() => {
+              setOrganismQuery("");
+              go({ type: "organisms" });
+            }}
+          />
         )}
 
         {/* ---------------- 薬剤名入力＋分類 ---------------- */}
@@ -494,6 +559,7 @@ export default function App() {
           適応外使用・採用薬・使用申請のルール・アンチバイオグラムは当院の取り決めまたは当院のデータであり、
           他施設ではそのまま当てはまりません。
           示される投与量は当院でコンセンサスの得られた標準的な投与量であり、最終的な投与判断は主治医が行います。
+          感染症別の一部は、厚生労働省『抗微生物薬適正使用の手引き 第四版』の情報を採用しています。
           使用時は添付文書を改めて精読してください。入力した患者条件は端末内にのみ保持され、外部に送信されません。
           <br />
           <button className="link-btn" onClick={() => go({ type: "about" })}>

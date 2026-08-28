@@ -2,7 +2,9 @@
 import { chromium } from "playwright";
 
 const BASE = process.env.BASE_URL ?? "http://localhost:4173";
-const EXEC = process.env.CHROMIUM_PATH ?? "/opt/pw-browsers/chromium-1194/chrome-linux/chrome";
+const EXEC = process.env.CHROMIUM_PATH ?? (process.platform === "win32"
+  ? "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+  : "/opt/pw-browsers/chromium-1194/chrome-linux/chrome");
 const failures = [];
 const check = (condition, label) => {
   console.log(`  ${condition ? "ok " : "NG "} ${label}`);
@@ -34,7 +36,7 @@ check(await page.locator(".offlabel-details .dose-conv").count() === 0, "適応�
 await adultDetails.locator("summary").click();
 check(await page.locator(".offlabel-details .offlabel-dose").count() > 0, "クリック後に適応外用量を表示する");
 
-await click("小児に切替");
+await click("小児に切り替える");
 const pediatricDetails = page.locator(".offlabel-details");
 check(await pediatricDetails.count() === 1, "明示的な小児適応外使用は小児画面に表示する");
 await pediatricDetails.locator("summary").click();

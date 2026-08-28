@@ -164,6 +164,50 @@ input, select { font: inherit; color: inherit; }
   text-underline-offset: 3px;
 }
 
+/* 成人／小児と患者条件は投与判断に直結するため、本文の先頭で大きく示す */
+.context-actions {
+  display: grid;
+  grid-template-columns: auto minmax(160px, 0.7fr) minmax(220px, 1fr);
+  gap: 10px;
+  align-items: stretch;
+  padding: 12px;
+  margin-bottom: 18px;
+  border: 2px solid var(--adult);
+  border-radius: var(--radius);
+  background: var(--adult-soft);
+}
+.context-actions.pediatric { border-color: var(--paed); background: var(--paed-soft); }
+.context-actions.patient-only {
+  grid-template-columns: minmax(220px, 360px);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.context-actions.patient-only .context-action { color: var(--accent); }
+.context-current {
+  min-width: 96px;
+  display: grid;
+  align-content: center;
+  padding: 3px 8px;
+  line-height: 1.35;
+}
+.context-current span { font-size: 11px; color: var(--ink-3); font-weight: 700; }
+.context-current b { font-size: 20px; color: var(--adult); }
+.context-actions.pediatric .context-current b { color: var(--paed); }
+.context-action {
+  border: 1px solid currentColor;
+  border-radius: 7px;
+  padding: 10px 14px;
+  background: var(--surface);
+  color: var(--adult);
+  font-weight: 800;
+  text-align: left;
+  line-height: 1.45;
+}
+.context-actions.pediatric .context-action { color: var(--paed); }
+.context-action:hover { filter: brightness(1.04); box-shadow: var(--shadow); }
+.patient-action { display: grid; gap: 1px; }
+.patient-action small { color: var(--ink-3); font-size: 11px; font-weight: 600; }
+
 .wrap { max-width: 860px; margin: 0 auto; padding: 20px 16px 80px; }
 
 /* ---------- search ---------- */
@@ -374,6 +418,32 @@ input, select { font: inherit; color: inherit; }
 
 ul.notes { margin: 8px 0 0; padding-left: 1.2em; font-size: 13px; color: var(--ink-2); }
 ul.notes li { margin-bottom: 3px; }
+.infection-notes { font-size: 14px !important; }
+.infection-notes li { margin-bottom: 8px !important; }
+.infection-table td:last-child { white-space: nowrap; }
+.hospital-infection-list { display: grid; gap: 12px; }
+.hospital-infection-list h4 { margin: 0 0 8px; font-size: 17px; }
+.organism-links { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+.organism-link,
+.organism-unlinked {
+  width: 100%;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--rule);
+  background: var(--surface-2);
+  text-align: left;
+}
+.organism-link { color: var(--accent); font-weight: 800; }
+.organism-link:hover { border-color: var(--accent); }
+.organism-link span,
+.organism-unlinked span { font-size: 11px; color: var(--ink-3); font-weight: 500; }
+.organism-unlinked { flex-wrap: wrap; }
+.organism-unlinked .link-btn { margin-left: auto; }
 
 .source-line {
   font-size: 12px;
@@ -731,10 +801,20 @@ footer.foot {
   .renal-row { grid-template-columns: 1fr; }
   .gate-choices { grid-template-columns: 1fr; }
   .count-tag { float: none; display: block; margin-top: 2px; }
+  .context-actions { grid-template-columns: 1fr 1fr; }
+  .context-current { grid-row: 1 / 3; }
+  .context-action { min-width: 0; }
 }
 
 /* 狭い画面では文章表をカードに落とす。横スクロールを利用者に強いない */
 @media (max-width: 480px) {
+  .context-actions { grid-template-columns: 1fr; }
+  .context-current { grid-row: auto; }
+  .context-current { display: flex; align-items: baseline; gap: 8px; }
+  .context-current b { font-size: 18px; }
+  .organism-link,
+  .organism-unlinked { align-items: flex-start; flex-direction: column; gap: 2px; }
+  .organism-unlinked .link-btn { margin-left: 0; }
   table.doc, table.doc tbody, table.doc tr, table.doc td { display: block; width: 100%; }
   table.doc thead { position: absolute; left: -9999px; }
   table.doc tr {

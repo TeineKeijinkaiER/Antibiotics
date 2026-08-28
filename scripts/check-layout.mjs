@@ -36,6 +36,10 @@ const SCREENS = [
   },
   { name: "05-injectable-class", steps: ["注射薬", "成人"] },
   { name: "06-organisms", steps: ["菌種別"] },
+  { name: "06b-infection-modepick", steps: ["感染症別"] },
+  { name: "06c-infection-menu", steps: ["感染症別", "成人"] },
+  { name: "06d-acute-diarrhea", steps: ["感染症別", "成人", "急性下痢症"] },
+  { name: "06e-hospital-onset", steps: ["感染症別", "小児", "院内発症感染症"] },
   { name: "07-other", steps: ["その他"] },
   { name: "08-prophylaxis", steps: ["その他", "周術期"] },
   { name: "09-postexposure", steps: ["その他", "暴露後予防投与"] },
@@ -122,7 +126,9 @@ async function step(page, s) {
 // playwright のビルド番号と一致しないため、実行ファイルを直接指定する。
 const browser = await chromium.launch({
   executablePath:
-    process.env.CHROMIUM_PATH ?? "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
+    process.env.CHROMIUM_PATH ?? (process.platform === "win32"
+      ? "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      : "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"),
 });
 let failures = 0;
 let checked = 0;

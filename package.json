@@ -19,6 +19,7 @@
     "check:navigation": "node scripts/check-navigation.mjs",
     "check:disclaimer": "node scripts/check-disclaimer.mjs",
     "check:medical-ui": "node scripts/check-medical-ui.mjs",
+    "check:infection-guide": "node scripts/check-infection-guide.mjs",
     "check:sw": "node scripts/check-sw-update.mjs"
   },
   "dependencies": {

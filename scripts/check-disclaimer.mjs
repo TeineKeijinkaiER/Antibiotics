@@ -13,7 +13,9 @@ import { chromium } from "playwright";
 
 const BASE = process.env.BASE_URL ?? "http://localhost:4173";
 const EXEC =
-  process.env.CHROMIUM_PATH ?? "/opt/pw-browsers/chromium-1194/chrome-linux/chrome";
+  process.env.CHROMIUM_PATH ?? (process.platform === "win32"
+    ? "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    : "/opt/pw-browsers/chromium-1194/chrome-linux/chrome");
 
 const failures = [];
 const check = (cond, label) => {
@@ -45,7 +47,7 @@ check(/外部に送信されません/.test(gateText), "患者条件を外部送
 
 await page.locator('button:has-text("確認しました")').click();
 await page.waitForTimeout(250);
-check((await page.locator(".top-btn").count()) === 4, "確認後は大項目4ボタンが表示される");
+check((await page.locator(".top-btn").count()) === 5, "確認後は大項目5ボタンが表示される");
 
 await page.reload({ waitUntil: "networkidle" });
 check((await page.locator(".gate").count()) === 0, "再訪時は再表示されない（端末に記録される）");
@@ -65,6 +67,7 @@ const about = await page.locator("main").innerText();
 const SECTIONS = [
   ["院内利用を想定", "適用範囲の宣言"],
   ["このアプリは何か", "このアプリは何か"],
+  ["抗微生物薬適正使用の手引き 第四版", "厚労省第四版の情報源"],
   ["使い方", "使い方"],
   ["注意事項", "注意事項"],
   ["アップデート", "アップデートとオフライン利用"],

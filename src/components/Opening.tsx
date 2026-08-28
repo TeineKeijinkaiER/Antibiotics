@@ -1,17 +1,18 @@
 import { useState } from "react";
 
 /**
- * オープニング画面（大項目4ボタン）
+ * オープニング画面（大項目5ボタン）
  *
  * ボタンには説明文を置かない。名前だけで選べるものにする。
  * 「アプリの説明」はヘッダー（欄外）に小さく置くため、ここには含めない。
  */
 
-export type TopCategory = "oral" | "injectable" | "organism" | "other";
+export type TopCategory = "oral" | "injectable" | "infection" | "organism" | "other";
 
 export const TOP_CATEGORIES: { key: TopCategory; label: string }[] = [
   { key: "oral", label: "内服薬" },
   { key: "injectable", label: "注射薬" },
+  { key: "infection", label: "感染症別" },
   { key: "organism", label: "菌種別" },
   { key: "other", label: "その他" },
 ];

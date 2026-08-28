@@ -18,7 +18,9 @@ import { chromium } from "playwright";
 
 const BASE = process.env.BASE_URL ?? "http://localhost:4173";
 const EXEC =
-  process.env.CHROMIUM_PATH ?? "/opt/pw-browsers/chromium-1194/chrome-linux/chrome";
+  process.env.CHROMIUM_PATH ?? (process.platform === "win32"
+    ? "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    : "/opt/pw-browsers/chromium-1194/chrome-linux/chrome");
 
 const failures = [];
 const check = (cond, label) => {
@@ -40,7 +42,7 @@ const page = await context.newPage();
 
 const openPatientPanel = async () => {
   if ((await page.locator("#f-age").count()) === 0) {
-    await page.locator('header button:has-text("患者条件")').first().click();
+    await page.locator(".patient-action").first().click();
     await page.waitForTimeout(150);
   }
 };

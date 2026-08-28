@@ -1,13 +1,14 @@
 import { MANUAL_EDITION } from "../data";
 import type { SwStatus } from "../lib/sw";
 import { APP_TITLE, APP_EDITION } from "./Opening";
+import { APPROPRIATE_USE_GUIDE } from "../data/infections";
 
 const FACILITY = MANUAL_EDITION.facility;
 
 /**
  * 適用範囲の宣言（アプリ全体で最も重要な注意書き）
  *
- * 本アプリの内容は原典＝当院の院内マニュアルに由来し、
+ * 本アプリの内容は主に当院の院内マニュアル、一部は厚労省の適正使用の手引きに由来し、
  * 特に適応外使用・採用薬・申請ルール・アンチバイオグラムは
  * 「当院で決めたこと」「当院で測ったこと」であって一般化できない。
  * 免責画面と説明画面の双方で同じ文面を使うため、ここに1か所だけ定義する。
@@ -17,7 +18,8 @@ export function ScopeNotice() {
     <div className="banner danger">
       <b>{FACILITY}の院内利用を想定したアプリです。</b>
       <br />
-      内容は当院の『{MANUAL_EDITION.title}』{MANUAL_EDITION.label}に基づいており、
+      内容は主に当院の『{MANUAL_EDITION.title}』{MANUAL_EDITION.label}、感染症別の一部は
+      厚生労働省『抗微生物薬適正使用の手引き 第四版』に基づいています。
       <b>適応外使用の可否・採用薬・使用申請のルール・アンチバイオグラム（感受性率）は、
       いずれも当院の取り決めまたは当院で検出された菌のデータ</b>です。
       他施設ではそのまま当てはまりません。院外の方や他施設での診療にはご利用にならないでください。
@@ -71,14 +73,15 @@ const HOW_TO: { title: string; items: string[] }[] = [
   {
     title: "1. 調べたいものを選ぶ",
     items: [
-      "最初の画面で「内服薬／注射薬／菌種別／その他」から選びます。",
+      "最初の画面で「内服薬／注射薬／感染症別／菌種別／その他」から選びます。",
+      "「感染症別」では、厚生労働省の適正使用の手引きから採用した急性下痢症と院内発症感染症を確認できます。",
       "「その他」には 周術期・暴露後予防投与・小児体重服用量簡易表・AMR対策 が入っています。",
     ],
   },
   {
     title: "2. 成人か小児かを選ぶ",
     items: [
-      "内服薬・注射薬を選ぶと、次に成人／小児を選びます。以降は選んだ側の用量だけが表示されます。",
+      "内服薬・注射薬・感染症別を選ぶと、次に成人／小児を選びます。以降は選んだ側の情報だけが表示されます。",
       "菌種別は成人／小児を選びません。菌の感受性率は患者の年齢によらないためです。",
       "小児では、成人向けの情報（腎機能低下時の投与量表など）は表示しません。",
     ],
@@ -164,6 +167,23 @@ export function About({
           紙・PDFのマニュアルを置き換えるものではなく、その閲覧を速くするためのものです。
           全ての画面に原典のページ番号を併記しているので、原典に戻って確認できます。
         </p>
+        <p className="lane-intro" style={{ marginBottom: 0 }}>
+          感染症別の一部には、<b>{APPROPRIATE_USE_GUIDE.publisher}『{APPROPRIATE_USE_GUIDE.title}』</b>
+          （{APPROPRIATE_USE_GUIDE.outpatient}・{APPROPRIATE_USE_GUIDE.inpatient}）から要約した情報を採用しています。
+          院内マニュアル由来の投与量・院内ルール・アンチバイオグラムとは出典を分けて表示します。
+        </p>
+      </section>
+
+      <section className="section">
+        <h3>情報源</h3>
+        <ul className="notes" style={{ fontSize: 13.5 }}>
+          <li>{FACILITY}『{MANUAL_EDITION.title}』{MANUAL_EDITION.label}</li>
+          <li>
+            {APPROPRIATE_USE_GUIDE.publisher}『{APPROPRIATE_USE_GUIDE.title}』
+            （{APPROPRIATE_USE_GUIDE.outpatient}・{APPROPRIATE_USE_GUIDE.inpatient}）
+            <br /><a href={APPROPRIATE_USE_GUIDE.url} target="_blank" rel="noreferrer">厚生労働省の公開ページ</a>
+          </li>
+        </ul>
       </section>
 
       <section className="section">
@@ -258,7 +278,8 @@ export function About({
           <ul className="notes" style={{ fontSize: 13.5, margin: 0 }}>
             <li>
               本アプリは<b>{FACILITY}の院内利用を想定</b>して作成されたものです。
-              収載内容は当院の院内マニュアルおよび院内の取り決めに基づいており、
+              収載内容は当院の院内マニュアル、院内の取り決め、および感染症別で明示した
+              厚生労働省『抗微生物薬適正使用の手引き 第四版』の一部に基づいており、
               他施設・院外での診療に用いることを想定していません。
             </li>
             <li>
