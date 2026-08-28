@@ -49,9 +49,10 @@ const openDrug = async (lane, mode, name) => {
 /* ---- オープニング ---- */
 console.log("オープニング");
 await home();
-check((await page.locator(".top-btn").count()) === 4, "大項目は4ボタン");
+// FR-000-2 / FR-017-1: 感染症別を加えて5ボタン
+check((await page.locator(".top-btn").count()) === 5, "大項目は5ボタン");
 const tops = await page.locator(".top-btn").allInnerTexts();
-for (const label of ["内服薬", "注射薬", "菌種別", "その他"]) {
+for (const label of ["内服薬", "注射薬", "菌種別", "感染症別", "その他"]) {
   check(tops.some((t) => t.trim() === label), `大項目に「${label}」がある`);
 }
 check(
@@ -68,9 +69,16 @@ check(
 console.log("\nその他");
 await home();
 await click("その他");
-check((await page.locator(".top-btn").count()) === 4, "その他は4ボタン");
+// 手引きの表集を加えて5ボタン
+check((await page.locator(".top-btn").count()) === 5, "その他は5ボタン");
 const others = await page.locator(".top-btn").allInnerTexts();
-for (const label of ["周術期", "暴露後予防投与", "小児体重服用量簡易表", "AMR対策"]) {
+for (const label of [
+  "周術期",
+  "暴露後予防投与",
+  "小児体重服用量簡易表",
+  "AMR対策",
+  "適正使用の手引き（表集）",
+]) {
   check(others.some((t) => t.trim() === label), `その他に「${label}」がある`);
 }
 check(
@@ -278,6 +286,101 @@ check(
   "TDM画面表示中に小児へ切り替えると成人向けの案内に切り替わる",
 );
 check((await page.locator("#tdm-first").count()) === 0, "小児では投与設計フォームを表示しない");
+
+/* ---- 感染症別（FR-017） ---- */
+console.log("\n感染症別");
+await home();
+const topsWithInfection = await page.locator(".top-btn").allInnerTexts();
+check(
+  topsWithInfection.some((t) => t.trim() === "感染症別"),
+  "大項目に「感染症別」がある",
+);
+
+await click("感染症別");
+await click("成人");
+
+// FR-100-5: 感染症名で引いたら、その感染症のことが1画面に集まっている
+await page.fill('input[aria-label="感染症名を入力"]', "肺炎");
+await page.waitForTimeout(300);
+check((await page.locator(".result").count()) > 0, "感染症名で検索できる");
+await page.locator(".result").first().click();
+await page.waitForTimeout(350);
+let infText = await page.locator("main").innerText();
+check(/緑膿菌/.test(infText), "肺炎に想定起炎菌（入院編 表2）が出る");
+check(/3〜5日間/.test(infText), "肺炎に治療期間（入院編 表5）が出る");
+check(
+  /第一選択薬（経験的治療）の記載はありません/.test(infText),
+  "原典に推奨薬がない場合はその旨を明示する（欄を空にしない）",
+);
+
+// FR-017-5: 菌名から菌種別画面へ
+await page.locator(".chip-link").first().click();
+await page.waitForTimeout(350);
+check(/緑膿菌/.test(await page.locator("h2").first().innerText()), "菌名から菌種別画面へ遷移する");
+await click("← 戻る");
+
+// FR-017-5: 薬剤名から薬剤詳細へ
+await home();
+await click("感染症別");
+await click("成人");
+await click("気道・耳鼻科");
+await click("急性鼻副鼻腔炎");
+check((await page.locator(".rx-link").count()) > 0, "推奨薬が薬剤詳細へのリンクになっている");
+await page.locator(".rx-link").first().click();
+await page.waitForTimeout(350);
+check(
+  /アモキシシリン/.test(await page.locator("h2").first().innerText()),
+  "薬剤名から当院の薬剤詳細へ遷移する",
+);
+await click("← 戻る");
+
+// FR-000-7: 成人と小児の用量を同一画面に並べない
+infText = await page.locator("main").innerText();
+check(/1回 500mg 1日3回 経口（成人）/.test(infText), "成人では成人の用量を出す");
+check(!/分3〜4/.test(infText), "成人の画面に小児の用量を出さない");
+check(!/小児の遷延性/.test(infText), "成人の画面に小児向けの判定表を出さない");
+
+await page.locator('header button:has-text("小児に切替")').click();
+await page.waitForTimeout(350);
+infText = await page.locator("main").innerText();
+check(/分3〜4/.test(infText), "小児に切り替えると小児の用量を出す");
+check(!/1回 500mg 1日3回 経口（成人）/.test(infText), "小児の画面に成人の用量を出さない");
+check(/遷延性/.test(infText), "小児では小児向けの判定表を出す");
+
+// FR-100-2/FR-100-4: 数値は畳んで置くが、失われてはいない
+await home();
+await click("感染症別");
+await click("成人");
+await click("気道・耳鼻科");
+await click("感冒");
+infText = await page.locator("main").innerText();
+check(/抗菌薬投与を行わないことを推奨/.test(infText), "「投与しない」推奨を結論として出す");
+check(!/嘔吐・下痢・皮疹/.test(infText), "根拠の数値は初期表示では畳まれている");
+await page.locator("summary").first().click();
+await page.waitForTimeout(250);
+check(/2.62倍/.test(await page.locator("main").innerText()), "開くと数値が読める");
+
+/* ---- 手引きの表集（その他） ---- */
+console.log("\n適正使用の手引き（表集）");
+await home();
+await click("その他");
+check(
+  (await page.locator(".top-btn").allInnerTexts()).some((t) =>
+    t.includes("適正使用の手引き"),
+  ),
+  "「その他」に手引きの表集がある",
+);
+await click("適正使用の手引き（表集）");
+for (const label of ["血液培養の解釈", "治療期間の早見表", "経口薬への切り替え"]) {
+  check(
+    (await page.locator(".top-btn").allInnerTexts()).some((t) => t.includes(label)),
+    `表集に「${label}」がある`,
+  );
+}
+await click("治療期間の早見表");
+const topicText = await page.locator("main").innerText();
+check(/椎体椎間板炎/.test(topicText), "疾患ページに載らない行も表として残っている");
+check(/6週間/.test(topicText), "治療期間の数値が出る");
 
 await browser.close();
 console.log(failures.length > 0 ? `\n失敗 ${failures.length}件` : "\n画面構成: 全て合格");

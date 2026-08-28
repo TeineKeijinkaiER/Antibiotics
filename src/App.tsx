@@ -16,6 +16,14 @@ import {
   type TopCategory,
 } from "./components/Opening";
 import { OrganismDetail } from "./components/OrganismDetail";
+import {
+  InfectionPicker,
+  InfectionList,
+  InfectionDetail,
+  StewardshipTopics,
+  StewardshipTopicDetail,
+} from "./components/InfectionLane";
+import { INFECTION_CATEGORY_LABEL, type InfectionCategory } from "./types";
 import { OffLabelSearch } from "./components/OffLabelSearch";
 import { Designer } from "./components/Designer";
 import { SurgicalProphylaxis } from "./components/SurgicalProphylaxis";
@@ -47,13 +55,14 @@ type PageKey =
   | "pcg"
   | "stewardship"
   | "amr"
-  | "offlabel";
+  | "offlabel"
+  | "stewardship-topics";
 
 type View =
   | { type: "opening" }
   | { type: "other" }
-  /** 内服薬・注射薬を選んだ直後の 成人／小児 */
-  | { type: "mode"; lane: DrugLane }
+  /** 内服薬・注射薬・感染症別を選んだ直後の 成人／小児 */
+  | { type: "mode"; lane: DrugLane | "infection" }
   /** 薬剤名の入力欄と分類ボタン */
   | { type: "picker"; lane: DrugLane }
   /** AWaRe分類対象外のジャンル選択（内服薬レーンの「その他」） */
@@ -67,6 +76,13 @@ type View =
       otherCategory?: DrugCategory;
     }
   | { type: "organisms" }
+  /** 感染症別：検索欄＋部位カテゴリ */
+  | { type: "infections" }
+  /** 部位カテゴリ内の感染症一覧 */
+  | { type: "infection-list"; category: InfectionCategory }
+  | { type: "infection"; id: string }
+  /** 手引きの表集（その他から開く） */
+  | { type: "topic"; id: string }
   | { type: "drug"; id: string }
   | { type: "organism"; id: string }
   | { type: "designer"; key: string; fromDrugId?: string }
@@ -74,6 +90,10 @@ type View =
   | { type: "page"; key: PageKey };
 
 const MODE_LABEL: Record<PatientMode, string> = { adult: "成人", pediatric: "小児" };
+
+/** 感染症別レーンの中か。集団バッジと切替の出し分けに使う */
+const isInfectionView = (v: View) =>
+  v.type === "infections" || v.type === "infection-list" || v.type === "infection";
 
 export default function App() {
   const [patient, setPatient] = useState<PatientState>(emptyPatient);
@@ -128,6 +148,9 @@ export default function App() {
       go({ type: "organisms" });
     } else if (key === "other") {
       go({ type: "other" });
+    } else if (key === "infection") {
+      // 感染症別も成人／小児で記載が変わるため、薬剤レーンと同じ出し分けにする
+      go(mode ? { type: "infections" } : { type: "mode", lane: "infection" });
     } else {
       // 集団が選択済みなら分類選択へ直行する
       go(mode ? { type: "picker", lane: key } : { type: "mode", lane: key });
@@ -136,17 +159,21 @@ export default function App() {
 
   const openOther = (key: OtherKey) => go({ type: "page", key: key as PageKey });
 
-  const pickMode = (lane: DrugLane, m: PatientMode) => {
+  const pickMode = (lane: DrugLane | "infection", m: PatientMode) => {
     setMode(m);
-    go({ type: "picker", lane });
+    go(lane === "infection" ? { type: "infections" } : { type: "picker", lane });
   };
 
-  /** 薬剤レーン内でのみ集団を切り替える */
+  /** 薬剤レーン・感染症別レーン内でのみ集団を切り替える */
   const switchMode = () => {
     if (!mode) return;
     const next: PatientMode = mode === "adult" ? "pediatric" : "adult";
     setMode(next);
-    setNotice(`${MODE_LABEL[next]}の用量に切り替わりました。`);
+    setNotice(
+      isInfectionView(view)
+        ? `${MODE_LABEL[next]}の記載に切り替わりました。`
+        : `${MODE_LABEL[next]}の用量に切り替わりました。`,
+    );
     window.scrollTo({ top: 0 });
   };
 
@@ -173,7 +200,10 @@ export default function App() {
     return null;
   };
   const lane = laneOf();
-  const showModeBadge = mode != null && lane != null;
+
+  /** 感染症別も成人／小児で記載が変わるため、同じバッジと切替を出す */
+  const showModeBadge = mode != null && (lane != null || isInfectionView(view));
+  const laneLabel = lane != null ? LANE_LABEL[lane] : "感染症別";
 
   /**
    * 患者条件フォームを出す画面。
@@ -236,7 +266,7 @@ export default function App() {
         </button>
         {showModeBadge && (
           <span className={`mode-badge ${mode}`}>
-            {LANE_LABEL[lane!]}／{MODE_LABEL[mode!]}
+            {laneLabel}／{MODE_LABEL[mode!]}
           </span>
         )}
         <span className="spacer" />
@@ -310,11 +340,50 @@ export default function App() {
         {view.type === "mode" && (
           <>
             <div className="detail-head">
-              <h2>{LANE_LABEL[view.lane]}</h2>
+              <h2>{view.lane === "infection" ? "感染症別" : LANE_LABEL[view.lane]}</h2>
             </div>
             <ModePicker onPick={(m) => pickMode(view.lane, m)} />
           </>
         )}
+
+        {/* ---------------- 感染症別（FR-017） ---------------- */}
+        {view.type === "infections" && mode && (
+          <>
+            <div className="detail-head">
+              <h2>感染症別</h2>
+            </div>
+            <InfectionPicker
+              mode={mode}
+              onPickCategory={(category) => go({ type: "infection-list", category })}
+              onOpenInfection={(id) => go({ type: "infection", id })}
+            />
+          </>
+        )}
+
+        {view.type === "infection-list" && mode && (
+          <>
+            <div className="detail-head">
+              <h2>{INFECTION_CATEGORY_LABEL[view.category]}</h2>
+            </div>
+            <InfectionList
+              category={view.category}
+              mode={mode}
+              onOpen={(id) => go({ type: "infection", id })}
+            />
+          </>
+        )}
+
+        {view.type === "infection" && (
+          <InfectionDetail
+            id={view.id}
+            mode={mode ?? "adult"}
+            onOpenDrug={(id) => go({ type: "drug", id })}
+            onOpenOrganism={(id) => go({ type: "organism", id })}
+            onOpenTopics={() => go({ type: "page", key: "stewardship-topics" })}
+          />
+        )}
+
+        {view.type === "topic" && <StewardshipTopicDetail id={view.id} />}
 
         {/* ---------------- 薬剤名入力＋分類 ---------------- */}
         {view.type === "picker" && mode && (
@@ -479,6 +548,9 @@ export default function App() {
         {view.type === "page" && view.key === "pcg" && <PcgContinuousInfusion />}
         {view.type === "page" && view.key === "stewardship" && <Stewardship />}
         {view.type === "page" && view.key === "amr" && <Amr />}
+        {view.type === "page" && view.key === "stewardship-topics" && (
+          <StewardshipTopics onOpenTopic={(id) => go({ type: "topic", id })} />
+        )}
 
         <footer className="foot">
           データ版：{APP_TITLE} {APP_EDITION}（{MANUAL_EDITION.issuedOn} ／{" "}

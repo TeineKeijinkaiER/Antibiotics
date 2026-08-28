@@ -36,7 +36,43 @@ const SCREENS = [
   },
   { name: "05-injectable-class", steps: ["注射薬", "成人"] },
   { name: "06-organisms", steps: ["菌種別"] },
+  // 感染症別（FR-017）。表を含む画面と、原典に推奨薬のない画面の両方を見る
+  { name: "06b-infection-picker", steps: ["感染症別", "成人"] },
+  { name: "06c-infection-airway", steps: ["感染症別", "成人", "気道・耳鼻科"] },
+  {
+    name: "06d-infection-sinusitis",
+    steps: ["感染症別", "成人", "気道・耳鼻科", "急性鼻副鼻腔炎"],
+  },
+  {
+    name: "06e-infection-pharyngitis",
+    steps: ["感染症別", "成人", "気道・耳鼻科", "急性咽頭炎"],
+  },
+  {
+    name: "06f-infection-pneumonia",
+    steps: ["感染症別", "成人", "呼吸器（肺炎）", "肺炎（VAP を含む）"],
+  },
+  {
+    name: "06g-infection-bacteremia",
+    steps: ["感染症別", "成人", "血流・全身", "菌血症"],
+  },
+  {
+    name: "06h-infection-sinusitis-paed",
+    steps: ["感染症別", "小児", "気道・耳鼻科", "急性鼻副鼻腔炎"],
+  },
   { name: "07-other", steps: ["その他"] },
+  { name: "07b-stewardship-topics", steps: ["その他", "適正使用の手引き（表集）"] },
+  {
+    name: "07c-topic-duration",
+    steps: ["その他", "適正使用の手引き（表集）", "治療期間の早見表"],
+  },
+  {
+    name: "07d-topic-blood-culture",
+    steps: ["その他", "適正使用の手引き（表集）", "血液培養の解釈"],
+  },
+  {
+    name: "07e-topic-iv-to-po",
+    steps: ["その他", "適正使用の手引き（表集）", "経口薬への切り替え"],
+  },
   { name: "08-prophylaxis", steps: ["その他", "周術期"] },
   { name: "09-postexposure", steps: ["その他", "暴露後予防投与"] },
   { name: "10-pediatric-weight", steps: ["その他", "小児体重服用量簡易表"] },
