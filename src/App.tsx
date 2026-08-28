@@ -148,12 +148,10 @@ export default function App() {
       go({ type: "organisms" });
     } else if (key === "other") {
       go({ type: "other" });
-    } else if (key === "infection") {
-      // 感染症別も成人／小児で記載が変わるため、薬剤レーンと同じ出し分けにする
-      go(mode ? { type: "infections" } : { type: "mode", lane: "infection" });
     } else {
-      // 集団が選択済みなら分類選択へ直行する
-      go(mode ? { type: "picker", lane: key } : { type: "mode", lane: key });
+      // 内服薬・注射薬・感染症別は、いずれも必ず成人／小児の選択を挟む。
+      // 前回の選択のまま別のレーンに入って誤参照することを防ぐ（FR-000-4）。
+      go({ type: "mode", lane: key });
     }
   };
 
@@ -204,6 +202,16 @@ export default function App() {
   /** 感染症別も成人／小児で記載が変わるため、同じバッジと切替を出す */
   const showModeBadge = mode != null && (lane != null || isInfectionView(view));
   const laneLabel = lane != null ? LANE_LABEL[lane] : "感染症別";
+
+  /** 患者条件が1つでも入力されているか。ボタンの見た目を変えて気づきやすくする */
+  const hasPatientInput =
+    patient.age != null ||
+    patient.sex != null ||
+    patient.weight != null ||
+    patient.height != null ||
+    patient.scr != null ||
+    patient.egfr != null ||
+    patient.rrt !== "none";
 
   /**
    * 患者条件フォームを出す画面。
@@ -264,26 +272,42 @@ export default function App() {
         <button className="brand link-btn" style={{ textDecoration: "none" }} onClick={goHome}>
           {APP_TITLE}
         </button>
-        {showModeBadge && (
-          <span className={`mode-badge ${mode}`}>
-            {laneLabel}／{MODE_LABEL[mode!]}
-          </span>
-        )}
         <span className="spacer" />
-        {showModeBadge && (
-          <button className="link-btn" onClick={switchMode}>
-            {MODE_LABEL[mode === "adult" ? "pediatric" : "adult"]}に切替
-          </button>
-        )}
-        {needsPatient && (
-          <button className="link-btn" onClick={() => setShowPatient((v) => !v)}>
-            患者条件{showPatient ? "を閉じる" : ""}
-          </button>
-        )}
         <button className="link-btn" onClick={() => go({ type: "about" })}>
           アプリの説明
         </button>
       </header>
+
+      {/*
+        成人／小児の切替と患者条件は、以前ヘッダー内の小さな文字リンクだったため
+        気づかれにくかった。誤参照に直結する操作なので、独立した帯に大きく置く。
+      */}
+      {(showModeBadge || needsPatient) && (
+        <div className={`contextbar${showModeBadge ? ` mode-${mode}` : ""}`}>
+          {showModeBadge && (
+            <>
+              <span className={`ctx-current ${mode}`}>
+                <span className="ctx-lane">{laneLabel}</span>
+                <b>{MODE_LABEL[mode!]}</b>
+              </span>
+              <button className={`ctx-btn switch ${mode}`} onClick={switchMode}>
+                {MODE_LABEL[mode === "adult" ? "pediatric" : "adult"]}に切替
+              </button>
+            </>
+          )}
+          {needsPatient && (
+            <button
+              className={`ctx-btn patient${showPatient ? " open" : ""}${
+                hasPatientInput ? " filled" : ""
+              }`}
+              aria-expanded={showPatient}
+              onClick={() => setShowPatient((v) => !v)}
+            >
+              {showPatient ? "患者条件を閉じる" : hasPatientInput ? "患者条件（入力済み）" : "患者条件を入力"}
+            </button>
+          )}
+        </div>
+      )}
 
       <main className="wrap">
         {swStatus === "update-available" && (

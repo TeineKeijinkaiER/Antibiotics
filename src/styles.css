@@ -770,12 +770,6 @@ footer.foot {
 
 /* ---------- 感染症別レーン（FR-017） ---------- */
 
-/* 抗菌薬を出すか出さないかの立場。「出さない」を弱く見せない（FR-017-6） */
-.badge.stance-withhold { background: var(--paed-soft); color: var(--paed); }
-.badge.stance-conditional { background: var(--warn-soft); color: var(--warn); }
-.badge.stance-test_first { background: var(--accent-soft); color: var(--accent); }
-.badge.stance-not_specified { background: var(--surface-2); color: var(--ink-3); }
-
 /* 画面最上部の結論。1行で読み切れることを最優先にする */
 .verdict {
   margin-top: 16px;
@@ -867,3 +861,62 @@ footer.foot {
 }
 .fold > summary:hover { text-decoration: underline; text-underline-offset: 3px; }
 .fold[open] > summary { margin-bottom: 8px; }
+
+/* ---------- 成人／小児の切替・患者条件の帯 ----------
+   以前ヘッダー内の小さな文字リンクで気づかれにくかったため、独立した帯に大きく置く */
+.contextbar {
+  position: sticky;
+  top: 0;
+  z-index: 19;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 10px 16px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--rule);
+}
+.contextbar.mode-adult { border-bottom-color: var(--adult); }
+.contextbar.mode-pediatric { border-bottom-color: var(--paed); }
+
+.ctx-current {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  border-radius: 999px;
+  padding: 5px 14px;
+  border: 2px solid;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.ctx-current b { font-size: 15px; font-weight: 700; }
+.ctx-current .ctx-lane { opacity: 0.75; }
+.ctx-current.adult { color: var(--adult); background: var(--adult-soft); border-color: var(--adult); }
+.ctx-current.pediatric { color: var(--paed); background: var(--paed-soft); border-color: var(--paed); }
+
+.ctx-btn {
+  border-radius: 999px;
+  padding: 7px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  border: 2px solid var(--rule);
+  background: var(--surface);
+  color: var(--ink-2);
+  white-space: nowrap;
+  min-height: 40px;
+}
+.ctx-btn:hover { border-color: var(--accent); color: var(--accent); }
+.ctx-btn.switch.adult { color: var(--paed); border-color: var(--paed); }
+.ctx-btn.switch.pediatric { color: var(--adult); border-color: var(--adult); }
+.ctx-btn.patient { margin-left: auto; border-color: var(--accent); color: var(--accent); }
+.ctx-btn.patient.filled,
+.ctx-btn.patient.open {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+@media (max-width: 420px) {
+  .contextbar { gap: 8px; padding: 9px 12px; }
+  .ctx-btn { padding: 7px 13px; font-size: 13.5px; }
+  .ctx-btn.patient { margin-left: 0; }
+}
