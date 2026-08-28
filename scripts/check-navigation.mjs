@@ -365,7 +365,8 @@ await click("院内発症感染症");
 infText = await page.locator("main").innerText();
 check(/市中感染へ外挿しない/.test(infText), "院内発症の原因微生物表と明示する");
 check(!/短期治療期間/.test(infText), "混在する投与期間表を疾患ページに載せない");
-check((await page.locator(".chip-link").count()) > 0, "菌名からアンチバイオグラムへ進める");
+check((await page.locator(".chip-link").count()) === 0, "表外の菌リンク一覧を表示しない");
+check((await page.locator(".table-organism-link").count()) > 0, "表2の菌名からアンチバイオグラムへ進める");
 
 await home();
 await click("感染症別");

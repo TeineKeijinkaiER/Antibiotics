@@ -341,7 +341,7 @@ export function InfectionDetail({
       )}
 
       {shownTables.map((t) => (
-        <DataTable key={t.caption} table={t} />
+        <DataTable key={t.caption} table={t} onOpenOrganism={onOpenOrganism} />
       ))}
 
       {/*
@@ -463,7 +463,13 @@ export function StewardshipTopicDetail({ id }: { id: string }) {
 /* ---------------- 共通：原典の表 ---------------- */
 
 /** 原典で表になっていた記載は構造を保ったまま出す（FR-017-4） */
-function DataTable({ table }: { table: InfectionTable }) {
+function DataTable({
+  table,
+  onOpenOrganism,
+}: {
+  table: InfectionTable;
+  onOpenOrganism?: (organismId: string) => void;
+}) {
   const singleColumn = table.headers.length === 1;
   return (
     <section className="section">
@@ -487,9 +493,29 @@ function DataTable({ table }: { table: InfectionTable }) {
             <tbody>
               {table.rows.map((r, i) => (
                 <tr key={`${r[0]}-${i}`}>
-                  {r.map((cell, j) => (
-                    <td key={j}>{cell}</td>
-                  ))}
+                  {r.map((cell, j) => {
+                    const links = (table.organismLinks ?? []).filter(
+                      (link) => link.row === i && link.column === j,
+                    );
+                    return (
+                      <td key={j} data-label={table.headers[j]}>
+                        <span>{cell}</span>
+                        {links.length > 0 && onOpenOrganism && (
+                          <div className="table-organism-links">
+                            {links.map((link) => (
+                              <button
+                                key={`${link.organismId}-${link.label}`}
+                                className="link-btn table-organism-link"
+                                onClick={() => onOpenOrganism(link.organismId)}
+                              >
+                                {link.label} →
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </td>
+                    );
+                  })}
                 </tr>
               ))}
             </tbody>

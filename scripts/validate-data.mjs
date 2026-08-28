@@ -460,6 +460,14 @@ for (const [lane, n] of Object.entries(laneCounts)) {
         if (row.length !== t.headers.length)
           fail(`${where}: 表「${t.caption}」${i + 1}行目の列数が見出しと一致しません`);
       }
+      for (const link of t.organismLinks ?? []) {
+        if (!organismIds.has(link.organismId))
+          fail(`${where}: 表内の菌ID「${link.organismId}」は存在しません`);
+        if (!Number.isInteger(link.row) || link.row < 0 || link.row >= (t.rows ?? []).length)
+          fail(`${where}: 表内リンクの行番号が不正です（${link.row}）`);
+        if (!Number.isInteger(link.column) || link.column < 0 || link.column >= (t.headers ?? []).length)
+          fail(`${where}: 表内リンクの列番号が不正です（${link.column}）`);
+      }
     }
 
     // 抗菌薬を出す立場なら、推奨薬か「記載なし」の説明のどちらかが要る

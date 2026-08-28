@@ -424,6 +424,13 @@ export type InfectionTable = {
   headers: string[];
   rows: string[][];
   note?: string;
+  /** 表中の語から菌種別（アンチバイオグラム）へ直接遷移するリンク */
+  organismLinks?: {
+    row: number;
+    column: number;
+    label: string;
+    organismId: string;
+  }[];
   /** その集団でのみ表示する。省略時は両方に出す */
   population?: PatientMode;
 };

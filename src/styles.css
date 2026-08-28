@@ -519,8 +519,11 @@ table.abx th, table.abx td { white-space: nowrap; }
 /* 文章表: 折り返す。列幅は各表で col に width を指定して決め打ちする */
 table.doc { table-layout: fixed; line-height: 1.7; }
 table.doc th, table.doc td { overflow-wrap: anywhere; word-break: normal; }
+table.doc td > span { white-space: pre-line; }
 table.doc ul { margin: 0; padding-left: 1.1em; }
 table.doc li { margin-bottom: 2px; }
+.table-organism-links { display: flex; flex-wrap: wrap; gap: 4px 10px; margin-top: 5px; }
+.table-organism-link { font-size: 12px; text-align: left; }
 .tierpill {
   display: inline-block;
   min-width: 46px;
