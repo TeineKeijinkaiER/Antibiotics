@@ -300,19 +300,19 @@
           { "generic": "cefalexin", "brand": "セファレキシン、ラリキシン" },
           { "generic": "metronidazole", "brand": "フラジール" },
           { "generic": "sulfamethoxazole/trimethoprim", "brand": "ダイフェン" },
-          { "generic": "clindamycin", "brand": "ダラシン" },
-          { "generic": "minocycline", "brand": "ミノサイクリン" },
-          { "generic": "fidaxomicin", "brand": "ダフクリア" },
-          { "generic": "kanamycin", "brand": "カナマイシン" },
-          { "generic": "rifaximin", "brand": "リフキシマ" }
+          { "generic": "clindamycin", "brand": "ダラシン" }
         ]
       },
       {
         "category": "Watch",
         "drugs": [
+          { "generic": "minocycline", "brand": "ミノサイクリン" },
           { "generic": "cefuroxime", "brand": "オラセフ" },
+          { "generic": "fidaxomicin", "brand": "ダフクリア" },
+          { "generic": "kanamycin", "brand": "カナマイシン" },
           { "generic": "erythromycin", "brand": "エリスロシン" },
           { "generic": "spiramycin acetate", "brand": "スピラマイシン" },
+          { "generic": "rifaximin", "brand": "リフキシマ" },
           { "generic": "clarithromycin", "brand": "クラリス" },
           { "generic": "azithromycin", "brand": "ジスロマック" },
           { "generic": "ciprofloxacin", "brand": "シプロキサン" },

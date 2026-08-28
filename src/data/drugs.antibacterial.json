@@ -926,7 +926,7 @@
     "class": "テトラサイクリン系",
     "category": "antibacterial",
     "renalAdjustmentNotRequired": true,
-    "aware": "Access",
+    "aware": "Watch",
     "aliases": [
       "ミノサイクリン",
       "ミノマイシン",
@@ -2666,7 +2666,7 @@
     "class": "マクロライド系（経口・難吸収性）",
     "category": "antibacterial",
     "renalAdjustmentNotRequired": true,
-    "aware": "Access",
+    "aware": "Watch",
     "aliases": [
       "ダフクリア",
       "フィダキソマイシン",
@@ -2711,7 +2711,7 @@
     "class": "アミノグリコシド系（経口）",
     "category": "antibacterial",
     "renalAdjustmentNotRequired": true,
-    "aware": "Access",
+    "aware": "Watch",
     "aliases": [
       "カナマイシン",
       "KM"
@@ -2763,7 +2763,7 @@
     "class": "リファマイシン系（経口・難吸収性）",
     "category": "antibacterial",
     "renalAdjustmentNotRequired": true,
-    "aware": "Access",
+    "aware": "Watch",
     "aliases": [
       "リフキシマ",
       "リファキシミン",
