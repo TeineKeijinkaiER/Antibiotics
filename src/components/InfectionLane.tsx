@@ -152,29 +152,19 @@ export function InfectionList({
   );
 }
 
-/** 一覧に出すカード。結論を1行で見せる */
+/**
+ * 一覧に出すカード。結論を1行で見せる。
+ * 立場を色つきタグでは示さない（本文の推奨文で十分なため）。
+ */
 function InfectionCard({ entry, onOpen }: { entry: InfectionEntry; onOpen: () => void }) {
   return (
     <button className="result" onClick={onOpen}>
       <div className="result-head">
         <span className="result-name">{entry.name}</span>
-        <StanceBadge entry={entry} />
       </div>
       <p className="result-dose">{entry.verdict ?? entry.summary}</p>
     </button>
   );
-}
-
-function StanceBadge({ entry }: { entry: InfectionEntry }) {
-  const label =
-    entry.stance === "withhold"
-      ? "抗菌薬を出さない"
-      : entry.stance === "conditional"
-        ? "条件つきで出す"
-        : entry.stance === "test_first"
-          ? "検査で決める"
-          : "手引きに推奨薬の記載なし";
-  return <span className={`badge stance-${entry.stance}`}>{label}</span>;
 }
 
 /* ---------------- 感染症詳細 ---------------- */
@@ -211,7 +201,6 @@ export function InfectionDetail({
     <>
       <div className="detail-head">
         <h2>{entry.name}</h2>
-        <StanceBadge entry={entry} />
       </div>
       <p className="lane-intro">{entry.summary}</p>
 
@@ -354,7 +343,7 @@ export function InfectionDetail({
       {entry.figures && entry.figures.length > 0 && (
         <section className="section">
           <details className="fold">
-            <summary>判断の根拠となる数値（{entry.figures.length}件）</summary>
+            <summary>疾患メモ（{entry.figures.length}件）</summary>
             <dl className="figures">
               {entry.figures.map((f) => (
                 <div className="figure" key={f.value + f.text}>
