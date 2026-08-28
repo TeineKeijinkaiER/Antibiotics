@@ -566,6 +566,7 @@ footer.foot {
 .top-btn.aware-access { color: var(--tier-good); border-color: var(--tier-good); }
 .top-btn.aware-watch { color: var(--warn); border-color: var(--warn); }
 .top-btn.aware-reserve { color: var(--danger); border-color: var(--danger); }
+.top-btn.aware-other { color: var(--ink-3); border-color: var(--ink-3); }
 
 /* AWaRe の説明 */
 .aware-lead { font-size: 13.5px; color: var(--ink-2); line-height: 1.85; margin-bottom: 16px; }

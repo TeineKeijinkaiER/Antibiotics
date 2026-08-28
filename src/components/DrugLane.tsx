@@ -178,12 +178,17 @@ export function LanePicker({
                 <span className="top-btn-count">{counts[b.key]}</span>
               </button>
             ))}
+            <button
+              className="top-btn aware-other"
+              disabled={counts.other === 0}
+              onClick={onPickOtherGenre}
+            >
+              その他
+              <span className="top-btn-count">{counts.other}</span>
+            </button>
           </div>
 
           <div className="sub-actions">
-            <button className="sub-btn" onClick={onPickOtherGenre}>
-              その他（AWaRe分類対象外の {counts.other} 剤）
-            </button>
             <p className="dose-note">
               抗真菌薬・抗ウイルス薬・抗結核薬・駆虫薬などはWHOのAWaRe分類の対象外です。
               ジャンルを選ぶと薬剤名が一覧できます。

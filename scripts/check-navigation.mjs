@@ -238,7 +238,7 @@ console.log("\nその他（AWaRe分類対象外）のジャンル分け");
 await home();
 await click("内服薬");
 await click("成人");
-await click("その他（AWaRe分類対象外の");
+await click("その他");
 await page.waitForTimeout(250);
 const genreButtons = await page.locator(".top-btn").allInnerTexts();
 for (const label of ["抗真菌薬", "抗ウイルス薬", "抗結核薬", "駆虫薬"]) {
