@@ -8,6 +8,26 @@ import {
   subscribePrompt,
 } from "./install-guide";
 
+function SafariShareIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="24"
+      height="24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      role="img"
+      aria-label="四角から上向き矢印が出ている共有マーク"
+      data-install-icon="safari-share"
+    >
+      <path d="M12 15V3m0 0L7.5 7.5M12 3l4.5 4.5M5 11v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8" />
+    </svg>
+  );
+}
+
 export function InstallGuide() {
   const [visible, setVisible] = useState(false);
   const [, rerender] = useState(0);
@@ -34,7 +54,7 @@ export function InstallGuide() {
         <h2 id="install-title">このアプリをすぐ使えるようにする</h2>
         {platform === "ios" ? (
           <ol>
-            <li>Safariの「共有」をタップ</li>
+            <li><SafariShareIcon /> Safariの「共有」（このマーク）をタップ</li>
             <li>「ホーム画面に追加」を選択</li>
             <li>「追加」をタップ</li>
           </ol>

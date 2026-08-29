@@ -8,6 +8,19 @@ import {
   subscribeInstallPrompt,
 } from "../lib/install-guide";
 
+function SafariShareIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      role="img"
+      aria-label="四角から上向き矢印が出ている共有マーク"
+      data-install-icon="safari-share"
+    >
+      <path d="M12 15V3m0 0L7.5 7.5M12 3l4.5 4.5M5 11v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8" />
+    </svg>
+  );
+}
+
 export function InstallGuide() {
   const [visible, setVisible] = useState(false);
   const [, setPromptVersion] = useState(0);
@@ -62,7 +75,7 @@ export function InstallGuide() {
 
         {platform === "ios" ? (
           <ol className="install-steps">
-            <li><span className="install-step-icon">↑</span><span><b>Safariの「共有」</b>をタップ</span></li>
+            <li><span className="install-step-icon"><SafariShareIcon /></span><span><b>Safariの「共有」</b>（左のマーク）をタップ</span></li>
             <li><span className="install-step-icon">＋</span><span><b>「ホーム画面に追加」</b>を選択</span></li>
             <li><span className="install-step-icon">✓</span><span>右上の<b>「追加」</b>をタップ</span></li>
           </ol>

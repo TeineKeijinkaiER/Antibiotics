@@ -31,6 +31,10 @@ check(
   "目的が伝わるタイトルを表示する",
 );
 check(/Safariの「共有」/.test(text), "iPhoneでは共有ボタンからの手順を示す");
+check(
+  (await iosPage.locator('[data-install-icon="safari-share"]').count()) === 1,
+  "Safariの共有マークを文字説明と併記する",
+);
 check(/ホーム画面に追加/.test(text), "「ホーム画面に追加」を案内する");
 await iosPage.getByRole("button", { name: "今回は閉じる" }).last().click();
 await iosPage.reload({ waitUntil: "networkidle" });
