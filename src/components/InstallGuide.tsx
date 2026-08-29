@@ -48,8 +48,8 @@ export function InstallGuide() {
       >
         <div className="install-guide-head">
           <div>
-            <p className="install-guide-kicker">次回からすぐ開く</p>
-            <h2 id="install-guide-title">ホーム画面に追加</h2>
+            <p className="install-guide-kicker">スマホでもっと便利に</p>
+            <h2 id="install-guide-title">このアプリをすぐ使えるようにする</h2>
           </div>
           <button className="install-guide-close" onClick={closeForNow} aria-label="今回は閉じる">
             ×

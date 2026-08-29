@@ -26,6 +26,10 @@ const iosPage = await ios.newPage();
 await iosPage.goto(BASE, { waitUntil: "networkidle" });
 let text = await iosPage.locator(".install-guide").innerText();
 await iosPage.screenshot({ path: "C:/tmp/install-guide-ios.png", fullPage: true });
+check(
+  (await iosPage.locator("#install-guide-title").innerText()) === "このアプリをすぐ使えるようにする",
+  "目的が伝わるタイトルを表示する",
+);
 check(/Safariの「共有」/.test(text), "iPhoneでは共有ボタンからの手順を示す");
 check(/ホーム画面に追加/.test(text), "「ホーム画面に追加」を案内する");
 await iosPage.getByRole("button", { name: "今回は閉じる" }).last().click();

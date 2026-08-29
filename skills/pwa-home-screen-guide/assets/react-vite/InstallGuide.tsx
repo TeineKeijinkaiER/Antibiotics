@@ -31,7 +31,7 @@ export function InstallGuide() {
   return (
     <div className="install-guide-backdrop">
       <section className="install-guide" role="dialog" aria-modal="true" aria-labelledby="install-title">
-        <h2 id="install-title">ホーム画面に追加</h2>
+        <h2 id="install-title">このアプリをすぐ使えるようにする</h2>
         {platform === "ios" ? (
           <ol>
             <li>Safariの「共有」をタップ</li>
