@@ -6,7 +6,8 @@
 - Installed launch detection uses `navigator.standalone === true` or the standalone display media query.
 - There is no `beforeinstallprompt` equivalent. The user normally installs from Safari’s Share sheet with “Add to Home Screen.”
 - Avoid relying on a platform-specific Share glyph: some test/browser fonts render it as a missing square. Pair a simple symbol or text label with the word “Share.”
-- There is no dependable installation-complete event. Offer a manual completion confirmation, while standalone detection remains the authoritative launch-time check.
+- There is no dependable installation-complete event. Do not place a manual completion claim inside the instructional guide; standalone detection is the authoritative launch-time check.
+- Closing the guide may suppress it for the current browser session, but must not be stored as installation completion.
 - In-app browsers may omit the required action. Tell the user to open the page in Safari when the Share option is unavailable.
 
 ## Android

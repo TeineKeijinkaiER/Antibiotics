@@ -27,16 +27,18 @@ await iosPage.goto(BASE, { waitUntil: "networkidle" });
 let text = await iosPage.locator(".install-guide").innerText();
 await iosPage.screenshot({ path: "C:/tmp/install-guide-ios.png", fullPage: true });
 check(
-  (await iosPage.locator("#install-guide-title").innerText()) === "このアプリをすぐ使えるようにする",
+    (await iosPage.locator("#install-guide-title").innerText()) === "このアプリを追加",
   "目的が伝わるタイトルを表示する",
 );
 check(/Safariの「共有」/.test(text), "iPhoneでは共有ボタンからの手順を示す");
+check(/携帯電話のホーム画面に登録すると/.test(text), "iPhoneでは登録する目的を説明する");
 check(
   (await iosPage.locator('[data-install-icon="safari-share"]').count()) === 1,
   "Safariの共有マークを文字説明と併記する",
 );
 check(/ホーム画面に追加/.test(text), "「ホーム画面に追加」を案内する");
-await iosPage.getByRole("button", { name: "今回は閉じる" }).last().click();
+check(!/ホーム画面に追加できた|今回は閉じる/.test(text), "案内内に完了・保留ボタンを置かない");
+await iosPage.getByRole("button", { name: "案内を閉じる" }).click();
 await iosPage.reload({ waitUntil: "networkidle" });
 check((await iosPage.locator(".install-guide").count()) === 0, "同じ閲覧中は閉じた案内を再表示しない");
 await ios.close();
@@ -59,7 +61,7 @@ check(
   "AndroidではネイティブボタンまたはChromeメニューの手順を示す",
 );
 check(/インストール|ホーム画面に追加/.test(text), "Androidのインストール操作を案内する");
-await androidPage.getByRole("button", { name: "ホーム画面に追加できた" }).click();
+await androidPage.evaluate(() => window.dispatchEvent(new Event("appinstalled")));
 await androidPage.reload({ waitUntil: "networkidle" });
 check((await androidPage.locator(".install-guide").count()) === 0, "追加完了後は案内を再表示しない");
 await android.close();

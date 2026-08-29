@@ -40,7 +40,7 @@ export function InstallGuide() {
   }, []);
 
   if (!visible) return null;
-  const later = () => { postpone(); setVisible(false); };
+  const closeGuide = () => { postpone(); setVisible(false); };
   const done = () => { markComplete(); setVisible(false); };
   const install = async () => {
     if (!prompt) return;
@@ -51,7 +51,17 @@ export function InstallGuide() {
   return (
     <div className="install-guide-backdrop">
       <section className="install-guide" role="dialog" aria-modal="true" aria-labelledby="install-title">
-        <h2 id="install-title">このアプリをすぐ使えるようにする</h2>
+        <div className="install-guide-head">
+          <h2 id="install-title">このアプリを追加</h2>
+          <button type="button" className="install-guide-close" aria-label="案内を閉じる" onClick={closeGuide}>×</button>
+        </div>
+        <p>
+          {platform === "ios"
+            ? "携帯電話のホーム画面に登録すると、通常のアプリと同じように繰り返して使用できます。 Safariの画面で以下のように登録してください"
+            : prompt
+              ? "携帯電話のホーム画面に登録すると、通常のアプリと同じように繰り返して使用できます。 下のボタンから登録してください"
+              : "携帯電話のホーム画面に登録すると、通常のアプリと同じように繰り返して使用できます。 Chromeの画面で以下のように登録してください"}
+        </p>
         {platform === "ios" ? (
           <ol>
             <li><SafariShareIcon /> Safariの「共有」（このマーク）をタップ</li>
@@ -67,8 +77,6 @@ export function InstallGuide() {
             <li>「インストール」をタップ</li>
           </ol>
         )}
-        <button onClick={done}>ホーム画面に追加できた</button>
-        <button onClick={later}>今回は閉じる</button>
       </section>
     </div>
   );

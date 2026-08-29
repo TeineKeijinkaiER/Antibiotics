@@ -17,3 +17,20 @@
   background: Canvas;
   color: CanvasText;
 }
+.install-guide-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.install-guide-head h2 { margin: 0; }
+.install-guide-close {
+  width: 40px;
+  height: 40px;
+  border: 1px solid ButtonBorder;
+  border-radius: 50%;
+  background: ButtonFace;
+  color: ButtonText;
+  font: inherit;
+}
+.install-guide-close:focus-visible { outline: 3px solid Highlight; outline-offset: 2px; }

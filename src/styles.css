@@ -246,9 +246,6 @@ input, select { font: inherit; color: inherit; }
   font-weight: 800;
 }
 .install-guide-note { margin: 8px 0; color: var(--ink-3); font-size: 12.5px; }
-.install-guide-actions { display: grid; gap: 7px; margin-top: 16px; }
-.install-guide-actions .sub-btn { width: 100%; }
-.install-guide-actions .link-btn { justify-self: center; }
 
 /* 成人／小児と患者条件は投与判断に直結するため、本文の先頭で大きく示す */
 .context-actions {
