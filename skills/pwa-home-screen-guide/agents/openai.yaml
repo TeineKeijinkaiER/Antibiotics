@@ -1,0 +1,4 @@
+interface:
+  display_name: "PWAホーム画面追加ガイド"
+  short_description: "モバイル向けPWA導入案内を実装して動作検証します"
+  default_prompt: "Use $pwa-home-screen-guide to add a mobile home-screen installation guide to this web app."

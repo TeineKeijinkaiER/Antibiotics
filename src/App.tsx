@@ -36,6 +36,7 @@ import {
   Amr,
 } from "./components/Reference";
 import { About, DisclaimerGate } from "./components/About";
+import { InstallGuide } from "./components/InstallGuide";
 import {
   getFavorites,
   getHistory,
@@ -237,6 +238,7 @@ export default function App() {
   if (view.type === "opening") {
     return (
       <>
+        <InstallGuide />
         <header className="topbar minimal">
           <span className="spacer" />
           <button className="link-btn" onClick={() => go({ type: "about" })}>
