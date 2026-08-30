@@ -20,8 +20,9 @@ const click = async (text) => {
   await page.waitForTimeout(180);
 };
 
-console.log("感染症別の入口と成人・小児");
+console.log("適正使用の手引き → 感染症別の入口と成人・小児");
 await page.goto(BASE, { waitUntil: "networkidle" });
+await click("適正使用の手引き");
 await click("感染症別");
 check((await page.locator(".top-btn").count()) === 2, "成人・小児の選択を必ず挟む");
 await click("成人");
@@ -46,6 +47,7 @@ check(/抗微生物薬適正使用の手引き 第四版/.test(text), "第四版
 
 console.log("\n小児の急性下痢症");
 await page.goto(BASE, { waitUntil: "networkidle" });
+await click("適正使用の手引き");
 await click("感染症別");
 await click("小児");
 await click("消化器");
@@ -56,6 +58,7 @@ check(!/50歳以上/.test(text), "成人固有の抗菌薬条件を小児画面�
 
 console.log("\n院内発症感染症");
 await page.goto(BASE, { waitUntil: "networkidle" });
+await click("適正使用の手引き");
 await click("感染症別");
 await click("成人");
 await click("院内発症感染症");

@@ -119,8 +119,8 @@ export function InfectionPicker({
 
           <div className="sub-actions">
             <p className="dose-note">
-              手引きの重要な表（治療期間の早見表・血液培養の解釈・経口薬への切り替えなど）は、
-              ホームの「その他」→「適正使用の手引き」から確認できます。
+              手引きの重要な表（治療期間の早見表・血液培養の解釈・経口薬への切り替え）は、
+              一つ前の「適正使用の手引き」の画面から確認できます。
             </p>
           </div>
         </>
@@ -402,21 +402,46 @@ export function InfectionDetail({
   );
 }
 
-/* ---------------- 「その他」に置く適正使用の手引き ---------------- */
+/* ---------------- 大項目「適正使用の手引き」 ---------------- */
 
-export function StewardshipTopics({ onOpenTopic }: { onOpenTopic: (id: string) => void }) {
+/**
+ * 手引きの入口。
+ *
+ * 感染症別はここに含まれる項目の一つであり、当院マニュアルではなく
+ * 厚生労働省の手引きが出典であることを、階層と冒頭の文で明示する。
+ */
+export function StewardshipTopics({
+  onOpenInfections,
+  onOpenTopic,
+}: {
+  onOpenInfections: () => void;
+  onOpenTopic: (id: string) => void;
+}) {
   return (
     <>
       <div className="detail-head">
         <h2>適正使用の手引き</h2>
       </div>
+      <p className="lane-intro">
+        この項目は、厚生労働省『{STEWARDSHIP_GUIDE.title} {STEWARDSHIP_GUIDE.edition}』
+        （{STEWARDSHIP_GUIDE.books.both}）の記載をまとめたものです。
+        当院『抗菌薬投与マニュアル』とは別の資料であり、
+        抗菌薬の用量・当院の採用状況・使用申請のルールは薬剤ページを正とします。
+      </p>
       <div className="top-grid">
+        <button className="top-btn compact" onClick={onOpenInfections}>
+          感染症別
+        </button>
         {STEWARDSHIP_TOPICS.map((t) => (
           <button key={t.id} className="top-btn compact" onClick={() => onOpenTopic(t.id)}>
             {t.title}
           </button>
         ))}
       </div>
+      <p className="source-line">
+        出典：厚生労働省『{STEWARDSHIP_GUIDE.title} {STEWARDSHIP_GUIDE.edition}』
+        {STEWARDSHIP_GUIDE.publisher}
+      </p>
     </>
   );
 }

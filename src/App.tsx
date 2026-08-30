@@ -149,8 +149,11 @@ export default function App() {
       go({ type: "organisms" });
     } else if (key === "other") {
       go({ type: "other" });
+    } else if (key === "stewardship") {
+      // 感染症別は手引きの一項目。出典が当院マニュアルでないことを階層で示す（FR-017）
+      go({ type: "page", key: "stewardship-topics" });
     } else {
-      // 内服薬・注射薬・感染症別は、いずれも必ず成人／小児の選択を挟む。
+      // 内服薬・注射薬は、いずれも必ず成人／小児の選択を挟む（感染症別も同様に mode を挟む）。
       // 前回の選択のまま別のレーンに入って誤参照することを防ぐ（FR-000-4）。
       go({ type: "mode", lane: key });
     }
@@ -573,7 +576,10 @@ export default function App() {
         {view.type === "page" && view.key === "stewardship" && <Stewardship />}
         {view.type === "page" && view.key === "amr" && <Amr />}
         {view.type === "page" && view.key === "stewardship-topics" && (
-          <StewardshipTopics onOpenTopic={(id) => go({ type: "topic", id })} />
+          <StewardshipTopics
+            onOpenInfections={() => go({ type: "mode", lane: "infection" })}
+            onOpenTopic={(id) => go({ type: "topic", id })}
+          />
         )}
 
         <footer className="foot">
@@ -590,7 +596,8 @@ export default function App() {
           適応外使用・採用薬・使用申請のルール・アンチバイオグラムは当院の取り決めまたは当院のデータであり、
           他施設ではそのまま当てはまりません。
           示される投与量は当院でコンセンサスの得られた標準的な投与量であり、最終的な投与判断は主治医が行います。
-          感染症別の一部は、厚生労働省『抗微生物薬適正使用の手引き 第四版』の情報を採用しています。
+          大項目「適正使用の手引き」（感染症別を含む）は、
+          厚生労働省『抗微生物薬適正使用の手引き 第四版』の情報を採用しており、当院マニュアルとは出典が異なります。
           使用時は添付文書を改めて精読してください。入力した患者条件は端末内にのみ保持され、外部に送信されません。
           <br />
           <button className="link-btn" onClick={() => go({ type: "about" })}>

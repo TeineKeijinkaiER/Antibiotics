@@ -64,8 +64,18 @@ export const DISEASE_BY_ID = new Map(DISEASES.map((d) => [d.id, d]));
 
 export const INFECTIONS = (infectionsJson as unknown as InfectionEntry[]).filter((i) => !i.retired);
 export const INFECTION_BY_ID = new Map(INFECTIONS.map((i) => [i.id, i]));
-/** 疾患ページへ統合済みの項目は「適正使用の手引き」の小項目には重複表示しない。 */
-const HIDDEN_STEWARDSHIP_TOPIC_IDS = new Set(["inpatient-organisms", "acute-diarrhea-food"]);
+/**
+ * 「適正使用の手引き」の小項目に出さないもの。
+ * - inpatient-organisms / acute-diarrhea-food: 疾患ページへ統合済みのため重複表示しない。
+ * - not-improving / end-of-life: 手引きの一般論であり当院の運用（感染症科・ICT／ASTへの相談）で扱うため、
+ *   参照アプリの項目としては廃止した。原典データは残してある。
+ */
+const HIDDEN_STEWARDSHIP_TOPIC_IDS = new Set([
+  "inpatient-organisms",
+  "acute-diarrhea-food",
+  "not-improving",
+  "end-of-life",
+]);
 export const STEWARDSHIP_TOPICS = (stewardshipTopicsJson as unknown as StewardshipTopic[]).filter(
   (topic) => !HIDDEN_STEWARDSHIP_TOPIC_IDS.has(topic.id),
 );

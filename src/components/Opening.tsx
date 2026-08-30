@@ -7,12 +7,13 @@ import { useState } from "react";
  * 「アプリの説明」はヘッダー（欄外）に小さく置くため、ここには含めない。
  */
 
-export type TopCategory = "oral" | "injectable" | "infection" | "organism" | "other";
+export type TopCategory = "oral" | "injectable" | "stewardship" | "organism" | "other";
 
 export const TOP_CATEGORIES: { key: TopCategory; label: string }[] = [
   { key: "oral", label: "内服薬" },
   { key: "injectable", label: "注射薬" },
-  { key: "infection", label: "感染症別" },
+  // 感染症別は当院マニュアルではなく厚労省の手引きが出典のため、手引きの下に置く（FR-017）
+  { key: "stewardship", label: "適正使用の手引き" },
   { key: "organism", label: "菌種別" },
   { key: "other", label: "その他" },
 ];
@@ -61,20 +62,13 @@ export function Opening({ onPick }: { onPick: (key: TopCategory) => void }) {
 
 /* ---------------- 「その他」の中身 ---------------- */
 
-export type OtherKey =
-  | "prophylaxis"
-  | "postexposure"
-  | "pediatric-weight"
-  | "amr"
-  | "stewardship-topics";
+export type OtherKey = "prophylaxis" | "postexposure" | "pediatric-weight" | "amr";
 
 export const OTHER_ITEMS: { key: OtherKey; label: string }[] = [
   { key: "prophylaxis", label: "周術期" },
   { key: "postexposure", label: "暴露後予防投与" },
   { key: "pediatric-weight", label: "小児体重服用量簡易表" },
   { key: "amr", label: "AMR対策" },
-  // 感染症別の各ページに載りきらない、適正使用の手引きの重要な表をまとめる（FR-017 補足）
-  { key: "stewardship-topics", label: "適正使用の手引き" },
 ];
 
 export function OtherMenu({ onPick }: { onPick: (key: OtherKey) => void }) {

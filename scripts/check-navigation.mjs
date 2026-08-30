@@ -2,7 +2,7 @@
 /**
  * 画面構成の回帰テスト（要件 FR-000 / FR-011 / FR-013）
  *
- * オープニングの大項目、感染症別、その他の中身、成人／小児の選択、AWaRe分類の選択、
+ * オープニングの大項目、適正使用の手引き（感染症別）、その他の中身、成人／小児の選択、AWaRe分類の選択、
  * 小児で成人向けの情報を隠すこと、を機械的に確認する。
  *
  * 使い方: npx vite preview を起動した状態で node scripts/check-navigation.mjs
@@ -53,7 +53,7 @@ console.log("オープニング");
 await home();
 check((await page.locator(".top-btn").count()) === 5, "大項目は5ボタン");
 const tops = await page.locator(".top-btn").allInnerTexts();
-for (const label of ["内服薬", "注射薬", "感染症別", "菌種別", "その他"]) {
+for (const label of ["内服薬", "注射薬", "適正使用の手引き", "菌種別", "その他"]) {
   check(tops.some((t) => t.trim() === label), `大項目に「${label}」がある`);
 }
 check(
@@ -70,18 +70,16 @@ check(
 console.log("\nその他");
 await home();
 await click("その他");
-// 手引きの表集を加えて5ボタン
-check((await page.locator(".top-btn").count()) === 5, "その他は5ボタン");
+// 適正使用の手引きは大項目へ移したので4ボタン
+check((await page.locator(".top-btn").count()) === 4, "その他は4ボタン");
 const others = await page.locator(".top-btn").allInnerTexts();
-for (const label of [
-  "周術期",
-  "暴露後予防投与",
-  "小児体重服用量簡易表",
-  "AMR対策",
-  "適正使用の手引き",
-]) {
+for (const label of ["周術期", "暴露後予防投与", "小児体重服用量簡易表", "AMR対策"]) {
   check(others.some((t) => t.trim() === label), `その他に「${label}」がある`);
 }
+check(
+  !others.some((t) => t.trim() === "適正使用の手引き"),
+  "その他に適正使用の手引きを残さない（大項目へ移動）",
+);
 check(
   !(await page.locator("main").innerText()).includes("アナフィラキシー"),
   "アナフィラキシーの項目が削除されている",
@@ -298,11 +296,23 @@ console.log("\n感染症別");
 await home();
 const topsWithInfection = await page.locator(".top-btn").allInnerTexts();
 check(
-  topsWithInfection.some((t) => t.trim() === "感染症別"),
-  "大項目に「感染症別」がある",
+  !topsWithInfection.some((t) => t.trim() === "感染症別"),
+  "大項目から「感染症別」を外した",
+);
+check(
+  topsWithInfection.some((t) => t.trim() === "適正使用の手引き"),
+  "大項目に「適正使用の手引き」がある",
 );
 
+await click("適正使用の手引き");
+const guideText = await page.locator("main").innerText();
+check(/厚生労働省/.test(guideText), "手引きの画面で厚生労働省が出典であると明示する");
+check(
+  (await page.locator(".top-btn").allInnerTexts()).some((t) => t.trim() === "感染症別"),
+  "手引きの先頭に「感染症別」がある",
+);
 await click("感染症別");
+check((await page.locator(".top-btn").count()) === 2, "感染症別でも成人・小児の選択を挟む");
 await click("成人");
 
 // FR-100-5: 感染症名で引いたら、その感染症のことが1画面に集まっている
@@ -317,6 +327,7 @@ check(/基礎疾患・合併症のない成人には投与しない/.test(infTex
 
 // FR-017-5: 薬剤名から薬剤詳細へ
 await home();
+await click("適正使用の手引き");
 await click("感染症別");
 await click("成人");
 await click("気道・耳鼻科");
@@ -345,6 +356,7 @@ check(/遷延性/.test(infText), "小児では小児向けの判定表を出す"
 
 // FR-100-2/FR-100-4: 数値は畳んで置くが、失われてはいない
 await home();
+await click("適正使用の手引き");
 await click("感染症別");
 await click("成人");
 await click("気道・耳鼻科");
@@ -358,6 +370,7 @@ check(/2.62倍/.test(await page.locator("main").innerText()), "開くと数値�
 
 // 外来編を残しつつ、院内表2は一つの項目に分離する
 await home();
+await click("適正使用の手引き");
 await click("感染症別");
 await click("成人");
 await click("院内発症感染症");
@@ -369,6 +382,7 @@ check((await page.locator(".chip-link").count()) === 0, "表外の菌リンク�
 check((await page.locator(".table-organism-link").count()) > 0, "表2の菌名からアンチバイオグラムへ進める");
 
 await home();
+await click("適正使用の手引き");
 await click("感染症別");
 await click("小児");
 await click("気道・耳鼻科");
@@ -377,20 +391,16 @@ infText = await page.locator("main").innerText();
 check(/2〜3日経過観察/.test(infText), "小児の急性中耳炎を表示する");
 check(/75%以上/.test(infText) === false, "中耳炎の数値も疾患メモに畳む");
 
-/* ---- 手引きの表集（その他） ---- */
+/* ---- 手引きの小項目 ---- */
 console.log("\n適正使用の手引き");
 await home();
-await click("その他");
-check(
-  (await page.locator(".top-btn").allInnerTexts()).some((t) =>
-    t.includes("適正使用の手引き"),
-  ),
-  "「その他」に適正使用の手引きがある",
-);
 await click("適正使用の手引き");
 const stewardshipItems = await page.locator(".top-btn").allInnerTexts();
+check(stewardshipItems.length === 4, "手引きは 感染症別＋3項目 の4ボタン");
 check(!stewardshipItems.some((t) => t.includes("急性下痢症")), "小項目に急性下痢症を重複表示しない");
 check(!stewardshipItems.some((t) => t.includes("院内感染症の代表的な原因微生物")), "小項目に院内感染症の原因微生物を重複表示しない");
+check(!stewardshipItems.some((t) => t.includes("感染症が改善しないとき")), "「感染症が改善しないとき」を廃止した");
+check(!stewardshipItems.some((t) => t.includes("終末期患者への抗菌薬")), "「終末期患者への抗菌薬」を廃止した");
 for (const label of ["血液培養の解釈", "治療期間の早見表", "経口薬への切り替え"]) {
   check(
     (await page.locator(".top-btn").allInnerTexts()).some((t) => t.includes(label)),
