@@ -36,7 +36,11 @@ check(await page.locator(".offlabel-details .dose-conv").count() === 0, "適応�
 await adultDetails.locator("summary").click();
 check(await page.locator(".offlabel-details .offlabel-dose").count() > 0, "クリック後に適応外用量を表示する");
 
-await click("小児に切り替える");
+// 集団の切替はラベル文言ではなくクラスで掴む。この検査の対象は適応外使用の出し分けであって
+// ボタンの文言ではないため（文言は check-navigation.mjs が見ている）、
+// 表記が変わってもここが落ちないようにする。
+await page.locator(".ctx-btn.switch").click();
+await page.waitForTimeout(300);
 const pediatricDetails = page.locator(".offlabel-details");
 check(await pediatricDetails.count() === 1, "明示的な小児適応外使用は小児画面に表示する");
 await pediatricDetails.locator("summary").click();
