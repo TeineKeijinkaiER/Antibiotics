@@ -689,6 +689,13 @@ footer.foot {
   background: var(--surface-2);
 }
 .opening-foot { max-width: 860px; margin: 0 auto; padding: 18px 16px 40px; text-align: center; }
+.opening-note {
+  margin: 14px 2px 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--ink-3);
+  text-align: center;
+}
 
 /* ---------- 大きなボタン（大項目・成人小児・AWaRe・系統） ---------- */
 .top-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }

@@ -12,10 +12,10 @@ export type TopCategory = "oral" | "injectable" | "stewardship" | "organism" | "
 export const TOP_CATEGORIES: { key: TopCategory; label: string }[] = [
   { key: "oral", label: "内服薬" },
   { key: "injectable", label: "注射薬" },
-  // 感染症別は当院マニュアルではなく厚労省の手引きが出典のため、手引きの下に置く（FR-017）
-  { key: "stewardship", label: "適正使用の手引き" },
   { key: "organism", label: "菌種別" },
   { key: "other", label: "その他" },
+  // 当院マニュアルではなく厚労省の手引きが出典のため、一番右に離して置く（FR-017）
+  { key: "stewardship", label: "適正使用の手引き" },
 ];
 
 export const APP_TITLE = "TKH抗菌薬投与マニュアル";
@@ -56,6 +56,12 @@ export function Opening({ onPick }: { onPick: (key: TopCategory) => void }) {
           </button>
         ))}
       </nav>
+
+      {/* 「適正使用の手引き」が当院マニュアルとは別の出典であることを、ボタンの外に明示する */}
+      <p className="opening-note">
+        「適正使用の手引き」は、厚生労働省『抗微生物薬適正使用の手引き 第四版』の内容です。
+        他のボタン（内服薬・注射薬・菌種別・その他）は当院『抗菌薬投与マニュアル』の内容です。
+      </p>
     </div>
   );
 }
