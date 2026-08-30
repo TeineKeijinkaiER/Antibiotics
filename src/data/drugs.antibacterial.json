@@ -82,28 +82,28 @@
       "designer": "vancomycin",
       "targets": [
         {
-          "type": "peak",
-          "value": "目標値なし",
+          "type": "auc",
+          "value": "400-600 (AUC/MIC)",
           "unit": "",
-          "condition": null
+          "condition": "MRSA感染症の基本目標（抗菌薬TDM臨床実践ガイドライン2022・MIC=1）"
         },
         {
           "type": "trough",
           "value": "10-15",
           "unit": "µg/mL",
-          "condition": null
+          "condition": "AUC評価が実施できない場合の院内代替運用"
         },
         {
           "type": "trough",
           "value": "15-20",
           "unit": "µg/mL",
-        "condition": "AUC評価が利用できない場合の参考（腎障害リスクに注意）"
+          "condition": "AUC評価が実施できない場合の参考（腎障害リスクが高く、一律に狙わない）"
         },
         {
-          "type": "auc",
-          "value": "400-600 (AUC/MIC)",
+          "type": "peak",
+          "value": "目標値なし",
           "unit": "",
-        "condition": "MRSA感染症の基本目標"
+          "condition": null
         }
       ],
       "sampling": {
@@ -111,11 +111,11 @@
         "peak": "AUCガイドTDM時のみ：投与終了後60分"
       },
       "firstTdmDose": "5ドーズ目以降（重症例では2-4ドーズ目を考慮）",
-    "loadingDose": "25-30mg/kg（各投与60分以上。最大1g/時を採用する場合は投与量に応じて延長）",
+      "loadingDose": "25-30mg/kg（各投与60分以上。最大1g/時を採用する場合は投与量に応じて延長）",
       "cautions": [
         "1日3gを超える投与は慎重に行い、1日4gを上限とする（4gを超える場合は他の抗MRSA薬への変更を考慮）",
-      "初回ローディングの母液は生食250mL。各投与60分以上とし、最大1g/時を採用する場合は投与量に応じて投与時間を延長する",
-      "AUC 400-600を基本目標とする。トラフ15-20µg/mLを一律に狙う運用は腎障害リスクが高いため避ける",
+        "初回ローディングの母液は生食250mL。各投与60分以上とし、最大1g/時を採用する場合は投与量に応じて投与時間を延長する",
+        "AUC 400-600を基本目標とする。トラフ15-20µg/mLを一律に狙う運用は腎障害リスクが高いため避ける",
         "AUCガイドTDMはMICが1の菌株に使用する。MICが2以上の場合は他の抗MRSA薬への変更を検討",
         "AUCガイドTDMは透析患者には適用できない",
         "AUCガイドTDMは採血タイミングが重要なため、実施する際は速やかに薬剤部（病棟薬剤師）へ連絡する"
@@ -239,22 +239,22 @@
       "designer": "teicoplanin",
       "targets": [
         {
+          "type": "trough",
+          "value": "15-30",
+          "unit": "µg/mL",
+          "condition": "非複雑性のMRSA感染症（抗菌薬TDM臨床実践ガイドライン2022 CQ4・推奨度I）"
+        },
+        {
+          "type": "trough",
+          "value": "20-40",
+          "unit": "µg/mL",
+          "condition": "複雑性感染症・重症例（感染性心内膜炎、骨関節感染症等）"
+        },
+        {
           "type": "peak",
           "value": "目標値なし",
           "unit": "",
           "condition": null
-        },
-        {
-          "type": "trough",
-          "value": "10-30",
-          "unit": "µg/mL",
-          "condition": null
-        },
-        {
-          "type": "trough",
-          "value": "20-30 以上を考慮",
-          "unit": "µg/mL",
-          "condition": "重症例（感染性心内膜炎、骨関節感染症等）"
         }
       ],
       "sampling": {
@@ -264,7 +264,8 @@
       "firstTdmDose": "5ドーズ目以降（重症例では2-4ドーズ目を考慮）",
       "loadingDose": "12mg/kg（早期に有効血中濃度を維持したい場合）",
       "cautions": [
-        "テイコプラニンは半減期が長く、定常状態への到達が遅れることを考慮する"
+        "テイコプラニンは半減期が長く、定常状態への到達が遅れることを考慮する",
+        "目標トラフ値は抗菌薬TDM臨床実践ガイドライン2022に合わせている。原典p.33の下限10µg/mLは同ガイドラインの推奨下限15µg/mLを下回るため採用しない（原典p.10は15-30µg/mLと記載）"
       ],
       "source": {
         "edition": 9,

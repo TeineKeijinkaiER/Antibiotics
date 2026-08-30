@@ -1,0 +1,14 @@
+{
+  "_comment": "抗菌薬アプリ（drugs.*.json）用の設定例。他のデータに使うときは path を差し替える。* は配列/オブジェクトの全要素を意味する。",
+  "pagesField": "source.pages",
+  "labelField": "genericName.ja",
+  "textFields": [
+    "adult.*.*.text",
+    "pediatric.*.*.text",
+    "renal.gt50",
+    "renal.ccr10_50",
+    "renal.lt10",
+    "renal.hd",
+    "renal.chdf"
+  ]
+}

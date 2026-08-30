@@ -1,0 +1,11 @@
+{
+  "_comment": "TDM目標血中濃度の内部不整合を洗う設定例。context を絞らないと参考文献番号やページ番号を拾って読めなくなる。",
+  "context": ["トラフ", "trough", "ピーク", "peak", "目標血中濃度", "目標トラフ"],
+  "terms": [
+    { "label": "バンコマイシン", "aliases": ["バンコマイシン", "vancomycin", "vcm"] },
+    { "label": "テイコプラニン", "aliases": ["テイコプラニン", "teicoplanin", "teic"] },
+    { "label": "ゲンタマイシン", "aliases": ["ゲンタマイシン", "gentamicin"] },
+    { "label": "アミカシン", "aliases": ["アミカシン", "amikacin"] },
+    { "label": "ボリコナゾール", "aliases": ["ボリコナゾール", "voriconazole", "vrcz"] }
+  ]
+}
